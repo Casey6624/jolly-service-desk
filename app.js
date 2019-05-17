@@ -38,6 +38,7 @@ app.use("/graphql", graphqlHttp({
     type RootMutation{
         createTask(taskInput: TaskInput): Task
         editTask(taskID: ID!, taskInput: TaskInput): Task
+        delTask(taskID: ID!): Task
     }
 
     schema {
@@ -83,12 +84,28 @@ app.use("/graphql", graphqlHttp({
         },
         editTask: async args => {
             const { taskID } = args
-            const findTask = await Task.findByIdAndUpdate({ _id: taskID }, args.taskInput, { useFindAndModify: false }, (err) => {
+            await Task.findByIdAndUpdate({ _id: taskID }, args.taskInput, { useFindAndModify: false }, (err, res) => {
                 if (err) {
                     throw new Error("There was an issue updating the previous task, please try again later.")
                 }
+                if (res) {
+                    return res
+                }
             })
             return args.taskInput
+        },
+        delTask: async args => {
+            const { taskID } = args
+            let deletedTask;
+            try {
+                await Task.findByIdAndDelete({ _id: taskID }, (err, res) => {
+                    deletedTask = res
+                })
+                return deletedTask
+            }
+            catch (err) {
+                throw err
+            }
         }
     },
     graphiql: true
