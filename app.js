@@ -20,6 +20,7 @@ app.use("/graphql", graphqlHttp({
         description: String
         assignedTo: String!
         priority: Int!
+        status: Int!
     }
 
     input TaskInput {
@@ -27,6 +28,7 @@ app.use("/graphql", graphqlHttp({
         description: String
         assignedTo: String!
         priority: Int!
+        status: Int!
     }
 
     type RootQuery{
@@ -35,6 +37,7 @@ app.use("/graphql", graphqlHttp({
 
     type RootMutation{
         createTask(taskInput: TaskInput): Task
+        editTask(taskID: ID!, taskInput: TaskInput): Task
     }
 
     schema {
@@ -56,13 +59,14 @@ app.use("/graphql", graphqlHttp({
                 })
         },
         createTask: (args) => {
-            const { title, description, assignedTo, priority } = args.taskInput
+            const { title, description, assignedTo, priority, status } = args.taskInput
             // new Mongoose model
             const task = new Task({
                 title: title,
                 description: description,
                 assignedTo: assignedTo,
-                priority: +priority
+                priority: +priority,
+                status: +status
             })
             let createdTask
             return task
@@ -76,6 +80,15 @@ app.use("/graphql", graphqlHttp({
                     throw err
                 })
             return task
+        },
+        editTask: async args => {
+            const { taskID } = args
+            const findTask = await Task.findByIdAndUpdate({ _id: taskID }, args.taskInput, { useFindAndModify: false }, (err) => {
+                if (err) {
+                    throw new Error("There was an issue updating the previous task, please try again later.")
+                }
+            })
+            return args.taskInput
         }
     },
     graphiql: true

@@ -20,6 +20,10 @@ const taskSchema = new Schema({
         type: Number,
         required: true
     },
+    status: {
+        type: Number,
+        required: true
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model("Task", taskSchema)
