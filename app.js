@@ -47,7 +47,6 @@ app.use("/graphql", graphqlHttp({
             return Task.find()
                 .then(tasks => {
                     return tasks.map(task => {
-                        console.log(...task._doc)
                         return { ...task._doc }
                     })
                 })
