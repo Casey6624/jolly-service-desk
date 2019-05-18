@@ -1,10 +1,9 @@
-import React, { useState } from "react"
+import React, { useContext } from "react"
 import myMSALObj from "./appConfig"
-
+import UserContext from "../../context/user-context"
 export default function LoginScreen(props) {
 
-    const [accessToken, setAccessToken] = useState(null)
-    const [user, setUser] = useState([])
+    const userContext = useContext(UserContext)
 
     function signIn() {
         var request = {
@@ -12,7 +11,13 @@ export default function LoginScreen(props) {
         };
         myMSALObj.loginPopup(request).then(function (loginResponse) {
             const { name, userName } = loginResponse.account
-            setUser([name, userName])
+            const { idToken } = loginResponse
+            try {
+                userContext.login([name, userName], idToken)
+            }
+            catch (err) {
+                throw err
+            }
         }).catch(function (error) {
             console.log(error);
         });
@@ -20,9 +25,8 @@ export default function LoginScreen(props) {
 
     return (
         <div>
-            <h1> {user[0]} </h1>
-            <h1> {user[1]} </h1>
-            <button onClick={signIn}> Sign in Using Office 365 </button>
+            <h1> Jolly IT | Tasks  </h1>
+            <button onClick={() => signIn()}> Sign in Using Office 365 </button>
         </div>
     )
 }
