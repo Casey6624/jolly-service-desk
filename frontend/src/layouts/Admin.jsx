@@ -1,7 +1,6 @@
-/* eslint-disable */
+/* eslint-disable react/no-string-refs */
 import React from "react";
-import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -11,12 +10,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-
 import routes from "routes.js";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
-import image from "assets/img/sidebar-2.jpg";
+import image from "assets/img/sheffield4.jpg";
 import logo from "assets/img/reactlogo.png";
 
 const switchRoutes = (
@@ -112,18 +110,12 @@ class Dashboard extends React.Component {
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
             </div>
-          ) : (
-              <div className={classes.map}>{switchRoutes}</div>
-            )}
+          ) : (<div className={classes.map}>{switchRoutes}</div>)}
           {this.getRoute() ? <Footer /> : null}
         </div>
       </div>
     );
   }
 }
-
-Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(dashboardStyle)(Dashboard);
