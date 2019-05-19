@@ -49,8 +49,7 @@ module.exports = GraphQLResolvers = {
         })
         return args.taskInput
     },
-    delTask: async args => {
-        const { taskID } = args
+    delTask: async ({ taskID }) => {
         let deletedTask;
         try {
             await Task.findByIdAndDelete({ _id: taskID }, (err, res) => {

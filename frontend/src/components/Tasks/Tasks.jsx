@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classnames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -60,6 +59,9 @@ class Tasks extends React.Component {
                 />
               </TableCell>
               <TableCell className={tableCellClasses}>
+                TITLE 123TITLE 123TITLE 123TITLE 123TITLE 123TITLE 123
+              </TableCell>
+              <TableCell className={tableCellClasses}>
                 {tasks[value]}
               </TableCell>
               <TableCell className={classes.tableActions}>
@@ -105,12 +107,5 @@ class Tasks extends React.Component {
     );
   }
 }
-
-Tasks.propTypes = {
-  classes: PropTypes.object.isRequired,
-  tasksIndexes: PropTypes.arrayOf(PropTypes.number),
-  tasks: PropTypes.arrayOf(PropTypes.node),
-  rtlActive: PropTypes.bool
-};
 
 export default withStyles(tasksStyle)(Tasks);
