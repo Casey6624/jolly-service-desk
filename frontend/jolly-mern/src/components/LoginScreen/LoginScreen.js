@@ -10,14 +10,11 @@ export default function LoginScreen(props) {
             scopes: ["user.read"]
         };
         myMSALObj.loginPopup(request).then(function (loginResponse) {
+            console.log("triggered!")
             const { name, userName } = loginResponse.account
             const { idToken } = loginResponse
-            try {
-                userContext.login([name, userName], idToken)
-            }
-            catch (err) {
-                throw err
-            }
+            userContext.login([name, userName], idToken)
+            return
         }).catch(function (error) {
             console.log(error);
         });

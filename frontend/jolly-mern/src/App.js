@@ -8,8 +8,10 @@ import MainScreen from "./components/MainScreen/MainScreen"
 function App() {
 
   function login(user, accessToken) {
+    if (!user || !accessToken) return
     setUser([user[0], user[1]])
     setIdToken(accessToken)
+    return
   }
 
   const [idToken, setIdToken] = useState(null)
@@ -24,9 +26,11 @@ function App() {
         username: user[1],
         login: login
       }}>
-        {idToken && <Redirect from="/" to="/app" exact />}
-        {idToken && <Route path="/app" component={MainScreen} />}
-        {!idToken && <LoginScreen />}
+        <Switch>
+          {idToken && <Redirect from="/" to="/app" exact />}
+          {idToken && <Route path="/app" component={MainScreen} />}
+          {!idToken && <LoginScreen />}
+        </Switch>
       </UserContext.Provider>
     </BrowserRouter>
 
