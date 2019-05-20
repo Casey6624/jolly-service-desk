@@ -1,13 +1,25 @@
 .modal{
-    width: 80%;
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     position: fixed;
     top: 20vh;
-    left: 5%;
-    right: 5%;
+    margin: 0 auto;
+    left: 50vh;
+    right: 50vh;
     position: absolute;
     z-index:1000;
+}
+
+.backdrop{
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index:2000;
 }
 
 @media(mix-width: 768px){
@@ -19,7 +31,7 @@
 
 .modal__header{
     padding: 1rem;
-    background: #f50057;
+    background: #333f48;
     color: white;
 }
 

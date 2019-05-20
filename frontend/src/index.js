@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import UserContext from "./context/UserContext";
+import HttpContext from "./context/HttpContext"
 
 // core components
 import Admin from "layouts/Admin.jsx";
@@ -15,7 +16,7 @@ ReactDOM.render(
   <Router history={hist}>
     <UserContext.Provider
       value={{
-        graphqlEndpoint: "http://localhost:4000/graphql", username: "caseyContext@jollyit.co.uk", JITUsers: [
+        username: "caseyContext@jollyit.co.uk", JITUsers: [
           "Casey@jollyit.co.uk",
           "Tom@jollyit.co.uk",
           "Tony@jollyit.co.uk",
@@ -27,10 +28,15 @@ ReactDOM.render(
         ]
       }}
     >
-      <Switch>
-        <Route path="/admin" component={Admin} />
-        <Redirect from="/" to="/admin/dashboard" />
-      </Switch>
+      <HttpContext.Provider value={{
+        graphqlEndpoint: "http://localhost:4000/graphql",
+
+      }}>
+        <Switch>
+          <Route path="/admin" component={Admin} />
+          <Redirect from="/" to="/admin/dashboard" />
+        </Switch>
+      </HttpContext.Provider>
     </UserContext.Provider>
   </Router>,
   document.getElementById("root")

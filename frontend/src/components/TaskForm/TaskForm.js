@@ -49,7 +49,7 @@ export default function TaskForm({ classes }) {
     function handleFormChange(event) {
         const { value, name } = event.target
 
-        console.log(value, name)
+        console.log(event)
     }
 
 
@@ -130,9 +130,6 @@ export default function TaskForm({ classes }) {
                             </GridItem>
                         </GridContainer>
                     </CardBody>
-                    <CardFooter>
-                        <Button color="primary">Update Profile</Button>
-                    </CardFooter>
                 </Card>
             </GridItem>
         </GridContainer >

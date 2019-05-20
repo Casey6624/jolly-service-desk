@@ -17,6 +17,7 @@ import Done from "@material-ui/icons/Done";
 import tasksStyle from "assets/jss/material-dashboard-react/components/tasksStyle.jsx";
 // Context
 import UserContext from "../../context/UserContext";
+import HttpContext from "../../context/HttpContext";
 // helpers
 import { transformPriority } from "../../helpers/index";
 
@@ -34,6 +35,7 @@ function delTaskHandler(taskID) {
 
 function Tasks({ classes }) {
   const userContext = useContext(UserContext);
+  const httpContext = useContext(HttpContext);
 
   const [taskData, setTaskData] = useState([]);
 
@@ -53,7 +55,7 @@ function Tasks({ classes }) {
         }`
     };
 
-    fetch(userContext.graphqlEndpoint, {
+    fetch(httpContext.graphqlEndpoint, {
       method: "POST",
       body: JSON.stringify(requestBody),
       headers: { "Content-Type": "application/json" }

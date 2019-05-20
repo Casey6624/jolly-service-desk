@@ -19,10 +19,9 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 function MyTasks(props) {
 
-  const [creating, setCreating] = useState(true)
+  const [creating, setCreating] = useState(false)
 
   function modalCancelHandler() {
-    console.log("cancel")
     setCreating(false)
   }
 
@@ -49,6 +48,7 @@ function MyTasks(props) {
             justifyContent: "flex-end",
             margin: 15
           }}>
+
             <Fab color="secondary" aria-label="Add" className={classes.fab} onClick={() => setCreating(!creating)}>
               <Add />
             </Fab>
