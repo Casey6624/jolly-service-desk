@@ -8,7 +8,9 @@ const UserContext = createContext({
     accessToken: null,
     login: (user, accessToken) => { },
     logout: () => { },
-    graphqlEndpoint: null
+    graphqlEndpoint: null,
+    username: null,
+    JITUsers: []
 })
 
 export default UserContext

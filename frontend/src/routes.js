@@ -1,8 +1,8 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-import MyTasks from "./views/MyTasks/MyTasks";
 // core components/views for Admin layout
+import MyTasks from "views/MyTasks/MyTasks";
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 

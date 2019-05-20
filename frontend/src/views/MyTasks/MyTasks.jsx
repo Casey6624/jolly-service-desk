@@ -19,7 +19,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 function MyTasks(props) {
 
-  const [creating, setCreating] = useState(false)
+  const [creating, setCreating] = useState(true)
 
   function modalCancelHandler() {
     console.log("cancel")

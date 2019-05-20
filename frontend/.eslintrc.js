@@ -1,25 +1,17 @@
-module.exports = {
-  parser: "babel-eslint",
-  env: {
-    es6: true,
-    node: true,
-    browser: true
+{
+  "extends": "eslint:recommended",
+    "env": {
+    "browser": true,
+      "commonjs": true,
+        "node": true,
+          "es6": true
   },
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true
-    }
+  "parserOptions": {
+    "ecmaVersion": 2018
   },
-  plugins: ["react"],
-  rules: {
-    "react/prop-types": 0,
-    "no-console": false
-  },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended"
-  ]
-};
+  "rules": {
+    "no-console": "off",
+      "strict": ["error", "global"],
+        "curly": "warn"
+  }
+}

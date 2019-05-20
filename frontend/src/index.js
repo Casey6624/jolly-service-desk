@@ -14,7 +14,18 @@ const hist = createBrowserHistory();
 ReactDOM.render(
   <Router history={hist}>
     <UserContext.Provider
-      value={{ graphqlEndpoint: "http://localhost:4000/graphql" }}
+      value={{
+        graphqlEndpoint: "http://localhost:4000/graphql", username: "caseyContext@jollyit.co.uk", JITUsers: [
+          "Casey@jollyit.co.uk",
+          "Tom@jollyit.co.uk",
+          "Tony@jollyit.co.uk",
+          "Ben@jollyit.co.uk",
+          "Lewis@jollyit.co.uk",
+          "Dan@jollyit.co.uk",
+          "Jude@jollyit.co.uk",
+          "anyone@jollyit.co.uk"
+        ]
+      }}
     >
       <Switch>
         <Route path="/admin" component={Admin} />
