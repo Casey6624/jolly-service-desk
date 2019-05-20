@@ -12,10 +12,25 @@ import TableCell from "@material-ui/core/TableCell";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
 import Done from "@material-ui/icons/Done";
+
 // core components
 import tasksStyle from "assets/jss/material-dashboard-react/components/tasksStyle.jsx";
 // Context
 import UserContext from "../../context/UserContext";
+// helpers
+import { transformPriority } from "../../helpers/index";
+
+function completeTaskHandler(taskID) {
+  console.log(`complete task with ID ${taskID}`);
+}
+
+function editTaskHandler(taskID) {
+  console.log(`edit task with ID ${taskID}`);
+}
+
+function delTaskHandler(taskID) {
+  console.log(`delete task with ID ${taskID}`);
+}
 
 function Tasks({ classes }) {
   const userContext = useContext(UserContext);
@@ -53,9 +68,9 @@ function Tasks({ classes }) {
         setTaskData(resData.data.tasks);
       })
       .catch(err => {
-        throw new Error("Could not reach API!");
-      })
-  }, [userContext])
+        throw new Error("Could not reach API!" + err);
+      });
+  }, [userContext]);
 
   const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   return (
@@ -74,7 +89,7 @@ function Tasks({ classes }) {
             <TableCell className={classes.tableCell}> {task.description} </TableCell>
             <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
             <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
-            <TableCell className={classes.tableCell}> {task.priority} </TableCell>
+            <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
             <TableCell className={classes.tableActions}>
               <Tooltip
                 id="tooltip-top"
@@ -85,6 +100,7 @@ function Tasks({ classes }) {
                 <IconButton
                   aria-label="Done"
                   className={classes.tableActionButton}
+                  onClick={() => completeTaskHandler(task._id)}
                 >
                   <Done
                     className={
@@ -102,6 +118,7 @@ function Tasks({ classes }) {
                 <IconButton
                   aria-label="Edit"
                   className={classes.tableActionButton}
+                  onClick={() => editTaskHandler(task._id)}
                 >
                   <Edit
                     className={
@@ -119,6 +136,7 @@ function Tasks({ classes }) {
                 <IconButton
                   aria-label="Close"
                   className={classes.tableActionButton}
+                  onClick={() => delTaskHandler(task._id)}
                 >
                   <Close
                     className={

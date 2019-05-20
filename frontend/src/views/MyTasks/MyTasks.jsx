@@ -1,10 +1,12 @@
 import React from "react";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
+import Fab from '@material-ui/core/Fab';
 // @material-ui/icons
 import Computer from "@material-ui/icons/Computer";
 import ViewModule from "@material-ui/icons/ViewModule";
 import MarkerCheck from "@material-ui/icons/Done";
+import Add from '@material-ui/icons/Add';
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -13,83 +15,67 @@ import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-var bugs = [
-  'Sign contract for "What are conference organizers afraid ofSign contract for "What are conference organizers afraid ofSign contract for "What are conference organizers afraid ofSign contract for "What are conference organizers afraid of?',
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  "Create 4 Invisible User Experiences you Never Knew About"
-];
-var website = [
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  'Sign contract for "What are conference organizers afraid of?"'
-];
-var server = [
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  'Sign contract for "What are conference organizers afraid of?"'
-];
+function MyTasks(props) {
 
-class Dashboard extends React.Component {
-  state = {
-    value: 0
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <CustomTabs
-              title="Tasks:"
-              headerColor="primary"
-              tabs={[
-                {
-                  tabName: "ALL",
-                  tabIcon: ViewModule,
-                  tabContent: (
-                    <Tasks
-                      checkedIndexes={[0, 3]}
-                      tasksIndexes={[0, 1, 2, 3]}
-                      tasks={bugs}
-                    />
-                  )
-                },
-                {
-                  tabName: "ACTIVE",
-                  tabIcon: Computer,
-                  tabContent: (
-                    <Tasks
-                      checkedIndexes={[0]}
-                      tasksIndexes={[0, 1]}
-                      tasks={website}
-                    />
-                  )
-                },
-                {
-                  tabName: "COMPLETED",
-                  tabIcon: MarkerCheck,
-                  tabContent: (
-                    <Tasks
-                      checkedIndexes={[1]}
-                      tasksIndexes={[0, 1, 2]}
-                      tasks={server}
-                    />
-                  )
-                }
-              ]}
-            />
-          </GridItem>
-        </GridContainer>
-      </div>
-    );
+  function handleAddNewTask() {
+    console.log("new task")
   }
+
+  const { classes } = props;
+  return (
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <div style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            margin: 20
+          }}>
+            <Fab color="secondary" aria-label="Add" className={classes.fab}>
+              <Add onClick={handleAddNewTask} />
+            </Fab>
+          </div>
+          <CustomTabs
+            title="Tasks:"
+            headerColor="primary"
+            tabs={[
+              {
+                tabName: "ALL",
+                tabIcon: ViewModule,
+                tabContent: (
+                  <Tasks
+                    checkedIndexes={[0, 3]}
+                    tasksIndexes={[0, 1, 2, 3]}
+                  />
+                )
+              },
+              {
+                tabName: "ACTIVE",
+                tabIcon: Computer,
+                tabContent: (
+                  <Tasks
+                    checkedIndexes={[0]}
+                    tasksIndexes={[0, 1]}
+                  />
+                )
+              },
+              {
+                tabName: "COMPLETED",
+                tabIcon: MarkerCheck,
+                tabContent: (
+                  <Tasks
+                    checkedIndexes={[1]}
+                    tasksIndexes={[0, 1, 2]}
+                  />
+                )
+              }
+            ]}
+          />
+        </GridItem>
+      </GridContainer>
+    </div>
+  );
+
 }
 
-export default withStyles(dashboardStyle)(Dashboard);
+export default withStyles(dashboardStyle)(MyTasks);
