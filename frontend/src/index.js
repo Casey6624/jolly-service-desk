@@ -7,6 +7,7 @@ import HttpContext from "./context/HttpContext"
 
 // core components
 import Admin from "layouts/Admin.jsx";
+import { submitNewTask } from "./helpers/index"
 
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 
@@ -30,7 +31,7 @@ ReactDOM.render(
     >
       <HttpContext.Provider value={{
         graphqlEndpoint: "http://localhost:4000/graphql",
-
+        submitNewTask: submitNewTask
       }}>
         <Switch>
           <Route path="/admin" component={Admin} />

@@ -4,7 +4,7 @@ import { createContext } from "react"
 
 const HttpContext = createContext({
     graphqlEndpoint: null,
-    submitNewTask: (params) => { }
+    submitNewTask: function (taskAssignedTo, taskDescription, taskPriority, taskTitle) { }
 })
 
 export default HttpContext

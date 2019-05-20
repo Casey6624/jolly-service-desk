@@ -3,7 +3,7 @@ import "./Modal.css";
 import Button from "components/CustomButtons/Button.jsx";
 import TaskForm from "components/TaskForm/TaskForm";
 
-const Modal = ({ title, canCancel, canConfirm, onCancel, onConfirm }) => {
+const Modal = ({ title, canCancel, onCancel }) => {
     return (
         <div className="backdrop">
             <div className="modal">
@@ -13,13 +13,8 @@ const Modal = ({ title, canCancel, canConfirm, onCancel, onConfirm }) => {
                 <section className="modal__content">
                     <TaskForm />
                 </section>
-                <section className="modal__actions">
+                <section className="modal__actions" style={{ display: "flex", justifyContent: "center" }}>
                     {canCancel && (
-                        <Button type="button" color="success" onClick={onConfirm}>
-                            Submit
-                        </Button>
-                    )}
-                    {canConfirm && (
                         <Button type="button" color="danger" onClick={onCancel}>
                             Cancel
                         </Button>
