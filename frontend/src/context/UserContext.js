@@ -8,7 +8,7 @@ const UserContext = createContext({
     accessToken: null,
     login: (user, accessToken) => { },
     logout: () => { },
-    graphqlEndpoint: "http://localhost:4000/graphql"
+    graphqlEndpoint: null
 })
 
 export default UserContext
