@@ -43,6 +43,9 @@ const tasksStyle = {
     width: "17px",
     height: "17px"
   },
+  taskTitle: {
+    fontWeight: "bold"
+  },
   edit: {
     backgroundColor: "transparent",
     color: primaryColor[0],

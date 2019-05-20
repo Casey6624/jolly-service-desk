@@ -34,16 +34,15 @@ const switchRoutes = (
 );
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: image,
-      color: "orange",
-      hasImage: true,
-      fixedClasses: "dropdown show",
-      mobileOpen: false
-    };
-  }
+
+  state = {
+    image: image,
+    color: "orange",
+    hasImage: true,
+    fixedClasses: "dropdown show",
+    mobileOpen: false
+  };
+
   handleImageClick = image => {
     this.setState({ image: image });
   };

@@ -36,16 +36,14 @@ class Tasks extends React.Component {
     });
   };
   render() {
-    const { classes, tasksIndexes, tasks, rtlActive } = this.props;
-    const tableCellClasses = classnames(classes.tableCell, {
-      [classes.tableCellRTL]: rtlActive
-    })
+    const { classes, tasksIndexes, tasks } = this.props;
+    const taskTitle = classnames(classes.tableCell, classes.taskTitle);
     return (
       <Table className={classes.table}>
         <TableBody>
           {tasksIndexes.map(value => (
             <TableRow key={value} className={classes.tableRow}>
-              <TableCell className={tableCellClasses}>
+              <TableCell className={classes.tableCell}>
                 <Checkbox
                   checked={this.state.checked.indexOf(value) !== -1}
                   tabIndex={-1}
@@ -58,10 +56,10 @@ class Tasks extends React.Component {
                   }}
                 />
               </TableCell>
-              <TableCell className={tableCellClasses}>
+              <TableCell className={taskTitle}>
                 TITLE 123TITLE 123TITLE 123TITLE 123TITLE 123TITLE 123
               </TableCell>
-              <TableCell className={tableCellClasses}>
+              <TableCell className={classes.tableCell} id="">
                 {tasks[value]}
               </TableCell>
               <TableCell className={classes.tableActions}>

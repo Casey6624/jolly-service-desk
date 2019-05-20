@@ -15,7 +15,7 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/table",
+    path: "/tasks",
     name: "My Tasks",
     icon: "content_paste",
     component: MyTasks,
