@@ -202,23 +202,22 @@ class Dashboard extends React.Component {
           </GridItem>
         </GridContainer>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={6}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-                <p className={classes.cardCategoryWhite}>
-                  New employees on 15th September, 2016
-                </p>
+                <h4 className={classes.cardTitleWhite}>Jolly Contact Details</h4>
               </CardHeader>
               <CardBody>
                 <Table
                   tableHeaderColor="warning"
-                  tableHead={["ID", "Name", "Salary", "Country"]}
+                  tableHead={["Name", "Email", "Ext"]}
                   tableData={[
-                    ["1", "Dakota Rice", "$36,738", "Niger"],
-                    ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                    ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                    ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                    ["Ben Griffiths", <a href="mailto:Ben@jollyit.co.uk">Ben@jollyit.co.uk</a>, "805"],
+                    ["Casey Smith", <a href="mailto:Casey@jollyit.co.uk">Casey@jollyit.co.uk</a>, "806"],
+                    ["Lewis Dexter", <a href="mailto:Lewis@jollyit.co.uk">Lewis@jollyit.co.uk</a>, "804"],
+                    ["Tom Jolly", <a href="mailto:Tom@jollyit.co.uk">Tom@jollyit.co.uk</a>, "802"],
+                    ["Tony Durell", <a href="mailto:Tony@jollyit.co.uk">Tony@jollyit.co.uk</a>, "541"],
+                    ["Jude Batham", <a href="mailto:Jude@jollyit.co.uk">Jude@jollyit.co.uk</a>, "803"]
                   ]}
                 />
               </CardBody>
