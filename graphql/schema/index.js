@@ -8,6 +8,7 @@ module.exports = TaskSchema = buildSchema(`
         assignedTo: String!
         priority: Int!
         status: Int!
+        createdBy: String!
     }
 
     input TaskInput {
@@ -16,6 +17,7 @@ module.exports = TaskSchema = buildSchema(`
         assignedTo: String!
         priority: Int!
         status: Int!
+        createdBy: String!
     }
 
     type RootQuery{

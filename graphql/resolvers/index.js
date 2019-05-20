@@ -15,14 +15,15 @@ module.exports = GraphQLResolvers = {
             })
     },
     createTask: (args) => {
-        const { title, description, assignedTo, priority, status } = args.taskInput
+        const { title, description, assignedTo, priority, status, createdBy } = args.taskInput
         // new Mongoose model
         const task = new Task({
             title: title,
             description: description,
             assignedTo: assignedTo,
             priority: +priority,
-            status: +status
+            status: +status,
+            createdBy: createdBy
         })
         let createdTask
         return task
@@ -37,17 +38,17 @@ module.exports = GraphQLResolvers = {
             })
         return task
     },
-    editTask: async args => {
-        const { taskID } = args
-        await Task.findByIdAndUpdate({ _id: taskID }, args.taskInput, { useFindAndModify: false }, (err, res) => {
+    editTask: async ({ taskID, taskInput }) => {
+        await Task.findByIdAndUpdate({ _id: taskID }, taskInput, { useFindAndModify: false }, (err, res) => {
             if (err) {
                 throw new Error("There was an issue updating the previous task, please try again later.")
+                return
             }
             if (res) {
                 return res
             }
         })
-        return args.taskInput
+        return taskInput
     },
     delTask: async ({ taskID }) => {
         let deletedTask;
