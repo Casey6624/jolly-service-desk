@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Fab from '@material-ui/core/Fab';
@@ -12,27 +12,45 @@ import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
+import Modal from "components/Modal/Modal"
+import Backdrop from "components/Modal/Backdrop"
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 function MyTasks(props) {
 
-  function handleAddNewTask() {
-    console.log("new task")
+  const [creating, setCreating] = useState(false)
+
+  function modalCancelHandler() {
+    console.log("cancel")
+    setCreating(false)
+  }
+
+  function modalConfirmHandler() {
+    console.log("new task added")
   }
 
   const { classes } = props;
   return (
     <div>
+      {creating && <Backdrop
+      />}
+      {creating && <Modal
+        title="Add New Task"
+        canConfirm
+        canCancel
+        onCancel={() => setCreating(false)}
+        onConfirm={modalConfirmHandler}
+      />}
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <div style={{
             display: "flex",
             justifyContent: "flex-end",
-            margin: 20
+            margin: 15
           }}>
-            <Fab color="secondary" aria-label="Add" className={classes.fab}>
-              <Add onClick={handleAddNewTask} />
+            <Fab color="secondary" aria-label="Add" className={classes.fab} onClick={() => setCreating(!creating)}>
+              <Add />
             </Fab>
           </div>
           <CustomTabs
