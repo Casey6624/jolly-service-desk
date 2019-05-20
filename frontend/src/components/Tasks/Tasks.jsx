@@ -17,10 +17,10 @@ import tasksStyle from "assets/jss/material-dashboard-react/components/tasksStyl
 // Context
 import UserContext from "../../context/UserContext";
 
-function Tasks({ classes, tasksIndexes, tasks }) {
+function Tasks({ classes }) {
   const userContext = useContext(UserContext);
 
-  const [taskData, setTaskData] = useState([])
+  const [taskData, setTaskData] = useState([]);
 
   useEffect(() => {
     const requestBody = {
@@ -49,8 +49,8 @@ function Tasks({ classes, tasksIndexes, tasks }) {
         }
         return res.json();
       })
-      .then(data => {
-        setTaskData(data);
+      .then(resData => {
+        setTaskData(resData.data.tasks);
       })
       .catch(err => {
         throw new Error("Could not reach API!");
@@ -68,13 +68,13 @@ function Tasks({ classes, tasksIndexes, tasks }) {
           <TableCell className={classes.tableCell}>Created By</TableCell>
           <TableCell className={classes.tableCell}>Priority</TableCell>
         </TableRow>
-        {tasksIndexes.map(value => (
-          <TableRow key={value} className={classes.tableRow}>
-            <TableCell className={taskTitle}>test task 123</TableCell>
-            <TableCell className={classes.tableCell}>{tasks[value]}</TableCell>
-            <TableCell className={classes.tableCell}>Casey Smith</TableCell>
-            <TableCell className={classes.tableCell}>Tom Jolly</TableCell>
-            <TableCell className={classes.tableCell}>4 (important)</TableCell>
+        {taskData.length > 0 && taskData.map(task => (
+          <TableRow key={task._id} className={classes.tableRow}>
+            <TableCell className={taskTitle}> {task.title} </TableCell>
+            <TableCell className={classes.tableCell}> {task.description} </TableCell>
+            <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
+            <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
+            <TableCell className={classes.tableCell}> {task.priority} </TableCell>
             <TableCell className={classes.tableActions}>
               <Tooltip
                 id="tooltip-top"
