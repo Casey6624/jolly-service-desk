@@ -27,7 +27,7 @@ const dashboardRoutes = [
     icon: Person,
     component: UserProfile,
     layout: "/admin"
-  },
+  }
 ];
 
 export default dashboardRoutes;

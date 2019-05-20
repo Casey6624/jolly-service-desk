@@ -1,21 +1,15 @@
 {
-  "name": "material-dashboard-react",
-  "homepage": "https://github.com/creativetimofficial/material-dashboard-react",
+  "name": "Jolly IT | Tasks",
+  "homepage": "https://www.jollyit.co.uk",
   "authors": [
-    "creative-tim"
+    "Casey Smith"
   ],
-  "description": "A Badass Material-UI Kit based on Material Design",
+  "description": "A slick app for managing outstanding tasks.",
   "main": "public/index.html",
   "keywords": [
-    "material",
-    "design",
-    "material-ui",
-    "material",
-    "design",
-    "google",
-    "twitter"
+    "Jolly IT"
   ],
-  "license": "Creative TIM License",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",

@@ -11,7 +11,6 @@ function App() {
     if (!user || !accessToken) return
     setUser([user[0], user[1]])
     setIdToken(accessToken)
-    return
   }
 
   function logout() {
