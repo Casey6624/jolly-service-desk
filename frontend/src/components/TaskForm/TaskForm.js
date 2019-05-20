@@ -25,6 +25,11 @@ export default function TaskForm({ classes }) {
 
     const userContext = useContext(UserContext)
 
+    const [taskAssignedTo, setTaskAssignedTo] = useState("")
+    const [taskPriority, setTaskPriority] = useState(null)
+    const [taskTitle, setTaskTitle] = useState("")
+    const [taskDescription, setTaskDescription] = useState("")
+
     const priorities = [1, 2, 3, 4, 5]
 
     const styles = {
@@ -46,10 +51,21 @@ export default function TaskForm({ classes }) {
         }
     };
 
-    function handleFormChange(event) {
-        const { value, name } = event.target
-
-        console.log(event)
+    function handleFormChange({ name, value }) {
+        switch (name) {
+            case "assignedTo":
+                setTaskAssignedTo(value)
+                break;
+            case "priority":
+                setTaskPriority(value)
+                break;
+            case "taskTitle":
+                setTaskTitle(value)
+                break;
+            case "taskDescription":
+                setTaskDescription(value)
+                break;
+        }
     }
 
 
@@ -77,6 +93,7 @@ export default function TaskForm({ classes }) {
                                         margin: 0,
                                         padding: 6,
                                     }}
+                                    onChange={e => handleFormChange(e.target)}
                                 >
                                     {userContext.JITUsers.map((user, index) => <option key={user} value={user}> {user} </option>)}
                                 </Select>
@@ -85,7 +102,8 @@ export default function TaskForm({ classes }) {
                                 <InputLabel htmlFor="age-native-simple">Choose Task Priority* </InputLabel>
                                 <Select
                                     native
-                                    name="assignedTo"
+                                    name="priority"
+                                    required
                                     style={{
                                         display: "flex",
                                         alignItems: "flex-end",
@@ -96,6 +114,7 @@ export default function TaskForm({ classes }) {
                                         margin: 0,
                                         padding: 6,
                                     }}
+                                    onChange={e => handleFormChange(e.target)}
                                 >
                                     {priorities.map((priority, index) => <option key={priority} value={priority}> {transformPriority(priority)} </option>)}
                                 </Select>
@@ -109,8 +128,11 @@ export default function TaskForm({ classes }) {
                                     formControlProps={{
                                         fullWidth: true
                                     }}
-                                    onChange={e => handleFormChange()}
-                                    name="taskTitle"
+                                    inputProps={{
+                                        name: "taskTitle",
+                                        required: true,
+                                        onChange: e => handleFormChange(e.target)
+                                    }}
                                 />
                             </GridItem>
                         </GridContainer>
@@ -123,8 +145,8 @@ export default function TaskForm({ classes }) {
                                         fullWidth: true
                                     }}
                                     inputProps={{
-                                        multiline: true,
-                                        rows: 5
+                                        name: "taskDescription",
+                                        onChange: e => handleFormChange(e.target)
                                     }}
                                 />
                             </GridItem>

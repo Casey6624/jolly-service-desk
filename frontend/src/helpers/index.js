@@ -22,3 +22,7 @@ export function transformPriority(priority) {
     }
     return transformedPriority;
 }
+
+export function submitNewTask(params) {
+
+}

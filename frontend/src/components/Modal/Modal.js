@@ -16,13 +16,13 @@ const Modal = ({ title, canCancel, canConfirm, onCancel, onConfirm }) => {
                 <section className="modal__actions">
                     {canCancel && (
                         <Button type="button" color="success" onClick={onConfirm}>
-                            Submit{" "}
+                            Submit
                         </Button>
                     )}
                     {canConfirm && (
                         <Button type="button" color="danger" onClick={onCancel}>
                             Cancel
-          </Button>
+                        </Button>
                     )}
                 </section>
             </div>
