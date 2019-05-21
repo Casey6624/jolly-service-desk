@@ -28,7 +28,7 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
     const httpContext = useContext(HttpContext)
 
 
-    const { assignedTo, priority, title, description } = editTaskData
+    const { _id, assignedTo, priority, title, description, createdBy, status } = editTaskData
 
     const [taskAssignedTo, setTaskAssignedTo] = useState(assignedTo)
     const [taskPriority, setTaskPriority] = useState(priority)
@@ -90,22 +90,21 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
         if (taskDescription === "") {
             taskDescription = "N/A"
         }
-
-        const requestBody = {
+        let requestBody = {
             query: `
                 mutation{
-                    createTask(taskInput: {
-                      title: "${taskTitle}"
-                      description:"${taskDescription}"
-                      assignedTo: "${taskAssignedTo}"
-                      priority: ${taskPriority}
-                      status: 0
-                      createdBy: "${currUser}"
+                    editTask(taskID: "${_id}", taskInput: {
+                    title: "${title}"
+                    description: "${description}"
+                    assignedTo: "${assignedTo}"
+                    priority: ${priority}
+                    status: ${status}
+                    createdBy: "${createdBy}"
                     }){
-                      title
-                      description
+                    title
+                    assignedTo
                     }
-                  }
+                }
                 `
         };
         fetch(httpContext.graphqlEndpoint, {
