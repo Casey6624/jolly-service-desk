@@ -20,7 +20,7 @@ import HttpContext from "../../context/HttpContext"
 // Helpers 
 import { transformPriority } from "../../helpers/index"
 
-export default function TaskForm({ classes }) {
+export default function TaskForm({ classes, onClose }) {
 
     const priorities = [1, 2, 3, 4, 5]
 
@@ -75,8 +75,8 @@ export default function TaskForm({ classes }) {
             setError("Error! Please ensure you have filled out the required fields.")
             return
         }
-
         submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle)
+        onClose()
     }
 
     function submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle) {

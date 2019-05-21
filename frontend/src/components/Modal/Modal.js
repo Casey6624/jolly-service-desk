@@ -11,7 +11,9 @@ const Modal = ({ title, canCancel, onCancel }) => {
                     <h1>{title}</h1>
                 </header>
                 <section className="modal__content">
-                    <TaskForm />
+                    <TaskForm
+                        onClose={onCancel}
+                    />
                 </section>
                 <section className="modal__actions" style={{ display: "flex", justifyContent: "center" }}>
                     {canCancel && (
