@@ -73,9 +73,55 @@ export default function TaskForm({ classes }) {
 
         if (!taskAssignedTo || !taskPriority || !taskTitle) {
             setError("Error! Please ensure you have filled out the required fields.")
+            return
         }
 
-        httpContext.submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle)
+        submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle)
+    }
+
+    function submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle) {
+
+        const currUser = userContext.username
+        if (!taskAssignedTo || !taskTitle || !taskPriority) return
+
+        if (taskDescription === "") {
+            taskDescription = "N/A"
+        }
+
+        const requestBody = {
+            query: `
+                mutation{
+                    createTask(taskInput: {
+                      title: "${taskTitle}"
+                      description:"${taskDescription}"
+                      assignedTo: "${taskAssignedTo}"
+                      priority: ${taskPriority}
+                      status: 0
+                      createdBy: "${currUser}"
+                    }){
+                      title
+                      description
+                    }
+                  }
+                `
+        };
+        fetch(httpContext.graphqlEndpoint, {
+            method: "POST",
+            body: JSON.stringify(requestBody),
+            headers: { "Content-Type": "application/json" }
+        })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) {
+                    throw new Error("Failed to fetch data!");
+                }
+                return res.json();
+            })
+            .then(resData => {
+                console.log(resData)
+            })
+            .catch(err => {
+                throw new Error("Could not reach API!" + err);
+            });
     }
 
 
