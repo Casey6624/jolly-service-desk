@@ -15,29 +15,41 @@ import Done from "@material-ui/icons/Done";
 
 // core components
 import tasksStyle from "assets/jss/material-dashboard-react/components/tasksStyle.jsx";
+import Modal from "components/Modal/Modal"
 // Context
 import UserContext from "../../context/UserContext";
 import HttpContext from "../../context/HttpContext";
 // helpers
 import { transformPriority } from "../../helpers/index";
 
-function completeTaskHandler(taskID) {
-  console.log(`complete task with ID ${taskID}`);
-}
-
-function editTaskHandler(taskID) {
-  console.log(`edit task with ID ${taskID}`);
-}
-
-function delTaskHandler(taskID) {
-  console.log(`delete task with ID ${taskID}`);
-}
-
 function Tasks({ classes }) {
   const userContext = useContext(UserContext);
   const httpContext = useContext(HttpContext);
 
   const [taskData, setTaskData] = useState([]);
+
+  const [editing, setEditing] = useState(false)
+  const [editTask, setEditTask] = useState(null)
+
+  function completeTaskHandler(taskID) {
+    console.log(`complete task with ID ${taskID}`);
+  }
+
+  function getTaskFromId(taskID) {
+    let wholeTask = taskData.filter(task => task._id.includes(taskID))
+    console.log(wholeTask[0])
+    return wholeTask[0] || null
+  }
+
+  function editTaskHandler(taskID) {
+    const wholeTask = getTaskFromId(taskID)
+    setEditing(true)
+    setEditTask(wholeTask)
+  }
+
+  function delTaskHandler(taskID) {
+    console.log(`delete task with ID ${taskID}`);
+  }
 
   useEffect(() => {
     const requestBody = {
@@ -70,13 +82,19 @@ function Tasks({ classes }) {
         setTaskData(resData.data.tasks);
       })
       .catch(err => {
-        throw new Error("Could not reach API!" + err);
+        throw new Error("Could not reach API! " + err);
       });
   }, [userContext]);
 
   const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   return (
     <Table className={classes.table}>
+      {editing && <Modal
+        modalType="editing"
+        editTaskData={editTask}
+        title="Edit Existing Task"
+        onCancel={() => setEditing(false)}
+      />}
       <TableBody>
         <TableRow className={classes.tableRow}>
           <TableCell className={classes.tableCell}>Title</TableCell>
