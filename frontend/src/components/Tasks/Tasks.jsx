@@ -24,11 +24,13 @@ import HttpContext from "../../context/HttpContext";
 // helpers
 import { transformPriority } from "../../helpers/index";
 
-function Tasks({ classes }) {
+function Tasks({ classes, filter }) {
   const userContext = useContext(UserContext);
   const httpContext = useContext(HttpContext);
 
   const [taskData, setTaskData] = useState([]);
+
+  const [filteredTaskData, setFilteredTaskData] = useState(null);
 
   const [editing, setEditing] = useState(false)
   const [editTask, setEditTask] = useState(null)
@@ -42,6 +44,23 @@ function Tasks({ classes }) {
   const [updatingT, setUpdatingT] = useState(null)
   const [updatingF, setUpdatingF] = useState(null)
   const [updateTask, setUpdateTask] = useState(null)
+
+
+  useEffect(() => {
+    switch (filter) {
+      case "ALL":
+        setFilteredTaskData(null)
+        break;
+      case "ACTIVE":
+
+        const filtered = taskData.filter(({ status }) => console.log(status))
+        console.log(filtered)
+        setFilteredTaskData(filtered)
+        break;
+      case "COMPLETED":
+        break;
+    }
+  }, [filter])
 
 
   function updateTaskTHandler(taskID) {
@@ -117,6 +136,129 @@ function Tasks({ classes }) {
         throw new Error("Could not reach API! " + err);
       });
   }, [userContext]);
+
+  if (filteredTaskData !== null) {
+    return (
+      <Table className={classes.table}>
+        {editing && <Modal
+          modalType="editing"
+          editTaskData={editTask}
+          title="Edit Existing Task"
+          onCancel={() => setEditing(false)}
+        />}
+        {deleting && <Modal
+          modalType="deleting"
+          delTaskData={delTask}
+          title="Delete Selected Task"
+          onCancel={() => setDeleting(false)}
+        />}
+        {updatingT && <Modal
+          modalType="updatingT"
+          updateTaskData={updateTask}
+          title="Complete Task"
+          onCancel={handleUpdateTChanged}
+        />}
+        {updatingF && <Modal
+          modalType="updatingF"
+          updateTaskData={updateTask}
+          title="Restore Back To Live Task"
+          onCancel={handleUpdateFChanged}
+        />}
+        <TableBody>
+          <TableRow className={classes.tableRow}>
+            <TableCell className={classes.tableCell}>Status</TableCell>
+            <TableCell className={classes.tableCell}>Title</TableCell>
+            <TableCell className={classes.tableCell}>Description</TableCell>
+            <TableCell className={classes.tableCell}>Assigned To</TableCell>
+            <TableCell className={classes.tableCell}>Created By</TableCell>
+            <TableCell className={classes.tableCell}>Priority</TableCell>
+          </TableRow>
+          {filteredTaskData.length > 0 && filteredTaskData.map(task => (
+            <TableRow key={task._id} className={classes.tableRow}>
+              <TableCell className={classes.tableCell}>
+                {!task.status ? <FailureIcon style={{ color: "red" }} /> : <SuccessIcon style={{ color: "green" }} />}
+              </TableCell>
+              <TableCell className={taskTitle}> {task.title} </TableCell>
+              <TableCell className={classes.tableCell}> {task.description} </TableCell>
+              <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
+              <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
+              <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
+              <TableCell className={classes.tableActions}>
+                {!task.status && <Tooltip
+                  id="tooltip-top"
+                  title="Mark As Complete"
+                  placement="top"
+                  classes={{ tooltip: classes.tooltip }}
+                >
+                  <IconButton
+                    aria-label="Complete Task"
+                    className={classes.tableActionButton}
+                    onClick={() => updateTaskTHandler(task._id)}
+                  >
+                    <Done
+                      className={classes.tableActionButtonIcon}
+                    />
+                  </IconButton>
+                </Tooltip>}
+                {task.status && <Tooltip
+                  id="tooltip-top"
+                  title="Mark As Incomplete"
+                  placement="top"
+                  classes={{ tooltip: classes.tooltip }}
+                >
+                  <IconButton
+                    aria-label="Restore Task"
+                    className={classes.tableActionButton}
+                    onClick={() => updateTaskFHandler(task._id)}
+                  >
+                    <Restore
+                      className={classes.tableActionButtonIcon}
+                    />
+                  </IconButton>
+                </Tooltip>}
+                <Tooltip
+                  id="tooltip-top"
+                  title="Edit Task"
+                  placement="top"
+                  classes={{ tooltip: classes.tooltip }}
+                >
+                  <IconButton
+                    aria-label="Edit"
+                    className={classes.tableActionButton}
+                    onClick={() => editTaskHandler(task._id)}
+                  >
+                    <Edit
+                      className={
+                        classes.tableActionButtonIcon + " " + classes.edit
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip
+                  id="tooltip-top-start"
+                  title="Remove"
+                  placement="top"
+                  classes={{ tooltip: classes.tooltip }}
+                >
+                  <IconButton
+                    aria-label="Close"
+                    className={classes.tableActionButton}
+                    onClick={() => delTaskHandler(task._id)}
+                  >
+                    <Close
+                      className={
+                        classes.tableActionButtonIcon + " " + classes.close
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    )
+  }
 
   const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   return (
