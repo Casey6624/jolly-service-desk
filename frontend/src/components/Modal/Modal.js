@@ -4,7 +4,8 @@ import Button from "components/CustomButtons/Button.jsx";
 import TaskForm from "components/TaskForm/TaskForm";
 import TaskFormEditing from "components/TaskForm/TaskFormEditing"
 import TaskFormDeleting from "components/TaskForm/TaskFormDel"
-import TaskFormUpdateStatus from "components/TaskForm/TaskFormUpdateStatus"
+import TaskFormStatusTrue from "components/TaskForm/TaskFormStatusTrue"
+import TaskFormStatusFalse from "components/TaskForm/TaskFormStatusFalse"
 
 const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTaskData }) => {
     return (
@@ -17,7 +18,8 @@ const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTa
                     {modalType === "creating" && <TaskForm onClose={onCancel} />}
                     {modalType === "editing" && <TaskFormEditing onClose={onCancel} editTaskData={editTaskData} />}
                     {modalType === "deleting" && <TaskFormDeleting onClose={onCancel} delTaskData={delTaskData} />}
-                    {modalType === "updating" && <TaskFormUpdateStatus onClose={onCancel} updateTaskData={updateTaskData} />}
+                    {modalType === "updatingT" && <TaskFormStatusTrue onClose={onCancel} updateTaskData={updateTaskData} />}
+                    {modalType === "updatingF" && <TaskFormStatusFalse onClose={onCancel} updateTaskData={updateTaskData} />}
                 </section>
                 <section className="modal__actions" style={{ display: "flex", justifyContent: "center" }}>
                     <Button type="button" color="danger" onClick={onCancel}>

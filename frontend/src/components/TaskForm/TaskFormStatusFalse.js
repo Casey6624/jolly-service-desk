@@ -20,15 +20,13 @@ import HttpContext from "../../context/HttpContext"
 // Helpers 
 import { transformPriority } from "../../helpers/index"
 
-export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData }) {
+export default function TaskFormStatusFalse({ classes, onClose, updateTaskData }) {
 
     const userContext = useContext(UserContext)
     const httpContext = useContext(HttpContext)
 
 
     const { _id, assignedTo, priority, title, description, createdBy } = updateTaskData
-
-    let { status } = updateTaskData
 
     const styles = {
         cardCategoryWhite: {
@@ -56,25 +54,14 @@ export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData 
 
         let requestBody = {
             query: `
-            mutation{
-                updateStatus(taskID: "${_id}", taskInput: {status: false}){
-                    status
-                }
-                }
-            `
-        }
-
-        if (!status) {
-            requestBody = {
-                query: `
                 mutation{
-                    updateStatus(taskID: "${_id}", taskInput: {status: true}){
+                    updateStatus(taskID: "${_id}", taskInput: {status: false}){
                         status
                     }
                     }
                 `
-            }
         }
+
         fetch(httpContext.graphqlEndpoint, {
             method: "POST",
             body: JSON.stringify(requestBody),
@@ -87,7 +74,7 @@ export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData 
                 return res.json();
             })
             .then(resData => {
-                console.log(resData)
+                console.log(resData.data.updateStatus.status)
             })
             .catch(err => {
                 throw new Error("Could not reach API!" + err);
@@ -108,7 +95,7 @@ export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData 
                 </Card>
             </GridItem>
             <Button type="button" color="success" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={updateTaskHandler}>
-                Complete Task
+                Restore Task To Active
             </Button>
         </GridContainer >
     );

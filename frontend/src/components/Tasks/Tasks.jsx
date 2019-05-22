@@ -12,7 +12,9 @@ import TableCell from "@material-ui/core/TableCell";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
 import Done from "@material-ui/icons/Done";
-
+import Restore from "@material-ui/icons/Cached";
+import SuccessIcon from "@material-ui/icons/CheckCircle";
+import FailureIcon from "@material-ui/icons/Cancel";
 // core components
 import tasksStyle from "assets/jss/material-dashboard-react/components/tasksStyle.jsx";
 import Modal from "components/Modal/Modal"
@@ -37,13 +39,20 @@ function Tasks({ classes }) {
   //const [completing, setCompleting] = useState(null)
   //const [compTask, setCompTask] = useState(null)
   //-------
-  const [updating, setUpdating] = useState(null)
+  const [updatingT, setUpdatingT] = useState(null)
+  const [updatingF, setUpdatingF] = useState(null)
   const [updateTask, setUpdateTask] = useState(null)
 
 
-  function updateTaskHandler(taskID) {
+  function updateTaskTHandler(taskID) {
     const wholeTask = getTaskFromId(taskID)
-    setUpdating(true)
+    setUpdatingT(true)
+    setUpdateTask(wholeTask)
+  }
+
+  function updateTaskFHandler(taskID) {
+    const wholeTask = getTaskFromId(taskID)
+    setUpdatingF(true)
     setUpdateTask(wholeTask)
   }
 
@@ -62,6 +71,16 @@ function Tasks({ classes }) {
     const wholeTask = getTaskFromId(taskID)
     setDeleting(true)
     setDelTask(wholeTask)
+  }
+
+  function handleUpdateTChanged() {
+    setUpdatingT(false)
+    setUpdateTask(null)
+  }
+
+  function handleUpdateFChanged() {
+    setUpdatingF(false)
+    setUpdateTask(null)
   }
 
   useEffect(() => {
@@ -114,14 +133,21 @@ function Tasks({ classes }) {
         title="Delete Selected Task"
         onCancel={() => setDeleting(false)}
       />}
-      {updating && <Modal
-        modalType="updating"
+      {updatingT && <Modal
+        modalType="updatingT"
         updateTaskData={updateTask}
-        title={updateTask.status ? "Change Task To Incomplete" : "Complete Task"}
-        onCancel={() => setUpdating(false)}
+        title="Complete Task"
+        onCancel={handleUpdateTChanged}
+      />}
+      {updatingF && <Modal
+        modalType="updatingF"
+        updateTaskData={updateTask}
+        title="Restore Back To Live Task"
+        onCancel={handleUpdateFChanged}
       />}
       <TableBody>
         <TableRow className={classes.tableRow}>
+          <TableCell className={classes.tableCell}>Status</TableCell>
           <TableCell className={classes.tableCell}>Title</TableCell>
           <TableCell className={classes.tableCell}>Description</TableCell>
           <TableCell className={classes.tableCell}>Assigned To</TableCell>
@@ -130,30 +156,47 @@ function Tasks({ classes }) {
         </TableRow>
         {taskData.length > 0 && taskData.map(task => (
           <TableRow key={task._id} className={classes.tableRow}>
+            <TableCell className={classes.tableCell}>
+              {!task.status ? <FailureIcon style={{ color: "red" }} /> : <SuccessIcon style={{ color: "green" }} />}
+            </TableCell>
             <TableCell className={taskTitle}> {task.title} </TableCell>
             <TableCell className={classes.tableCell}> {task.description} </TableCell>
             <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
             <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
             <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
             <TableCell className={classes.tableActions}>
-              <Tooltip
+              {!task.status && <Tooltip
                 id="tooltip-top"
-                title="Complete Task"
+                title="Mark As Complete"
                 placement="top"
                 classes={{ tooltip: classes.tooltip }}
               >
                 <IconButton
-                  aria-label="Done"
+                  aria-label="Complete Task"
                   className={classes.tableActionButton}
-                  onClick={() => updateTaskHandler(task._id)}
+                  onClick={() => updateTaskTHandler(task._id)}
                 >
                   <Done
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.edit
-                    }
+                    className={classes.tableActionButtonIcon}
                   />
                 </IconButton>
-              </Tooltip>
+              </Tooltip>}
+              {task.status && <Tooltip
+                id="tooltip-top"
+                title="Mark As Incomplete"
+                placement="top"
+                classes={{ tooltip: classes.tooltip }}
+              >
+                <IconButton
+                  aria-label="Restore Task"
+                  className={classes.tableActionButton}
+                  onClick={() => updateTaskFHandler(task._id)}
+                >
+                  <Restore
+                    className={classes.tableActionButtonIcon}
+                  />
+                </IconButton>
+              </Tooltip>}
               <Tooltip
                 id="tooltip-top"
                 title="Edit Task"
