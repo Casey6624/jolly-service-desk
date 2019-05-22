@@ -30,6 +30,9 @@ function Tasks({ classes }) {
 
   const [editing, setEditing] = useState(false)
   const [editTask, setEditTask] = useState(null)
+  //-------
+  const [deleting, setDeleting] = useState(null)
+  const [delTask, setDelTask] = useState(null)
 
   function completeTaskHandler(taskID) {
     console.log(`complete task with ID ${taskID}`);
@@ -48,7 +51,9 @@ function Tasks({ classes }) {
   }
 
   function delTaskHandler(taskID) {
-    console.log(`delete task with ID ${taskID}`);
+    const wholeTask = getTaskFromId(taskID)
+    setDeleting(true)
+    setDelTask(wholeTask)
   }
 
   useEffect(() => {
@@ -94,6 +99,12 @@ function Tasks({ classes }) {
         editTaskData={editTask}
         title="Edit Existing Task"
         onCancel={() => setEditing(false)}
+      />}
+      {deleting && <Modal
+        modalType="deleting"
+        delTaskData={delTask}
+        title="Delete Selected Task"
+        onCancel={() => setDeleting(false)}
       />}
       <TableBody>
         <TableRow className={classes.tableRow}>

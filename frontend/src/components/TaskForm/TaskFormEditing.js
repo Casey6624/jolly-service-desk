@@ -90,6 +90,8 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
         if (taskDescription === "") {
             taskDescription = "N/A"
         }
+
+        console.log(_id, assignedTo, priority, title, description, createdBy, status)
         let requestBody = {
             query: `
                 mutation{
@@ -101,12 +103,10 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                     status: ${status}
                     createdBy: "${createdBy}"
                     }){
-                    title
-                    assignedTo
+                        title
+                        assignedTo
                     }
-                }
-                `
-        };
+                }`};
         fetch(httpContext.graphqlEndpoint, {
             method: "POST",
             body: JSON.stringify(requestBody),
