@@ -20,15 +20,13 @@ import HttpContext from "../../context/HttpContext"
 // Helpers 
 import { transformPriority } from "../../helpers/index"
 
-export default function TaskFormComplete({ classes, onClose, completeTaskData }) {
+export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData }) {
 
     const userContext = useContext(UserContext)
     const httpContext = useContext(HttpContext)
 
 
-    const { _id, assignedTo, priority, title, description, createdBy, status } = completeTaskData
-
-    const [showSuccess, setShowSuccess] = useState(false)
+    const { _id, assignedTo, priority, title, description, createdBy, status } = updateTaskData
 
     const styles = {
         cardCategoryWhite: {
@@ -50,14 +48,27 @@ export default function TaskFormComplete({ classes, onClose, completeTaskData })
     };
 
 
-    function completeTask() {
+    function updateTaskHandler() {
 
         onClose()
+
+        let newStatus
+
+        switch (status) {
+            case 0:
+                newStatus = 1;
+                break;
+            case 1:
+                newStatus = 0;
+                break;
+        }
+
+        console.log(status, newStatus)
 
         let requestBody = {
             query: `
             mutation{
-                updateStatus(taskID: "${_id}", taskInput: {status: 0}){
+                updateStatus(taskID: "${_id}", taskInput: {status: ${newStatus}}){
                   status
                 }
               }
@@ -87,9 +98,6 @@ export default function TaskFormComplete({ classes, onClose, completeTaskData })
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
                 <Card>
-                    {showSuccess && <CardHeader color="success">
-                        <p className={styles.cardCategoryWhite}> Good Job! Completing Task...</p>
-                    </CardHeader>}
                     <CardBody>
                         Task Title:  <strong>{title}</strong> <br />
                         Task Description:  <strong>{description}</strong> <br />
@@ -98,7 +106,7 @@ export default function TaskFormComplete({ classes, onClose, completeTaskData })
                     </CardBody>
                 </Card>
             </GridItem>
-            <Button type="button" color="success" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={completeTask}>
+            <Button type="button" color="success" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={updateTaskHandler}>
                 Complete Task
             </Button>
         </GridContainer >

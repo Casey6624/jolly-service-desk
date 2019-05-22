@@ -34,19 +34,21 @@ function Tasks({ classes }) {
   const [deleting, setDeleting] = useState(null)
   const [delTask, setDelTask] = useState(null)
   //-------
-  const [completing, setCompleting] = useState(null)
-  const [compTask, setCompTask] = useState(null)
+  //const [completing, setCompleting] = useState(null)
+  //const [compTask, setCompTask] = useState(null)
+  //-------
+  const [updating, setUpdating] = useState(null)
+  const [updateTask, setUpdateTask] = useState(null)
 
 
-  function completeTaskHandler(taskID) {
+  function updateTaskHandler(taskID) {
     const wholeTask = getTaskFromId(taskID)
-    setCompleting(true)
-    setCompTask(wholeTask)
+    setUpdating(true)
+    setUpdateTask(wholeTask)
   }
 
   function getTaskFromId(taskID) {
     let wholeTask = taskData.filter(task => task._id.includes(taskID))
-    console.log(wholeTask[0])
     return wholeTask[0] || null
   }
 
@@ -112,11 +114,11 @@ function Tasks({ classes }) {
         title="Delete Selected Task"
         onCancel={() => setDeleting(false)}
       />}
-      {completing && <Modal
-        modalType="completing"
-        completeTaskData={compTask}
+      {updating && <Modal
+        modalType="updating"
+        updateTaskData={updateTask}
         title="Complete Selected Task"
-        onCancel={() => setCompleting(false)}
+        onCancel={() => setUpdating(false)}
       />}
       <TableBody>
         <TableRow className={classes.tableRow}>
@@ -143,7 +145,7 @@ function Tasks({ classes }) {
                 <IconButton
                   aria-label="Done"
                   className={classes.tableActionButton}
-                  onClick={() => completeTaskHandler(task._id)}
+                  onClick={() => updateTaskHandler(task._id)}
                 >
                   <Done
                     className={
