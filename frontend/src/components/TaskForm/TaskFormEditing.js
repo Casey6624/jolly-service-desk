@@ -91,22 +91,25 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
             taskDescription = "N/A"
         }
 
-        console.log(_id, assignedTo, priority, title, description, createdBy, status)
+        console.log(taskTitle)
+
         let requestBody = {
             query: `
-                mutation{
-                    editTask(taskID: "${_id}", taskInput: {
-                    title: "${title}"
-                    description: "${description}"
-                    assignedTo: "${assignedTo}"
-                    priority: ${priority}
-                    status: ${status}
-                    createdBy: "${createdBy}"
-                    }){
-                        title
-                        assignedTo
-                    }
-                }`};
+            mutation{
+                editTask(taskID: "${_id}", taskInput: {
+                  title: "${taskTitle}"
+                  description: "${taskDescription}"
+                  assignedTo: "${taskAssignedTo}"
+                  priority: ${taskPriority}
+                  status: ${status}
+                  createdBy: "${createdBy}"
+                }){
+                  title
+                  assignedTo
+                }
+              }
+            `
+        };
         fetch(httpContext.graphqlEndpoint, {
             method: "POST",
             body: JSON.stringify(requestBody),
@@ -125,7 +128,6 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                 throw new Error("Could not reach API!" + err);
             });
     }
-
 
     return (
         <GridContainer>
