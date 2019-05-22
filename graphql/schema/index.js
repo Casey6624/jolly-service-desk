@@ -27,6 +27,10 @@ module.exports = TaskSchema = buildSchema(`
         priority: Int!
     }
 
+    input TaskInputUpdateStatus {
+        status: Int!
+    }
+
     type RootQuery{
         tasks: [Task!]!
     }
@@ -35,6 +39,7 @@ module.exports = TaskSchema = buildSchema(`
         createTask(taskInput: TaskInput): Task
         editTask(taskID: ID!, taskInput: TaskInputEdit): Task
         delTask(taskID: ID!): Task
+        updateStatus(taskID: ID!, taskInput: TaskInputUpdateStatus): Task
     }
 
     schema {

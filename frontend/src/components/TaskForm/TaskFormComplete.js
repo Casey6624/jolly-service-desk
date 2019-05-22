@@ -20,13 +20,15 @@ import HttpContext from "../../context/HttpContext"
 // Helpers 
 import { transformPriority } from "../../helpers/index"
 
-export default function TaskFormDel({ classes, onClose, delTaskData }) {
+export default function TaskFormComplete({ classes, onClose, completeTaskData }) {
 
     const userContext = useContext(UserContext)
     const httpContext = useContext(HttpContext)
 
 
-    const { _id, assignedTo, priority, title, description, createdBy, status } = delTaskData
+    const { _id, assignedTo, priority, title, description, createdBy, status } = completeTaskData
+
+    const [showSuccess, setShowSuccess] = useState(false)
 
     const styles = {
         cardCategoryWhite: {
@@ -48,7 +50,7 @@ export default function TaskFormDel({ classes, onClose, delTaskData }) {
     };
 
 
-    function delTask() {
+    function completeTask() {
 
         onClose()
 
@@ -85,9 +87,9 @@ export default function TaskFormDel({ classes, onClose, delTaskData }) {
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
                 <Card>
-                    <CardHeader color="danger">
-                        <p className={styles.cardCategoryWhite}> CAUTION: This operation is irreversible. </p>
-                    </CardHeader>
+                    {showSuccess && <CardHeader color="success">
+                        <p className={styles.cardCategoryWhite}> Good Job! Completing Task...</p>
+                    </CardHeader>}
                     <CardBody>
                         Task Title:  <strong>{title}</strong> <br />
                         Task Description:  <strong>{description}</strong> <br />
@@ -96,8 +98,8 @@ export default function TaskFormDel({ classes, onClose, delTaskData }) {
                     </CardBody>
                 </Card>
             </GridItem>
-            <Button type="button" color="info" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={delTask}>
-                Delete Task
+            <Button type="button" color="success" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={completeTask}>
+                Complete Task
             </Button>
         </GridContainer >
     );

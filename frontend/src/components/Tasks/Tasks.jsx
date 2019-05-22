@@ -33,9 +33,15 @@ function Tasks({ classes }) {
   //-------
   const [deleting, setDeleting] = useState(null)
   const [delTask, setDelTask] = useState(null)
+  //-------
+  const [completing, setCompleting] = useState(null)
+  const [compTask, setCompTask] = useState(null)
+
 
   function completeTaskHandler(taskID) {
-    console.log(`complete task with ID ${taskID}`);
+    const wholeTask = getTaskFromId(taskID)
+    setCompleting(true)
+    setCompTask(wholeTask)
   }
 
   function getTaskFromId(taskID) {
@@ -105,6 +111,12 @@ function Tasks({ classes }) {
         delTaskData={delTask}
         title="Delete Selected Task"
         onCancel={() => setDeleting(false)}
+      />}
+      {completing && <Modal
+        modalType="completing"
+        completeTaskData={compTask}
+        title="Complete Selected Task"
+        onCancel={() => setCompleting(false)}
       />}
       <TableBody>
         <TableRow className={classes.tableRow}>

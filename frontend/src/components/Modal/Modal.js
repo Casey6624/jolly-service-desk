@@ -4,8 +4,9 @@ import Button from "components/CustomButtons/Button.jsx";
 import TaskForm from "components/TaskForm/TaskForm";
 import TaskFormEditing from "components/TaskForm/TaskFormEditing"
 import TaskFormDeleting from "components/TaskForm/TaskFormDel"
+import TaskFormComplete from "components/TaskForm/TaskFormComplete"
 
-const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData }) => {
+const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, completeTaskData }) => {
     return (
         <div className="backdrop">
             <div className="modal">
@@ -16,6 +17,7 @@ const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData }) => {
                     {modalType === "creating" && <TaskForm onClose={onCancel} />}
                     {modalType === "editing" && <TaskFormEditing onClose={onCancel} editTaskData={editTaskData} />}
                     {modalType === "deleting" && <TaskFormDeleting onClose={onCancel} delTaskData={delTaskData} />}
+                    {modalType === "completing" && <TaskFormComplete onClose={onCancel} completeTaskData={completeTaskData} />}
                 </section>
                 <section className="modal__actions" style={{ display: "flex", justifyContent: "center" }}>
                     <Button type="button" color="danger" onClick={onCancel}>

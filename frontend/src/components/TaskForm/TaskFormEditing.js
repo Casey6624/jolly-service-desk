@@ -91,8 +91,6 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
             taskDescription = "N/A"
         }
 
-        console.log(taskTitle)
-
         let requestBody = {
             query: `
             mutation{
