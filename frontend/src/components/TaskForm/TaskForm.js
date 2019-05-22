@@ -96,7 +96,7 @@ export default function TaskForm({ classes, onClose }) {
                       description:"${taskDescription}"
                       assignedTo: "${taskAssignedTo}"
                       priority: ${taskPriority}
-                      status: 0
+                      status: false
                       createdBy: "${currUser}"
                     }){
                       title
@@ -120,6 +120,7 @@ export default function TaskForm({ classes, onClose }) {
                 console.log(resData)
             })
             .catch(err => {
+                console.log(err)
                 throw new Error("Could not reach API!" + err);
             });
     }

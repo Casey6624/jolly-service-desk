@@ -21,7 +21,7 @@ const taskSchema = new Schema({
         required: true
     },
     status: {
-        type: Number,
+        type: Boolean,
         required: true
     },
     createdBy: {

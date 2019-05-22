@@ -26,7 +26,9 @@ export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData 
     const httpContext = useContext(HttpContext)
 
 
-    const { _id, assignedTo, priority, title, description, createdBy, status } = updateTaskData
+    const { _id, assignedTo, priority, title, description, createdBy } = updateTaskData
+
+    let { status } = updateTaskData
 
     const styles = {
         cardCategoryWhite: {
@@ -52,28 +54,27 @@ export default function TaskFormUpdateStatus({ classes, onClose, updateTaskData 
 
         onClose()
 
-        let newStatus
-
-        switch (status) {
-            case 0:
-                newStatus = 1;
-                break;
-            case 1:
-                newStatus = 0;
-                break;
-        }
-
-        console.log(status, newStatus)
-
         let requestBody = {
             query: `
             mutation{
-                updateStatus(taskID: "${_id}", taskInput: {status: ${newStatus}}){
-                  status
+                updateStatus(taskID: "${_id}", taskInput: {status: false}){
+                    status
                 }
-              }
+                }
             `
-        };
+        }
+
+        if (!status) {
+            requestBody = {
+                query: `
+                mutation{
+                    updateStatus(taskID: "${_id}", taskInput: {status: true}){
+                        status
+                    }
+                    }
+                `
+            }
+        }
         fetch(httpContext.graphqlEndpoint, {
             method: "POST",
             body: JSON.stringify(requestBody),

@@ -7,7 +7,7 @@ module.exports = TaskSchema = buildSchema(`
         description: String
         assignedTo: String!
         priority: Int!
-        status: Int!
+        status: Boolean!
         createdBy: String!
     }
 
@@ -16,7 +16,7 @@ module.exports = TaskSchema = buildSchema(`
         description: String
         assignedTo: String!
         priority: Int!
-        status: Int!
+        status: Boolean!
         createdBy: String!
     }
 
@@ -28,7 +28,7 @@ module.exports = TaskSchema = buildSchema(`
     }
 
     input TaskInputUpdateStatus {
-        status: Int!
+        status: Boolean!
     }
 
     type RootQuery{

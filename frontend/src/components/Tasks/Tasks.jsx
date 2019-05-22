@@ -117,7 +117,7 @@ function Tasks({ classes }) {
       {updating && <Modal
         modalType="updating"
         updateTaskData={updateTask}
-        title="Complete Selected Task"
+        title={updateTask.status ? "Change Task To Incomplete" : "Complete Task"}
         onCancel={() => setUpdating(false)}
       />}
       <TableBody>
