@@ -101,8 +101,6 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                   description: "${taskDescription}"
                   assignedTo: "${taskAssignedTo}"
                   priority: ${taskPriority}
-                  status: ${status}
-                  createdBy: "${createdBy}"
                 }){
                   title
                   assignedTo

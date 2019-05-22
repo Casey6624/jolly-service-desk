@@ -20,13 +20,20 @@ module.exports = TaskSchema = buildSchema(`
         createdBy: String!
     }
 
+    input TaskInputEdit {
+        title: String!
+        description: String
+        assignedTo: String!
+        priority: Int!
+    }
+
     type RootQuery{
         tasks: [Task!]!
     }
 
     type RootMutation{
         createTask(taskInput: TaskInput): Task
-        editTask(taskID: ID!, taskInput: TaskInput): Task
+        editTask(taskID: ID!, taskInput: TaskInputEdit): Task
         delTask(taskID: ID!): Task
     }
 
