@@ -7,6 +7,7 @@ import Computer from "@material-ui/icons/Computer";
 import ViewModule from "@material-ui/icons/ViewModule";
 import MarkerCheck from "@material-ui/icons/Done";
 import Add from '@material-ui/icons/Add';
+import Refresh from '@material-ui/icons/Refresh';
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -19,6 +20,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 function MyTasks(props) {
 
   const [creating, setCreating] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   const { classes } = props;
   return (
@@ -35,13 +37,16 @@ function MyTasks(props) {
             justifyContent: "flex-end",
             margin: 15
           }}>
+            <Fab color="primary" aria-label="Add" className={classes.fab} onClick={() => setRefreshing(true)} style={{ marginRight: 10 }}>
+              <Refresh />
+            </Fab>
 
             <Fab color="secondary" aria-label="Add" className={classes.fab} onClick={() => setCreating(!creating)}>
               <Add />
             </Fab>
           </div>
           <CustomTabs
-            title="Tasks:"
+            title="Tasks: "
             headerColor="primary"
             tabs={[
               {
@@ -49,6 +54,8 @@ function MyTasks(props) {
                 tabIcon: ViewModule,
                 tabContent: (
                   <Tasks
+                    refreshing={refreshing}
+                    setRefreshing={setRefreshing}
                     filter="ALL"
                   />
                 )
@@ -58,6 +65,8 @@ function MyTasks(props) {
                 tabIcon: Computer,
                 tabContent: (
                   <Tasks
+                    refreshing={refreshing}
+                    setRefreshing={setRefreshing}
                     filter="ACTIVE"
                   />
                 )
@@ -67,6 +76,8 @@ function MyTasks(props) {
                 tabIcon: MarkerCheck,
                 tabContent: (
                   <Tasks
+                    refreshing={refreshing}
+                    setRefreshing={setRefreshing}
                     filter="COMPLETED"
                   />
                 )

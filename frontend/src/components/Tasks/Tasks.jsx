@@ -24,7 +24,7 @@ import HttpContext from "../../context/HttpContext";
 // helpers
 import { transformPriority } from "../../helpers/index";
 
-function Tasks({ classes, filter }) {
+function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const userContext = useContext(UserContext);
   const httpContext = useContext(HttpContext);
 
@@ -45,7 +45,16 @@ function Tasks({ classes, filter }) {
   const [updatingF, setUpdatingF] = useState(null)
   const [updateTask, setUpdateTask] = useState(null)
 
+  useEffect(() => {
+    if (refreshing) {
+      console.log("refreshing!")
+      setRefreshing(!refreshing)
+      console.log(refreshing)
+    }
+    return setRefreshing(false)
+  }, [refreshing])
 
+  // filter items
   useEffect(() => {
     if (taskData.length > 0) {
       switch (filter) {
@@ -136,7 +145,7 @@ function Tasks({ classes, filter }) {
       .catch(err => {
         throw new Error("Could not reach API! " + err);
       });
-  }, [userContext, taskData]);
+  }, [userContext, taskData, refreshing]);
 
   if (filteredTaskData !== null) {
     return (

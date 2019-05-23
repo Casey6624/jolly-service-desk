@@ -8,6 +8,7 @@ import TaskFormStatusTrue from "components/TaskForm/TaskFormStatusTrue"
 import TaskFormStatusFalse from "components/TaskForm/TaskFormStatusFalse"
 
 const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTaskData }) => {
+
     return (
         <div className="backdrop">
             <div className="modal">
