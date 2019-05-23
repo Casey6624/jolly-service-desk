@@ -136,7 +136,7 @@ function Tasks({ classes, filter }) {
       .catch(err => {
         throw new Error("Could not reach API! " + err);
       });
-  }, [userContext]);
+  }, [userContext, taskData]);
 
   if (filteredTaskData !== null) {
     return (
