@@ -47,21 +47,22 @@ function Tasks({ classes, filter }) {
 
 
   useEffect(() => {
-    switch (filter) {
-      case "ALL":
-        setFilteredTaskData(null)
-        break;
-      case "ACTIVE":
-
-        const filtered = taskData.filter(({ status }) => console.log(status))
-        console.log(filtered)
-        setFilteredTaskData(filtered)
-        break;
-      case "COMPLETED":
-        break;
+    if (taskData.length > 0) {
+      switch (filter) {
+        case "ALL":
+          setFilteredTaskData(null)
+          break;
+        case "ACTIVE":
+          const filteredActive = taskData.filter(task => !task.status)
+          setFilteredTaskData(filteredActive)
+          break;
+        case "COMPLETED":
+          const filteredCompleted = taskData.filter(task => task.status)
+          setFilteredTaskData(filteredCompleted)
+          break;
+      }
     }
-  }, [filter])
-
+  }, [filter, taskData])
 
   function updateTaskTHandler(taskID) {
     const wholeTask = getTaskFromId(taskID)

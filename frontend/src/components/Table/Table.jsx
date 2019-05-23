@@ -51,23 +51,5 @@ function CustomTable({ ...props }) {
   );
 }
 
-CustomTable.defaultProps = {
-  tableHeaderColor: "gray"
-};
-
-CustomTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  tableHeaderColor: PropTypes.oneOf([
-    "warning",
-    "primary",
-    "danger",
-    "success",
-    "info",
-    "rose",
-    "gray"
-  ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-};
 
 export default withStyles(tableStyle)(CustomTable);
