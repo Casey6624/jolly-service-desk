@@ -1,6 +1,6 @@
 import React from "react"
 import "./Backdrop"
 
-const Backdrop = props => <div className="backdrop"></div >
+const Backdrop = ({ onClose }) => <div className="backdrop" onClick={onClose}></div >
 
 export default Backdrop
