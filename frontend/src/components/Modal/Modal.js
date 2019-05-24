@@ -6,6 +6,7 @@ import TaskFormEditing from "components/TaskForm/TaskFormEditing"
 import TaskFormDeleting from "components/TaskForm/TaskFormDel"
 import TaskFormStatusTrue from "components/TaskForm/TaskFormStatusTrue"
 import TaskFormStatusFalse from "components/TaskForm/TaskFormStatusFalse"
+import TaskFormAutoTask from "components/TaskForm/TaskFormAutoTask"
 
 const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTaskData }) => {
 
@@ -21,6 +22,7 @@ const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTa
                     {modalType === "deleting" && <TaskFormDeleting onClose={onCancel} delTaskData={delTaskData} />}
                     {modalType === "updatingT" && <TaskFormStatusTrue onClose={onCancel} updateTaskData={updateTaskData} />}
                     {modalType === "updatingF" && <TaskFormStatusFalse onClose={onCancel} updateTaskData={updateTaskData} />}
+                    {modalType === "autotask" && <TaskFormAutoTask onClose={onCancel} editTaskData={editTaskData} />}
                 </section>
                 <section className="modal__actions" style={{ display: "flex", justifyContent: "center" }}>
                     <Button type="button" color="danger" onClick={onCancel}>

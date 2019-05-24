@@ -33,16 +33,16 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const [taskData, setTaskData] = useState([]);
 
   const [filteredTaskData, setFilteredTaskData] = useState(null);
-
+  // AutoTasking(ing) Task
+  const [autotasking, setAutotasking] = useState(false)
+  const [autoTaskTask, setAutoTaskTask] = useState(null)
+  // Editing Task
   const [editing, setEditing] = useState(false)
   const [editTask, setEditTask] = useState(null)
-  //-------
-  const [deleting, setDeleting] = useState(null)
+  // Deleting Task
+  const [deleting, setDeleting] = useState(false)
   const [delTask, setDelTask] = useState(null)
-  //-------
-  //const [completing, setCompleting] = useState(null)
-  //const [compTask, setCompTask] = useState(null)
-  //-------
+  // Updating Status Task
   const [updatingT, setUpdatingT] = useState(null)
   const [updatingF, setUpdatingF] = useState(null)
   const [updateTask, setUpdateTask] = useState(null)
@@ -102,6 +102,12 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     const wholeTask = getTaskFromId(taskID)
     setDeleting(true)
     setDelTask(wholeTask)
+  }
+
+  function autoTaskHandler(taskID){
+    const wholeTask = getTaskFromId(taskID)
+    setAutotasking(true)
+    setAutoTaskTask(wholeTask)
   }
 
   function handleUpdateTChanged() {
@@ -181,6 +187,12 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
             updateTaskData={updateTask}
             title="Restore Back To Live Task"
             onCancel={handleUpdateFChanged}
+          />}
+          {autotasking && <Modal
+            modalType="autotask"
+            editTaskData={autoTaskTask}
+            title="Export Task To AutoTask"
+            onCancel={() => setAutotasking(false)}
           />}
           <TableBody>
             <TableRow className={classes.tableRow}>
@@ -270,6 +282,20 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                       />
                     </IconButton>
                   </Tooltip>
+                  <Tooltip
+                id="tooltip-top-start"
+                title="Export To AutoTask"
+                placement="top"
+                classes={{ tooltip: classes.tooltip }}
+              >
+                <IconButton
+                  aria-label="Export To AutoTask"
+                  className={classes.tableActionButton}
+                  onClick={() => autoTaskHandler(task._id)}
+                >
+                  <Export className={classes.tableActionButtonIcon + " " + classes.edit} />
+                </IconButton>
+              </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
@@ -307,6 +333,12 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
         title="Restore Back To Live Task"
         onCancel={handleUpdateFChanged}
       />}
+                {autotasking && <Modal
+            modalType="autotask"
+            editTaskData={autoTaskTask}
+            title="Export Task To AutoTask"
+            onCancel={() => setAutotasking(false)}
+          />}
       <TableBody>
         <TableRow className={classes.tableRow}>
           <TableCell className={classes.tableCell}>Status</TableCell>
@@ -394,8 +426,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                     }
                   />
                 </IconButton>
-              </Tooltip>
-          
+              </Tooltip>          
               <Tooltip
                 id="tooltip-top-start"
                 title="Export To AutoTask"
@@ -403,15 +434,11 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                 classes={{ tooltip: classes.tooltip }}
               >
                 <IconButton
-                  aria-label="Close"
+                  aria-label="Export To AutoTask"
                   className={classes.tableActionButton}
-                  onClick={() => delTaskHandler(task._id)}
+                  onClick={() => autoTaskHandler(task._id)}
                 >
-                  <Export
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.edit
-                    }
-                  />
+                  <Export className={classes.tableActionButtonIcon + " " + classes.edit} />
                 </IconButton>
               </Tooltip>
             </TableCell>
