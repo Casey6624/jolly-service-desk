@@ -206,7 +206,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
             {filteredTaskData.length > 0 && filteredTaskData.map(task => (
               <TableRow key={task._id} className={classes.tableRow}>
                 <TableCell className={classes.tableCell}>
-                  {!task.status ? <FailureIcon style={{ color: "red" }} /> : <SuccessIcon style={{ color: "green" }} />}
+                  {!task.status ? <FailureIcon style={{ color: "grey" }} /> : <SuccessIcon style={{ color: "green" }} />}
                 </TableCell>
                 <TableCell className={taskTitle}> {task.title} </TableCell>
                 <TableCell className={classes.tableCell}> {task.description} </TableCell>
@@ -351,7 +351,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
         {taskData.length > 0 && taskData.map(task => (
           <TableRow key={task._id} className={classes.tableRow}>
             <TableCell className={classes.tableCell}>
-              {!task.status ? <FailureIcon style={{ color: "red" }} /> : <SuccessIcon style={{ color: "green" }} />}
+              {!task.status ? <FailureIcon style={{ color: "grey" }} /> : <SuccessIcon style={{ color: "green" }} />}
             </TableCell>
             <TableCell className={taskTitle}> {task.title} </TableCell>
             <TableCell className={classes.tableCell}> {task.description} </TableCell>
