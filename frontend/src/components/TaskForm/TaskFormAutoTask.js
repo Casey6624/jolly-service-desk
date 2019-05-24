@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
+import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 // core components
@@ -12,13 +13,13 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-import customInputStyle from "assets/jss/material-dashboard-react/components/customInputStyle.jsx";
 // Context
 import UserContext from "../../context/UserContext"
 import HttpContext from "../../context/HttpContext"
 // Helpers 
 import { transformPriority } from "../../helpers/index"
+// Libraries
+import moment from "moment"
 
 export default function TaskFormEditing({ classes, onClose, editTaskData }) {
 
@@ -28,13 +29,13 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
     const httpContext = useContext(HttpContext)
 
     const autoTaskTicket = {
-        QueueID: httpContext.autoTaskQueueID,
+        QueueID: httpContext.autoTaskQueueID, // Used to add to the helpdesk queue
         id: 0, // 0 creates a new task, pass a taskID if we need to edit
         AccountID: 0,
         DueDateTime: '2018-12-17',
         Title: taskTitle,
         Status: 1, // only 1 works, cannot set completed etc
-        Priority: taskPriority
+        Priority: taskPriority // 1 = High, 2 = Medium, 3 = Low, 4 = Critical
     }
 
     const { _id, assignedTo, priority, title, description, createdBy, status } = editTaskData
@@ -205,6 +206,18 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                                     }}
 
                                 />
+                            </GridItem>
+                        </GridContainer>
+                        <GridContainer>
+                            <GridItem>
+                            <TextField
+                            id="date"
+                            label="Ticket Due Date"
+                            type="date"
+                            InputLabelProps={{
+                            shrink: true,
+                            }}      
+                            />
                             </GridItem>
                         </GridContainer>
                         <GridContainer>

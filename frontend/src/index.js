@@ -68,7 +68,8 @@ export default function App() {
       >
         <HttpContext.Provider value={{
           graphqlEndpoint: "http://localhost:4000/graphql",
-          fetchAllTasks: fetchAllTasks
+          fetchAllTasks: fetchAllTasks,
+          autoTaskQueueID: 29682833
         }}>
           <Switch>
             <Route path="/admin" component={Admin} />
