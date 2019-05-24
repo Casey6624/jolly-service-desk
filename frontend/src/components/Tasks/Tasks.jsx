@@ -13,6 +13,7 @@ import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
 import Done from "@material-ui/icons/Done";
 import Restore from "@material-ui/icons/Cached";
+import Export from "@material-ui/icons/CloudUpload";
 import SuccessIcon from "@material-ui/icons/CheckCircle";
 import FailureIcon from "@material-ui/icons/Cancel";
 // core components
@@ -359,7 +360,7 @@ function Tasks({ classes, filter }) {
               </Tooltip>
               <Tooltip
                 id="tooltip-top-start"
-                title="Remove"
+                title="Remove Task"
                 placement="top"
                 classes={{ tooltip: classes.tooltip }}
               >
@@ -371,6 +372,25 @@ function Tasks({ classes, filter }) {
                   <Close
                     className={
                       classes.tableActionButtonIcon + " " + classes.close
+                    }
+                  />
+                </IconButton>
+              </Tooltip>
+          
+              <Tooltip
+                id="tooltip-top-start"
+                title="Export To AutoTask"
+                placement="top"
+                classes={{ tooltip: classes.tooltip }}
+              >
+                <IconButton
+                  aria-label="Close"
+                  className={classes.tableActionButton}
+                  onClick={() => delTaskHandler(task._id)}
+                >
+                  <Export
+                    className={
+                      classes.tableActionButtonIcon + " " + classes.edit
                     }
                   />
                 </IconButton>
