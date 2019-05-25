@@ -7,6 +7,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Table from "@material-ui/core/Table";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
+import GridItem from "components/Grid/GridItem.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
 import TableCell from "@material-ui/core/TableCell";
 // @material-ui/icons
 import Edit from "@material-ui/icons/Edit";
@@ -104,7 +106,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     setDelTask(wholeTask)
   }
 
-  function autoTaskHandler(taskID){
+  function autoTaskHandler(taskID) {
     const wholeTask = getTaskFromId(taskID)
     setAutotasking(true)
     setAutoTaskTask(wholeTask)
@@ -283,19 +285,19 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                     </IconButton>
                   </Tooltip>
                   <Tooltip
-                id="tooltip-top-start"
-                title="Export To AutoTask"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Export To AutoTask"
-                  className={classes.tableActionButton}
-                  onClick={() => autoTaskHandler(task._id)}
-                >
-                  <Export className={classes.tableActionButtonIcon + " " + classes.edit} />
-                </IconButton>
-              </Tooltip>
+                    id="tooltip-top-start"
+                    title="Export To AutoTask"
+                    placement="top"
+                    classes={{ tooltip: classes.tooltip }}
+                  >
+                    <IconButton
+                      aria-label="Export To AutoTask"
+                      className={classes.tableActionButton}
+                      onClick={() => autoTaskHandler(task._id)}
+                    >
+                      <Export className={classes.tableActionButtonIcon + " " + classes.edit} />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
@@ -307,146 +309,150 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
 
   const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   return (
-  <Fragment>
-    <Table className={classes.table}>
-      {editing && <Modal
-        modalType="editing"
-        editTaskData={editTask}
-        title="Edit Existing Task"
-        onCancel={() => setEditing(false)}
-      />}
-      {deleting && <Modal
-        modalType="deleting"
-        delTaskData={delTask}
-        title="Delete Selected Task"
-        onCancel={() => setDeleting(false)}
-      />}
-      {updatingT && <Modal
-        modalType="updatingT"
-        updateTaskData={updateTask}
-        title="Complete Task"
-        onCancel={handleUpdateTChanged}
-      />}
-      {updatingF && <Modal
-        modalType="updatingF"
-        updateTaskData={updateTask}
-        title="Restore Back To Live Task"
-        onCancel={handleUpdateFChanged}
-      />}
-                {autotasking && <Modal
-            modalType="autotask"
-            editTaskData={autoTaskTask}
-            title="Export Task To AutoTask"
-            onCancel={() => setAutotasking(false)}
-          />}
-      <TableBody>
-        <TableRow className={classes.tableRow}>
-          <TableCell className={classes.tableCell}>Status</TableCell>
-          <TableCell className={classes.tableCell}>Title</TableCell>
-          <TableCell className={classes.tableCell}>Description</TableCell>
-          <TableCell className={classes.tableCell}>Assigned To</TableCell>
-          <TableCell className={classes.tableCell}>Created By</TableCell>
-          <TableCell className={classes.tableCell}>Priority</TableCell>
-        </TableRow>
-        {taskData.length > 0 && taskData.map(task => (
-          <TableRow key={task._id} className={classes.tableRow}>
-            <TableCell className={classes.tableCell}>
-              {!task.status ? <FailureIcon style={{ color: "grey" }} /> : <SuccessIcon style={{ color: "green" }} />}
-            </TableCell>
-            <TableCell className={taskTitle}> {task.title} </TableCell>
-            <TableCell className={classes.tableCell}> {task.description} </TableCell>
-            <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
-            <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
-            <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
-            <TableCell className={classes.tableActions}>
-              {!task.status && <Tooltip
-                id="tooltip-top"
-                title="Mark As Complete"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Complete Task"
-                  className={classes.tableActionButton}
-                  onClick={() => updateTaskTHandler(task._id)}
-                >
-                  <Done
-                    className={classes.tableActionButtonIcon}
-                  />
-                </IconButton>
-              </Tooltip>}
-              {task.status && <Tooltip
-                id="tooltip-top"
-                title="Mark As Incomplete"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Restore Task"
-                  className={classes.tableActionButton}
-                  onClick={() => updateTaskFHandler(task._id)}
-                >
-                  <Restore
-                    className={classes.tableActionButtonIcon}
-                  />
-                </IconButton>
-              </Tooltip>}
-              <Tooltip
-                id="tooltip-top"
-                title="Edit Task"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Edit"
-                  className={classes.tableActionButton}
-                  onClick={() => editTaskHandler(task._id)}
-                >
-                  <Edit
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.edit
-                    }
-                  />
-                </IconButton>
-              </Tooltip>
-              <Tooltip
-                id="tooltip-top-start"
-                title="Remove Task"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Close"
-                  className={classes.tableActionButton}
-                  onClick={() => delTaskHandler(task._id)}
-                >
-                  <Close
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.close
-                    }
-                  />
-                </IconButton>
-              </Tooltip>          
-              <Tooltip
-                id="tooltip-top-start"
-                title="Export To AutoTask"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Export To AutoTask"
-                  className={classes.tableActionButton}
-                  onClick={() => autoTaskHandler(task._id)}
-                >
-                  <Export className={classes.tableActionButtonIcon + " " + classes.edit} />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-    </Fragment>
+    <div className={classes.tableResponsive}>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Table className={classes.table}>
+            {editing && <Modal
+              modalType="editing"
+              editTaskData={editTask}
+              title="Edit Existing Task"
+              onCancel={() => setEditing(false)}
+            />}
+            {deleting && <Modal
+              modalType="deleting"
+              delTaskData={delTask}
+              title="Delete Selected Task"
+              onCancel={() => setDeleting(false)}
+            />}
+            {updatingT && <Modal
+              modalType="updatingT"
+              updateTaskData={updateTask}
+              title="Complete Task"
+              onCancel={handleUpdateTChanged}
+            />}
+            {updatingF && <Modal
+              modalType="updatingF"
+              updateTaskData={updateTask}
+              title="Restore Back To Live Task"
+              onCancel={handleUpdateFChanged}
+            />}
+            {autotasking && <Modal
+              modalType="autotask"
+              editTaskData={autoTaskTask}
+              title="Export Task To AutoTask"
+              onCancel={() => setAutotasking(false)}
+            />}
+            <TableBody>
+              <TableRow className={classes.tableRow}>
+                <TableCell className={classes.tableCell}>Status</TableCell>
+                <TableCell className={classes.tableCell}>Title</TableCell>
+                <TableCell className={classes.tableCell}>Description</TableCell>
+                <TableCell className={classes.tableCell}>Assigned To</TableCell>
+                <TableCell className={classes.tableCell}>Created By</TableCell>
+                <TableCell className={classes.tableCell}>Priority</TableCell>
+              </TableRow>
+              {taskData.length > 0 && taskData.map(task => (
+                <TableRow key={task._id}>
+                  <TableCell className={classes.tableCell}>
+                    {!task.status ? <FailureIcon style={{ color: "grey" }} /> : <SuccessIcon style={{ color: "green" }} />}
+                  </TableCell>
+                  <TableCell className={taskTitle}> {task.title} </TableCell>
+                  <TableCell className={classes.tableCell}> {task.description} </TableCell>
+                  <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
+                  <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
+                  <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
+                  <TableCell className={classes.tableActions}>
+                    {!task.status && <Tooltip
+                      id="tooltip-top"
+                      title="Mark As Complete"
+                      placement="top"
+                      classes={{ tooltip: classes.tooltip }}
+                    >
+                      <IconButton
+                        aria-label="Complete Task"
+                        className={classes.tableActionButton}
+                        onClick={() => updateTaskTHandler(task._id)}
+                      >
+                        <Done
+                          className={classes.tableActionButtonIcon}
+                        />
+                      </IconButton>
+                    </Tooltip>}
+                    {task.status && <Tooltip
+                      id="tooltip-top"
+                      title="Mark As Incomplete"
+                      placement="top"
+                      classes={{ tooltip: classes.tooltip }}
+                    >
+                      <IconButton
+                        aria-label="Restore Task"
+                        className={classes.tableActionButton}
+                        onClick={() => updateTaskFHandler(task._id)}
+                      >
+                        <Restore
+                          className={classes.tableActionButtonIcon}
+                        />
+                      </IconButton>
+                    </Tooltip>}
+                    <Tooltip
+                      id="tooltip-top"
+                      title="Edit Task"
+                      placement="top"
+                      classes={{ tooltip: classes.tooltip }}
+                    >
+                      <IconButton
+                        aria-label="Edit"
+                        className={classes.tableActionButton}
+                        onClick={() => editTaskHandler(task._id)}
+                      >
+                        <Edit
+                          className={
+                            classes.tableActionButtonIcon + " " + classes.edit
+                          }
+                        />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                      id="tooltip-top-start"
+                      title="Remove Task"
+                      placement="top"
+                      classes={{ tooltip: classes.tooltip }}
+                    >
+                      <IconButton
+                        aria-label="Close"
+                        className={classes.tableActionButton}
+                        onClick={() => delTaskHandler(task._id)}
+                      >
+                        <Close
+                          className={
+                            classes.tableActionButtonIcon + " " + classes.close
+                          }
+                        />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                      id="tooltip-top-start"
+                      title="Export To AutoTask"
+                      placement="top"
+                      classes={{ tooltip: classes.tooltip }}
+                    >
+                      <IconButton
+                        aria-label="Export To AutoTask"
+                        className={classes.tableActionButton}
+                        onClick={() => autoTaskHandler(task._id)}
+                      >
+                        <Export className={classes.tableActionButtonIcon + " " + classes.edit} />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </GridItem>
+      </GridContainer>
+    </div>
   );
 }
 

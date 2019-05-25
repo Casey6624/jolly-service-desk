@@ -13,13 +13,15 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+// Additional Components
+
 // Context
 import UserContext from "../../context/UserContext"
 import HttpContext from "../../context/HttpContext"
 // Helpers 
 import { transformPriority } from "../../helpers/index"
 // Libraries
-import moment from "moment"
+
 
 export default function TaskFormEditing({ classes, onClose, editTaskData }) {
 
@@ -210,14 +212,14 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                         </GridContainer>
                         <GridContainer>
                             <GridItem>
-                            <TextField
-                            id="date"
-                            label="Ticket Due Date"
-                            type="date"
-                            InputLabelProps={{
-                            shrink: true,
-                            }}      
-                            />
+                                <TextField
+                                    id="date"
+                                    label="Ticket Due Date"
+                                    type="date"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
                             </GridItem>
                         </GridContainer>
                         <GridContainer>

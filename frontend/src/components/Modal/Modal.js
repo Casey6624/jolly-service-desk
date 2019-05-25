@@ -7,6 +7,7 @@ import TaskFormDeleting from "components/TaskForm/TaskFormDel"
 import TaskFormStatusTrue from "components/TaskForm/TaskFormStatusTrue"
 import TaskFormStatusFalse from "components/TaskForm/TaskFormStatusFalse"
 import TaskFormAutoTask from "components/TaskForm/TaskFormAutoTask"
+//import AutoTask from "../../assets/svg/AutoTask"
 
 const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTaskData }) => {
 
@@ -30,7 +31,7 @@ const Modal = ({ title, onCancel, modalType, editTaskData, delTaskData, updateTa
                     </Button>
                 </section>
             </div>
-        </div>
+        </div >
     );
 };
 
