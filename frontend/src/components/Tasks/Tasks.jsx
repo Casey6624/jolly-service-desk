@@ -136,6 +136,10 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     setSearchQuery(value.toUpperCase())
   }
 
+  function handleClearInput() {
+    setSearchQuery("")
+  }
+
   function fetchAllTasks() {
     const requestBody = {
       query: `
@@ -183,6 +187,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
             focus
             value={searchQuery}
             onchange={searchQueryHandler}
+            clearInput={handleClearInput}
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
@@ -338,6 +343,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
           focus
           value={searchQuery}
           onchange={searchQueryHandler}
+          clearInput={handleClearInput}
         />
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
