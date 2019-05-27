@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import useInterval from "./hooks/useInterval"
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
@@ -14,6 +15,10 @@ const hist = createBrowserHistory();
 
 export default function App() {
   const httpContext = useContext(HttpContext)
+
+  const [allTasks, setAllTasks] = useState([])
+
+  const [lastTaskRefresh, setLastTaskRefresh] = useState(null)
 
   function fetchAllTasks() {
     const requestBody = {
@@ -31,7 +36,7 @@ export default function App() {
           }`
     };
 
-    fetch(httpContext.graphqlEndpoint, {
+    fetch("http://localhost:4000/graphql", {
       method: "POST",
       body: JSON.stringify(requestBody),
       headers: { "Content-Type": "application/json" }
@@ -43,12 +48,19 @@ export default function App() {
         return res.json();
       })
       .then(resData => {
-        return resData.data.tasks;
+        setAllTasks(resData.data.tasks);
+        setLastTaskRefresh(new Date())
       })
       .catch(err => {
         throw new Error("Could not reach API! " + err);
       });
   }
+
+  useInterval(() => {
+    fetchAllTasks()
+  }, 15000)
+
+
 
   return (
     <Router history={hist}>
@@ -69,7 +81,9 @@ export default function App() {
         <HttpContext.Provider value={{
           graphqlEndpoint: "http://localhost:4000/graphql",
           fetchAllTasks: fetchAllTasks,
-          autoTaskQueueID: 29682833 // The Helpdesk AT Queue
+          autoTaskQueueID: 29682833, // The Helpdesk AT Queue
+          allTasks: allTasks,
+          lastTaskRefresh: lastTaskRefresh
         }}>
           <Switch>
             <Route path="/admin" component={Admin} />

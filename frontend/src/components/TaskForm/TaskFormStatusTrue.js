@@ -74,7 +74,7 @@ export default function TaskFormStatusTrue({ classes, onClose, updateTaskData })
                 return res.json();
             })
             .then(resData => {
-                console.log(resData.data.updateStatus.status)
+                httpContext.fetchAllTasks()
             })
             .catch(err => {
                 throw new Error("Could not reach API!" + err);

@@ -37,8 +37,6 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const userContext = useContext(UserContext);
   const httpContext = useContext(HttpContext);
 
-  const [taskData, setTaskData] = useState([]);
-
   const [filteredTaskData, setFilteredTaskData] = useState(null);
   // AutoTasking(ing) Task
   const [autotasking, setAutotasking] = useState(false)
@@ -57,19 +55,22 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
-    if (refreshing) {
+    try {
       console.log("refreshing!")
-      fetchAllTasks()
+      httpContext.fetchAllTasks()
       setRefreshing(!refreshing)
+    }
+    catch (err) {
+      console.log(err)
     }
     return setRefreshing(false)
   }, [refreshing])
 
   // filter items
   useEffect(() => {
-    if (taskData.length > 0) {
+    if (httpContext.allTasks.length > 0) {
       if (searchQuery) {
-        let filteredData = taskData.filter(({ title }) => title.toUpperCase().includes(searchQuery));
+        let filteredData = httpContext.allTasks.filter(({ title }) => title.toUpperCase().includes(searchQuery));
         setFilteredTaskData(filteredData);
       } else {
         switch (filter) {
@@ -77,17 +78,17 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
             setFilteredTaskData(null)
             break;
           case "ACTIVE":
-            const filteredActive = taskData.filter(task => !task.status)
+            const filteredActive = httpContext.allTasks.filter(task => !task.status)
             setFilteredTaskData(filteredActive)
             break;
           case "COMPLETED":
-            const filteredCompleted = taskData.filter(task => task.status)
+            const filteredCompleted = httpContext.allTasks.filter(task => task.status)
             setFilteredTaskData(filteredCompleted)
             break;
         }
       }
     }
-  }, [filter, taskData, searchQuery])
+  }, [filter, httpContext.allTasks, searchQuery])
 
   function updateTaskTHandler(taskID) {
     const wholeTask = getTaskFromId(taskID)
@@ -102,7 +103,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   }
 
   function getTaskFromId(taskID) {
-    let wholeTask = taskData.filter(task => task._id.includes(taskID))
+    let wholeTask = httpContext.allTasks.filter(task => task._id.includes(taskID))
     return wholeTask[0] || null
   }
 
@@ -143,50 +144,10 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     setSearchQuery("")
   }
 
-  function fetchAllTasks() {
-    const requestBody = {
-      query: `
-      query{
-        tasks{
-          _id
-          title
-          assignedTo
-          createdBy
-          description
-          status
-          priority
-          createdAt
-          updatedAt
-        }
-      }`
-    };
-
-    fetch(httpContext.graphqlEndpoint, {
-      method: "POST",
-      body: JSON.stringify(requestBody),
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error("Failed to fetch data!");
-        }
-        return res.json();
-      })
-      .then(resData => {
-        setTaskData(resData.data.tasks);
-      })
-      .catch(err => {
-        throw new Error("Could not reach API! " + err);
-      });
-  }
-
-  useEffect(() => {
-    fetchAllTasks()
-  }, []);
-
   if (filteredTaskData !== null) {
     return (
       <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
+        <button style={{ fontSize: 52, color: "red" }} onClick={httpContext.fetchAllTasks}> FETCH DATA!!!! </button>
         <GridItem xs={12} sm={12} md={12}>
           <Searchbar
             focus
@@ -391,7 +352,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
               <TableCell className={classes.tableCell} style={{ color: "#333f48", fontWeight: "bold", textTransform: "uppercase" }}>Created By</TableCell>
               <TableCell className={classes.tableCell} style={{ color: "#333f48", fontWeight: "bold", textTransform: "uppercase" }}>Priority</TableCell>
             </TableRow>
-            {taskData.length > 0 && taskData.map(task => (
+            {httpContext.allTasks.length > 0 && httpContext.allTasks.map(task => (
               <Fragment key={task._id}>
                 <TableRow>
                   <TableCell className={classes.tableCell} rowSpan={3}>
@@ -491,8 +452,8 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                 </TableRow>
                 <TableRow className={classes.tableRow}>
                   <TableCell />
-                  <TableCell colSpan={1} className={classes.tableCell}> <strong>UPDATED: </strong> {moment(task.updatedAt).calendar()} </TableCell>
-                  <TableCell colSpan={1} className={classes.tableCell}> <strong>CREATED: </strong> {moment(task.createdAt).calendar()} </TableCell>
+                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>UPDATED: </strong> {moment(task.updatedAt).calendar()} </TableCell>
+                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>CREATED: </strong> {moment(task.createdAt).calendar()} </TableCell>
                 </TableRow>
               </Fragment>
             ))}

@@ -73,7 +73,7 @@ export default function TaskFormDel({ classes, onClose, delTaskData }) {
                 return res.json();
             })
             .then(resData => {
-                console.log(resData)
+                httpContext.fetchAllTasks()
             })
             .catch(err => {
                 throw new Error("Could not reach API!" + err);

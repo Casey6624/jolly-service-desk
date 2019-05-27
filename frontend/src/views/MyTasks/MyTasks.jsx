@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Fab from '@material-ui/core/Fab';
@@ -11,16 +11,25 @@ import Refresh from '@material-ui/icons/Refresh';
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
+import Chip from '@material-ui/core/Chip';
 import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Modal from "components/Modal/Modal"
+import moment from "moment"
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import HttpContext from "../../context/HttpContext";
 
 function MyTasks(props) {
 
+  const httpContext = useContext(HttpContext)
+
   const [creating, setCreating] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+
+  function getLastRefresh() {
+    return moment(httpContext.lastTaskRefresh).format('LTS');
+  }
 
   const { classes } = props;
   return (
@@ -35,8 +44,10 @@ function MyTasks(props) {
           <div style={{
             display: "flex",
             justifyContent: "flex-end",
-            margin: 15
+            margin: 15,
+            alignItems: "center"
           }}>
+            <Chip label={`Last Updated: ${getLastRefresh()}`} className={classes.chip} variant="outlined" style={{ marginRight: 10 }} />
             <Fab color="primary" aria-label="Add" className={classes.fab} onClick={() => setRefreshing(true)} style={{ marginRight: 10 }}>
               <Refresh />
             </Fab>

@@ -5,7 +5,9 @@ import { createContext } from "react"
 const HttpContext = createContext({
     graphqlEndpoint: null,
     fetchAllTasks: function () { },
-    autoTaskQueueID: null
+    autoTaskQueueID: null,
+    allTasks: [],
+    lastTaskRefresh: null
 })
 
 export default HttpContext

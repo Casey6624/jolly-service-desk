@@ -117,7 +117,7 @@ export default function TaskForm({ classes, onClose }) {
                 return res.json();
             })
             .then(resData => {
-                console.log(resData)
+                httpContext.fetchAllTasks()
             })
             .catch(err => {
                 console.log(err)
