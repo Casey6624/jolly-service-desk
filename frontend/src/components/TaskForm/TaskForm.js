@@ -219,3 +219,17 @@ export default function TaskForm({ classes, onClose }) {
         </GridContainer >
     );
 }
+
+const styles = {
+    th: {
+        maxWidth: 125,
+        minWidth: 125,
+        padding: 0,
+        overflowX: "auto",
+        textAlign: "center"
+    },
+    td: {
+        height: 40,
+        padding: 5
+    }
+}
