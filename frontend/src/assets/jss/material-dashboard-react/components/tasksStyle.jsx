@@ -10,8 +10,7 @@ const tasksStyle = {
   ...tooltipStyle,
   ...checkboxAdnRadioStyle,
   table: {
-    marginBottom: "0",
-    overflow: "visible"
+    marginBottom: "0"
   },
   tableRow: {
     position: "relative",
@@ -42,7 +41,8 @@ const tasksStyle = {
   },
   taskTitle: {
     fontWeight: "bold",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    color: primaryColor[0]
   },
   edit: {
     backgroundColor: "transparent",

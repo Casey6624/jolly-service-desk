@@ -247,7 +247,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                   <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
                   <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
                   <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
-                  <TableCell className={classes.tableActions}>
+                  <TableCell className={classes.tableActions} rowSpan={2}>
                     {!task.status && <Tooltip
                       id="tooltip-top"
                       title="Mark As Complete"
@@ -386,7 +386,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
           <TableBody className={classes.tableResponsive} >
             <TableRow className={classes.tableRow}>
               <TableCell className={classes.tableCell}>Status</TableCell>
-              <TableCell className={classes.tableCell}>Title</TableCell>
+              <TableCell className={classes.tableCell}>Title/Description</TableCell>
               <TableCell className={classes.tableCell}>Assigned To</TableCell>
               <TableCell className={classes.tableCell}>Created By</TableCell>
               <TableCell className={classes.tableCell}>Priority</TableCell>
@@ -394,14 +394,14 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
             {taskData.length > 0 && taskData.map(task => (
               <Fragment key={task._id}>
                 <TableRow>
-                  <TableCell className={classes.tableCell}>
+                  <TableCell className={classes.tableCell} rowSpan={2}>
                     {!task.status ? <FailureIcon style={{ color: "grey" }} /> : <SuccessIcon style={{ color: "green" }} />}
                   </TableCell>
                   <TableCell className={taskTitle}> {task.title} </TableCell>
                   <TableCell className={classes.tableCell}> {task.assignedTo} </TableCell>
                   <TableCell className={classes.tableCell}> {task.createdBy} </TableCell>
-                  <TableCell className={classes.tableCell}> {transformPriority(task.priority)} </TableCell>
-                  <TableCell className={classes.tableActions}>
+                  <TableCell className={classes.tableCell} rowSpan={2}> {transformPriority(task.priority)}  </TableCell>
+                  <TableCell className={classes.tableCell} rowSpan={2} style={{ alignItems: "center", flexDirection: "row", display: "flex", height: "auto" }}>
                     {!task.status && <Tooltip
                       id="tooltip-top"
                       title="Mark As Complete"
@@ -487,9 +487,9 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                   </TableCell>
                 </TableRow>
                 <TableRow className={classes.tableRow}>
-                  <TableCell className={classes.tableCell}> <strong>Task Description:</strong> {task.description} </TableCell>
-                  <TableCell className={classes.tableCell}> Created: {moment(task.createdAt).calendar()} </TableCell>
-                  <TableCell className={classes.tableCell}> Last Updated: {moment(task.updatedAt).calendar()} </TableCell>
+                  <TableCell className={classes.tableCell}> {task.description} </TableCell>
+                  <TableCell className={classes.tableCell}> <strong>UPDATED: </strong> {moment(task.updatedAt).calendar()} </TableCell>
+                  <TableCell className={classes.tableCell}> <strong>CREATED: </strong> {moment(task.createdAt).calendar()} </TableCell>
                 </TableRow>
               </Fragment>
             ))}
