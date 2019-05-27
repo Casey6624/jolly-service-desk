@@ -27,6 +27,8 @@ import UserContext from "../../context/UserContext";
 import HttpContext from "../../context/HttpContext";
 // helpers
 import { transformPriority } from "../../helpers/index";
+// Custom components
+import Searchbar from "../Searchbar/Searchbar";
 
 function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const userContext = useContext(UserContext);
@@ -48,6 +50,8 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const [updatingT, setUpdatingT] = useState(null)
   const [updatingF, setUpdatingF] = useState(null)
   const [updateTask, setUpdateTask] = useState(null)
+  //--------------------
+  const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
     if (refreshing) {
@@ -61,21 +65,26 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   // filter items
   useEffect(() => {
     if (taskData.length > 0) {
-      switch (filter) {
-        case "ALL":
-          setFilteredTaskData(null)
-          break;
-        case "ACTIVE":
-          const filteredActive = taskData.filter(task => !task.status)
-          setFilteredTaskData(filteredActive)
-          break;
-        case "COMPLETED":
-          const filteredCompleted = taskData.filter(task => task.status)
-          setFilteredTaskData(filteredCompleted)
-          break;
+      if (searchQuery) {
+        let filteredData = taskData.filter(({ title }) => title.toUpperCase().includes(searchQuery));
+        setFilteredTaskData(filteredData);
+      } else {
+        switch (filter) {
+          case "ALL":
+            setFilteredTaskData(null)
+            break;
+          case "ACTIVE":
+            const filteredActive = taskData.filter(task => !task.status)
+            setFilteredTaskData(filteredActive)
+            break;
+          case "COMPLETED":
+            const filteredCompleted = taskData.filter(task => task.status)
+            setFilteredTaskData(filteredCompleted)
+            break;
+        }
       }
     }
-  }, [filter, taskData])
+  }, [filter, taskData, searchQuery])
 
   function updateTaskTHandler(taskID) {
     const wholeTask = getTaskFromId(taskID)
@@ -122,6 +131,11 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     setUpdateTask(null)
   }
 
+  function searchQueryHandler(e) {
+    const { value } = e.target
+    setSearchQuery(value.toUpperCase())
+  }
+
   function fetchAllTasks() {
     const requestBody = {
       query: `
@@ -164,6 +178,13 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   if (filteredTaskData !== null) {
     return (
       <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
+        <GridItem xs={12} sm={12} md={12}>
+          <Searchbar
+            focus
+            value={searchQuery}
+            onchange={searchQueryHandler}
+          />
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           {refreshing && <LinearProgress color="secondary" variant="query" />}
           <Table className={classes.table}>
@@ -312,6 +333,13 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   return (
     <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
+      <GridItem xs={12} sm={12} md={12}>
+        <Searchbar
+          focus
+          value={searchQuery}
+          onchange={searchQueryHandler}
+        />
+      </GridItem>
       <GridItem xs={12} sm={12} md={12}>
         <Table className={classes.table}>
           {editing && <Modal
