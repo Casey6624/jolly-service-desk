@@ -9,6 +9,8 @@ module.exports = TaskSchema = buildSchema(`
         priority: Int!
         status: Boolean!
         createdBy: String!
+        createdAt: String!
+        updatedAt: String!
     }
 
     input TaskInput {
