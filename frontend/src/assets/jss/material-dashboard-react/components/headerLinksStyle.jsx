@@ -74,7 +74,6 @@ const headerLinksStyle = theme => ({
   notifications: {
     zIndex: "4",
     [theme.breakpoints.up("md")]: {
-      position: "absolute",
       top: "2px",
       border: "1px solid " + whiteColor,
       right: "4px",

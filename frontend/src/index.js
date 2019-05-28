@@ -32,6 +32,8 @@ export default function App() {
               description
               status
               priority
+              createdAt
+              updatedAt
             }
           }`
     };
@@ -49,6 +51,7 @@ export default function App() {
       })
       .then(resData => {
         setAllTasks(resData.data.tasks);
+        console.log(resData.data.tasks)
         setLastTaskRefresh(new Date())
       })
       .catch(err => {
@@ -66,7 +69,7 @@ export default function App() {
     <Router history={hist}>
       <UserContext.Provider
         value={{
-          username: "casey@jollyit.co.uk", JITUsers: [
+          username: "Casey@jollyit.co.uk", JITUsers: [
             "Casey@jollyit.co.uk",
             "Tom@jollyit.co.uk",
             "Tony@jollyit.co.uk",

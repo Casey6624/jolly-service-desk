@@ -1,12 +1,11 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Card from "@material-ui/core/Card";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 // @material-ui/icons
@@ -17,29 +16,39 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import Modal from "../Modal/Modal"
 import { NavLink } from "react-router-dom"
-
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
+// Context 
+import HttpContext from "../../context/HttpContext"
+import UserContext from "../../context/UserContext"
 
-class HeaderLinks extends React.Component {
-  state = {
-    open: false
-  };
-  handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+function HeaderLinks(props){
+
+  const [open, setOpen] = useState(false)
+
+  const [openModal, setOpenModal] = useState(false)
+
+  const httpContext = useContext(HttpContext)
+  const userContext = useContext(UserContext)
+
+  const [myTasks, setMyTasks] = useState([])
+
+  function handleToggle(val){
+    console.log(val)
+    setOpenModal(!val)
   };
 
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
+  useEffect(() => {
+    if(userContext.username && httpContext.allTasks.length > 0){
+      let myTasks = httpContext.allTasks.filter(({ assignedTo, status }) => assignedTo === userContext.username && status === false)
+      setMyTasks(myTasks)
     }
+  }, [httpContext.allTasks, userContext.username])
 
-    this.setState({ open: false });
-  };
+  
 
-  render() {
-    const { classes } = this.props;
-    const { open } = this.state;
+    const { classes } = props;
     return (
       <div>
         <div className={classes.searchWrapper}>
@@ -74,28 +83,21 @@ class HeaderLinks extends React.Component {
         </NavLink>
         <div className={classes.manager}>
           <Button
-            buttonRef={node => {
-              this.anchorEl = node;
-            }}
             color={window.innerWidth > 959 ? "transparent" : "white"}
             justIcon={window.innerWidth > 959}
             simple={!(window.innerWidth > 959)}
             aria-owns={open ? "menu-list-grow" : null}
             aria-haspopup="true"
-            onClick={this.handleToggle}
             className={classes.buttonLink}
+            onClick={() => handleToggle(openModal)}
           >
             <Notifications className={classes.icons} />
-            <span className={classes.notifications}>5</span>
+            <span className={classes.notifications}> {myTasks.length} </span>
             <Hidden mdUp implementation="css">
-              <p onClick={this.handleClick} className={classes.linkText}>
-                Notification
-              </p>
             </Hidden>
           </Button>
           <Poppers
             open={open}
-            anchorEl={this.anchorEl}
             transition
             disablePortal
             className={
@@ -113,46 +115,17 @@ class HeaderLinks extends React.Component {
                     placement === "bottom" ? "center top" : "center bottom"
                 }}
               >
-                <Paper>
-                  <ClickAwayListener onClickAway={this.handleClose}>
-                    <MenuList role="menu">
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Mike John responded to your email
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        You have 5 new tasks
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        You're now friend with Andrew
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Another Notification
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Another One
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
               </Grow>
             )}
           </Poppers>
         </div>
+        {openModal &&<Modal
+          title="Your Active Tasks"
+          modalType="reading"
+          myTaskData={myTasks}   
+          onCancel={() => setOpenModal(false)}  
+        > 
+        </Modal>}
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -168,6 +141,5 @@ class HeaderLinks extends React.Component {
       </div>
     );
   }
-}
 
 export default withStyles(headerLinksStyle)(HeaderLinks);

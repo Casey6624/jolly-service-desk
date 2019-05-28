@@ -280,7 +280,6 @@ footer ul li a:hover {
   width: 290px;
   border-radius: 0.1875rem;
   padding: 0 10px;
-  position: absolute;
   color: rgba(0, 0, 0, 0.87);
   display: inline-block;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
@@ -478,7 +477,6 @@ footer ul li a:hover {
 .fixed-plugin .dropdown .dropdown-menu:after {
   content: "";
   display: inline-block;
-  position: absolute;
   top: 46px;
   width: 16px;
   transform: translateY(-50%);

@@ -217,7 +217,7 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                     </CardBody>
                 </Card>
             </GridItem>
-            <Button type="button" color="success" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={initialValidation}>
+            <Button type="button" color="#ef7d00" style={{ margin: "auto", marginTop: 0, marginBottom: 0 }} onClick={initialValidation}>
                 Submit
             </Button>
         </GridContainer >

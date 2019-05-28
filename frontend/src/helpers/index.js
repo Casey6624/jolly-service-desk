@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react"
-
-import HttpContext from "../context/HttpContext"
-import UserContext from "../context/UserContext"
+import moment from "moment"
 
 // used to transform the priority in the tasks View so the user gets a little more insight into how the tasks are weighted
 export function transformPriority(priority) {
@@ -24,4 +22,8 @@ export function transformPriority(priority) {
             break;
     }
     return transformedPriority;
+}
+
+export function transformDate(date){
+    return moment(date).format()
 }

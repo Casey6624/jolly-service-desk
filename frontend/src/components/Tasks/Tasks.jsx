@@ -27,7 +27,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import UserContext from "../../context/UserContext";
 import HttpContext from "../../context/HttpContext";
 // helpers
-import { transformPriority } from "../../helpers/index";
+import { transformPriority, transformDate } from "../../helpers/index";
 // Custom components
 import Searchbar from "../Searchbar/Searchbar";
 // LIbraries
@@ -147,7 +147,6 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   if (filteredTaskData !== null) {
     return (
       <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
-        <button style={{ fontSize: 52, color: "red" }} onClick={httpContext.fetchAllTasks}> FETCH DATA!!!! </button>
         <GridItem xs={12} sm={12} md={12}>
           <Searchbar
             focus
@@ -452,8 +451,8 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                 </TableRow>
                 <TableRow className={classes.tableRow}>
                   <TableCell />
-                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>UPDATED: </strong> {moment(task.updatedAt).calendar()} </TableCell>
-                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>CREATED: </strong> {moment(task.createdAt).calendar()} </TableCell>
+                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>UPDATED: </strong> {moment(+task.updatedAt).calendar() || null} </TableCell>
+                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>CREATED: </strong> {moment(+task.createdAt).calendar() || null} </TableCell>
                 </TableRow>
               </Fragment>
             ))}

@@ -8,7 +8,6 @@ const UserContext = createContext({
     accessToken: null,
     login: (user, accessToken) => { },
     logout: () => { },
-    username: null,
     JITUsers: []
 })
 
