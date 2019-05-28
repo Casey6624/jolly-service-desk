@@ -64,7 +64,7 @@ export default function App() {
   
   useEffect(() => {
     if(username && allTasks.length > 0){
-      let myTasks = allTasks.filter(({ assignedTo, status }) => assignedTo === username || assignedTo === "Anyone@jollyit.co.uk" && status === false)
+      let myTasks = allTasks.filter(({ assignedTo, status }) => assignedTo === username && status === false || assignedTo === "Anyone@jollyit.co.uk" && status === false)
       setMyTasks(myTasks)
       if(myTasks <= 0) return
       document.title = ` (${myTasks.length}) Jolly IT | Tasks`
