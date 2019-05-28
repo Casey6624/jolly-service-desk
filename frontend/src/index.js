@@ -77,7 +77,7 @@ export default function App() {
             "Lewis@jollyit.co.uk",
             "Dan@jollyit.co.uk",
             "Jude@jollyit.co.uk",
-            "anyone@jollyit.co.uk"
+            "Anyone@jollyit.co.uk"
           ]
         }}
       >

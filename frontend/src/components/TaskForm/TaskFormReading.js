@@ -11,10 +11,8 @@ import Button from "components/CustomButtons/Button.jsx";
 import Coffee from "@material-ui/icons/LocalCafe";
 // Libraries
 import { NavLink } from "react-router-dom"
-import moment from "moment"
-// Context
-import UserContext from "../../context/UserContext"
-import HttpContext from "../../context/HttpContext"
+// Helpers
+import {transformDate} from "../../helpers/index"
 
 export default function TaskFormReading({ onClose, myTaskData }) {
 
@@ -33,10 +31,10 @@ export default function TaskFormReading({ onClose, myTaskData }) {
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
                 <List style={{overflowY: "auto", height: 300}}>
-              {myTaskData.map(task => <ListItem key={task._id}>
+              {myTaskData.map(task => <ListItem key={task._id} style={{background: "#f2f2f2", marginBottom: 5}}>
                   <ListItemText
                     primary={task.title}
-                    secondary={`Created: ${moment(task.createdAt).calendar()}`}
+                    secondary={`Created: ${transformDate(task.createdAt)}`}
                   />
                 </ListItem>,
               )}

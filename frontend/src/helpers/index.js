@@ -25,5 +25,5 @@ export function transformPriority(priority) {
 }
 
 export function transformDate(date){
-    return moment(date).format()
+    return moment(+date).calendar()
 }

@@ -41,7 +41,7 @@ function HeaderLinks(props){
 
   useEffect(() => {
     if(userContext.username && httpContext.allTasks.length > 0){
-      let myTasks = httpContext.allTasks.filter(({ assignedTo, status }) => assignedTo === userContext.username && status === false)
+      let myTasks = httpContext.allTasks.filter(({ assignedTo, status }) => assignedTo === userContext.username || assignedTo === "Anyone@jollyit.co.uk" && status === false)
       setMyTasks(myTasks)
     }
   }, [httpContext.allTasks, userContext.username])
