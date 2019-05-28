@@ -28,6 +28,10 @@ app.use("/graphql", graphqlHttp({
     graphiql: true
 }))
 
+app.use("/", (req, res, next) => {
+    res.redirect("https://jollyit.co.uk")
+})
+
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@jollytasks-buxaz.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`, { useNewUrlParser: true })
     .then(() => {
         console.log("Successfully connected to MongoDB")
