@@ -51,7 +51,6 @@ export default function App() {
       })
       .then(resData => {
         setAllTasks(resData.data.tasks);
-        console.log(resData.data.tasks)
         setLastTaskRefresh(new Date())
       })
       .catch(err => {

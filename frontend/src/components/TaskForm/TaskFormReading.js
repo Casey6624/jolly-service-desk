@@ -36,7 +36,7 @@ export default function TaskFormReading({ onClose, myTaskData }) {
                     primary={task.title}
                     secondary={`Created: ${transformDate(task.createdAt)}`}
                   />
-                </ListItem>,
+                </ListItem>
               )}
             </List>
                 <NavLink to="/admin/tasks">

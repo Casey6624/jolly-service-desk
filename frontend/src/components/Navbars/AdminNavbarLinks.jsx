@@ -43,6 +43,8 @@ function HeaderLinks(props){
     if(userContext.username && httpContext.allTasks.length > 0){
       let myTasks = httpContext.allTasks.filter(({ assignedTo, status }) => assignedTo === userContext.username || assignedTo === "Anyone@jollyit.co.uk" && status === false)
       setMyTasks(myTasks)
+      if(myTasks <= 0) return
+      document.title = ` (${myTasks.length}) Jolly IT | Tasks`
     }
   }, [httpContext.allTasks, userContext.username])
 
