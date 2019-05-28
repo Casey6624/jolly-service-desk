@@ -34,7 +34,6 @@ import Searchbar from "../Searchbar/Searchbar";
 import moment from "moment"
 
 function Tasks({ classes, filter, refreshing, setRefreshing }) {
-  const userContext = useContext(UserContext);
   const httpContext = useContext(HttpContext);
 
   const [filteredTaskData, setFilteredTaskData] = useState(null);

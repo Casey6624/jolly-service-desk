@@ -33,8 +33,8 @@ export default function TaskFormReading({ onClose, myTaskData }) {
                 <List style={{overflowY: "auto", height: 300}}>
               {myTaskData.map(task => <ListItem key={task._id} style={{background: "#f2f2f2", marginBottom: 5}}>
                   <ListItemText
-                    primary={task.title}
-                    secondary={`Created: ${transformDate(task.createdAt)}`}
+                    primary={`${task.title}`}
+                    secondary={`Created: ${transformDate(task.createdAt)} | Assigned To: ${task.assignedTo}`}
                   />
                 </ListItem>
               )}

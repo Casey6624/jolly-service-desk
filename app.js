@@ -8,6 +8,8 @@ const graphqlResolvers = require("./graphql/resolvers/index")
 
 const app = express();
 
+const PORT = 4000;
+
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -35,4 +37,4 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
         console.log(`Ooops! Error: ${err}`)
     })
 
-app.listen(4000)
+app.listen(PORT)
