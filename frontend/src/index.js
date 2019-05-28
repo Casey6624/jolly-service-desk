@@ -18,6 +18,10 @@ export default function App() {
 
   const [allTasks, setAllTasks] = useState([])
 
+  const [myTasks, setMyTasks] = useState([])
+
+  const username = "Casey@jollyit.co.uk";
+
   const [lastTaskRefresh, setLastTaskRefresh] = useState(null)
 
   function fetchAllTasks() {
@@ -57,6 +61,15 @@ export default function App() {
         throw new Error("Could not reach API! " + err);
       });
   }
+  
+  useEffect(() => {
+    if(username && allTasks.length > 0){
+      let myTasks = allTasks.filter(({ assignedTo, status }) => assignedTo === username || assignedTo === "Anyone@jollyit.co.uk" && status === false)
+      setMyTasks(myTasks)
+      if(myTasks <= 0) return
+      document.title = ` (${myTasks.length}) Jolly IT | Tasks`
+    }
+  }, [allTasks, username])
 
   useInterval(() => {
     fetchAllTasks()
@@ -68,7 +81,7 @@ export default function App() {
     <Router history={hist}>
       <UserContext.Provider
         value={{
-          username: "Casey@jollyit.co.uk", JITUsers: [
+          username: username, JITUsers: [
             "Casey@jollyit.co.uk",
             "Tom@jollyit.co.uk",
             "Tony@jollyit.co.uk",
@@ -85,7 +98,8 @@ export default function App() {
           fetchAllTasks: fetchAllTasks,
           autoTaskQueueID: 29682833, // The Helpdesk AT Queue
           allTasks: allTasks,
-          lastTaskRefresh: lastTaskRefresh
+          lastTaskRefresh: lastTaskRefresh,
+          myTasks: myTasks
         }}>
           <Switch>
             <Route path="/admin" component={Admin} />

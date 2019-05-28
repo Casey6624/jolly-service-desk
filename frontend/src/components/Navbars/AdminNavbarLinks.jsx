@@ -30,25 +30,10 @@ function HeaderLinks(props){
   const [openModal, setOpenModal] = useState(false)
 
   const httpContext = useContext(HttpContext)
-  const userContext = useContext(UserContext)
-
-  const [myTasks, setMyTasks] = useState([])
 
   function handleToggle(val){
-    console.log(val)
     setOpenModal(!val)
-  };
-
-  useEffect(() => {
-    if(userContext.username && httpContext.allTasks.length > 0){
-      let myTasks = httpContext.allTasks.filter(({ assignedTo, status }) => assignedTo === userContext.username || assignedTo === "Anyone@jollyit.co.uk" && status === false)
-      setMyTasks(myTasks)
-      if(myTasks <= 0) return
-      document.title = ` (${myTasks.length}) Jolly IT | Tasks`
-    }
-  }, [httpContext.allTasks, userContext.username])
-
-  
+  };  
 
     const { classes } = props;
     return (
@@ -94,7 +79,7 @@ function HeaderLinks(props){
             onClick={() => handleToggle(openModal)}
           >
             <Notifications className={classes.icons} />
-            <span className={classes.notifications}> {myTasks.length} </span>
+            <span className={classes.notifications}> {httpContext.myTasks.length} </span>
             <Hidden mdUp implementation="css">
             </Hidden>
           </Button>
@@ -124,7 +109,7 @@ function HeaderLinks(props){
         {openModal &&<Modal
           title="Your Active Tasks"
           modalType="reading"
-          myTaskData={myTasks}   
+          myTaskData={httpContext.myTasks}   
           onCancel={() => setOpenModal(false)}  
         > 
         </Modal>}

@@ -295,6 +295,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
               ))}
             </TableBody>
           </Table>
+          <p> {`${filteredTaskData.length} Results Found.`} </p>
         </GridItem>
       </GridContainer>
     )
