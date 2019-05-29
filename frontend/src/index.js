@@ -66,7 +66,10 @@ export default function App() {
     if(username && allTasks.length > 0){
       let myTasks = allTasks.filter(({ assignedTo, status }) => assignedTo === username && status === false || assignedTo === "Anyone@jollyit.co.uk" && status === false)
       setMyTasks(myTasks)
-      if(myTasks <= 0) return
+      if(myTasks <= 0){
+        document.title = "Jolly IT | Tasks"
+        return
+      }
       document.title = ` (${myTasks.length}) Jolly IT | Tasks`
     }
   }, [allTasks, username])
