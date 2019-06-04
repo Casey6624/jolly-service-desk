@@ -295,8 +295,8 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                 <TableRow className={classes.tableRow}>
                   <TableCell />
                   <TableCell />
-                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>UPDATED: </strong> {transformDate(task.updatedAt)} </TableCell>
-                  <TableCell colSpan={1} className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>CREATED: </strong> {transformDate(task.createdAt)} </TableCell>
+                  <TableCell className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>UPDATED: </strong> {transformDate(task.updatedAt)} </TableCell>
+                  <TableCell className={classes.tableCell}> <strong style={{ color: "#ef7d00" }}>CREATED: </strong> {transformDate(task.createdAt)} </TableCell>
                 </TableRow>
               </Fragment>
             ))}

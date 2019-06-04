@@ -8,7 +8,8 @@ const HttpContext = createContext({
     autoTaskQueueID: null,
     allTasks: [],
     lastTaskRefresh: null,
-    myTasks: []
+    myTasks: [],
+    fetchErr: null
 })
 
 export default HttpContext

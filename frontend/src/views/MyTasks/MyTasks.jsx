@@ -8,6 +8,7 @@ import ViewModule from "@material-ui/icons/ViewModule";
 import MarkerCheck from "@material-ui/icons/Done";
 import Add from '@material-ui/icons/Add';
 import Refresh from '@material-ui/icons/Refresh';
+import CloseIcon from '@material-ui/icons/Close';
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -16,6 +17,8 @@ import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Modal from "components/Modal/Modal"
 import moment from "moment"
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import HttpContext from "../../context/HttpContext";
@@ -26,6 +29,8 @@ function MyTasks(props) {
 
   const [creating, setCreating] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+
+  const [showErr, setShowErr] = useState(true)
 
   function getLastRefresh() {
     return moment(httpContext.lastTaskRefresh).format('LTS');
@@ -47,6 +52,31 @@ function MyTasks(props) {
             margin: 15,
             alignItems: "center"
           }}>
+
+        { httpContext.fetchErr && showErr && <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={true}
+        onClose={() => setShowErr(false)}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id"><strong>Connection Error</strong> - Unable To Connect To Database</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            className={classes.close}
+            onClick={() => setShowErr(false)}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      /> }
+
             <Chip label={`Last Updated: ${getLastRefresh()}`} className={classes.chip} variant="outlined" style={{ marginRight: 10 }} />
             <Fab color="primary" aria-label="Add" className={classes.fab} onClick={() => setRefreshing(true)} style={{ marginRight: 10 }}>
               <Refresh />

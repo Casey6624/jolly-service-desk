@@ -20,6 +20,8 @@ export default function App() {
 
   const [myTasks, setMyTasks] = useState([])
 
+  const [fetchErr, setFetchErr] = useState(null)
+
   const username = "Casey@jollyit.co.uk";
 
   const [lastTaskRefresh, setLastTaskRefresh] = useState(null)
@@ -58,7 +60,8 @@ export default function App() {
         setLastTaskRefresh(new Date())
       })
       .catch(err => {
-        throw new Error("Could not reach API! " + err);
+        console.log("Unable To Fetch")
+        setFetchErr(err)
       });
   }
   
@@ -66,11 +69,11 @@ export default function App() {
     if(username && allTasks.length > 0){
       let myTasks = allTasks.filter(({ assignedTo, status }) => assignedTo === username && status === false || assignedTo === "Anyone@jollyit.co.uk" && status === false)
       setMyTasks(myTasks)
-      if(myTasks <= 0){
-        document.title = "Jolly IT | Tasks"
+      if(myTasks.length > 0){
+        document.title = ` (${myTasks.length}) Jolly IT | Tasks`
         return
       }
-      document.title = ` (${myTasks.length}) Jolly IT | Tasks`
+      document.title = "Jolly IT | Tasks"
     }
   }, [allTasks, username])
 
@@ -102,7 +105,8 @@ export default function App() {
           autoTaskQueueID: 29682833, // The Helpdesk AT Queue
           allTasks: allTasks,
           lastTaskRefresh: lastTaskRefresh,
-          myTasks: myTasks
+          myTasks: myTasks,
+          fetchErr: fetchErr
         }}>
           <Switch>
             <Route path="/admin" component={Admin} />
