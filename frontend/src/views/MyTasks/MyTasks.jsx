@@ -30,8 +30,6 @@ function MyTasks(props) {
   const [creating, setCreating] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
-  const [showErr, setShowErr] = useState(true)
-
   function getLastRefresh() {
     return moment(httpContext.lastTaskRefresh).format('LTS');
   }
@@ -53,28 +51,16 @@ function MyTasks(props) {
             alignItems: "center"
           }}>
 
-        { httpContext.fetchErr && showErr && <Snackbar
+        { httpContext.fetchErr && <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}
         open={true}
-        onClose={() => setShowErr(false)}
         ContentProps={{
           'aria-describedby': 'message-id',
         }}
         message={<span id="message-id"><strong>Connection Error</strong> - Unable To Connect To Database</span>}
-        action={[
-          <IconButton
-            key="close"
-            aria-label="Close"
-            color="inherit"
-            className={classes.close}
-            onClick={() => setShowErr(false)}
-          >
-            <CloseIcon />
-          </IconButton>,
-        ]}
       /> }
 
             <Chip label={`Last Updated: ${getLastRefresh()}`} className={classes.chip} variant="outlined" style={{ marginRight: 10 }} />

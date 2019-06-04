@@ -56,6 +56,7 @@ export default function App() {
         return res.json();
       })
       .then(resData => {
+        setFetchErr(null)
         setAllTasks(resData.data.tasks);
         setLastTaskRefresh(new Date())
       })
