@@ -61,17 +61,6 @@ function MyTasks(props) {
             headerColor="primary"
             tabs={[
               {
-                tabName: "ALL",
-                tabIcon: ViewModule,
-                tabContent: (
-                  <Tasks
-                    refreshing={refreshing}
-                    setRefreshing={setRefreshing}
-                    filter="ALL"
-                  />
-                )
-              },
-              {
                 tabName: "ACTIVE",
                 tabIcon: Computer,
                 tabContent: (
@@ -92,8 +81,20 @@ function MyTasks(props) {
                     filter="COMPLETED"
                   />
                 )
+              },
+              {
+                tabName: "ALL",
+                tabIcon: ViewModule,
+                tabContent: (
+                  <Tasks
+                    refreshing={refreshing}
+                    setRefreshing={setRefreshing}
+                    filter="ALL"
+                  />
+                )
               }
             ]}
+
           />
         </GridItem>
       </GridContainer>
