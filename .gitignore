@@ -1,5 +1,6 @@
 # exclude node_modules 
 /node_modules
 node_modules
-
+# Hide AT data
+/RMM/AT.json
 nodemon.json

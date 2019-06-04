@@ -6,6 +6,8 @@ const mongoose = require("mongoose")
 const graphqlSchema = require("./graphql/schema/index")
 const graphqlResolvers = require("./graphql/resolvers/index")
 
+const RMM = require("./RMM/index")
+
 const app = express();
 
 const PORT = 4000;
@@ -29,7 +31,9 @@ app.use("/graphql", graphqlHttp({
 }))
 
 app.use("/", (req, res, next) => {
-    res.redirect("https://jollyit.co.uk")
+    //res.redirect("https://jollyit.co.uk")
+
+    RMM.readFile()
 })
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@jollytasks-buxaz.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`, { useNewUrlParser: true })
