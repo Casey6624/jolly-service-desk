@@ -6,6 +6,8 @@ const mongoose = require("mongoose")
 const graphqlSchema = require("./graphql/schema/index")
 const graphqlResolvers = require("./graphql/resolvers/index")
 
+const mail = require("./mail/index")
+
 const app = express();
 
 const PORT = 4000;
@@ -27,6 +29,11 @@ app.use("/graphql", graphqlHttp({
     rootValue: graphqlResolvers,
     graphiql: true
 }))
+
+app.use("/m", (req,res,next) => {
+    mail.sendNow()
+    //next()
+})
 
 app.use("/", (req, res, next) => {
     res.redirect("https://jollyit.co.uk")
