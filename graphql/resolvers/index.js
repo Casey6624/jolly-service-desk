@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 const Task = require("../../models/Task")
 
+const mail = require("../../mail/index");
+
 module.exports = GraphQLResolvers = {
     tasks: () => {
         return Task.find()
@@ -31,6 +33,9 @@ module.exports = GraphQLResolvers = {
             .then(res => {
                 createdTask = { ...res._doc }
                 return createdTask
+            })
+            .then(() => {
+                mail.sendNow(null, "new" ,args.taskInput)
             })
             .catch(err => {
                 console.log(err)

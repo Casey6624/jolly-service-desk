@@ -11,13 +11,36 @@ let transporter = nodemailer.createTransport({
 })
 
 module.exports = {
-    sendNow: function(to, subject = "Jolly IT | Tasks", body = ""){
+    sendNow: function(to, template, taskDetails){
+        const { title, description, priority, createdBy } = taskDetails
+        let { assignedTo } = taskDetails
+        assignedTo = assignedTo.split("@")[0]
+
+        if(assignedTo === "Anyone"){
+            assignedTo = "Everyone"
+        }
+
+        let createNew = `
+        Hey ${assignedTo},
+        
+        A new Task has been created and assigned to you - ${title}.
+        
+        DESCRIPTION: ${description}
+
+        CREATED BY: ${createdBy} 
+
+        PRIORITY: ${priority}
+
+        ---------------------
+
+        Please login to view the task within your browser - https://tasks.jollyit.co.uk
+        `
 
         var mailOptions = {
             from: process.env.EMAIL_USR,
             to: 'casey@jollyit.co.uk',
-            subject: subject,
-            text: body
+            subject: `New Task - ${title}`,
+            text: createNew
           };
 
         transporter.sendMail(mailOptions, function(error, info){
