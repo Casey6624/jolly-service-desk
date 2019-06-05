@@ -29,15 +29,12 @@ module.exports = TaskSchema = buildSchema(`
         domain: String!
         rebootRequired: Boolean!
         online: Boolean!
+        antivirus: antivirus!
     }
 
-    input RMMInput {
-        hostname: String!
-        intIpAddress: String!
-        operatingSystem: String!
-        domain: String!
-        rebootRequired: Boolean!
-        online: Boolean!
+    type antivirus {
+        antivirusProduct: String
+        antivirusStatus: String!
     }
 
     input TaskInputEdit {
