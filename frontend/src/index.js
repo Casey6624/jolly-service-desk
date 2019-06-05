@@ -116,8 +116,13 @@ export default function App() {
 
   useInterval(() => {
     fetchAllTasks()
+    fetchRMMStats()
   }, 15000)
 
+  useEffect(() => {
+    fetchAllTasks()
+    fetchRMMStats()
+  }, [])
 
 
   return (
