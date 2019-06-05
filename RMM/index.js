@@ -19,6 +19,6 @@ module.exports = {
 
         const antiVirusServers = jollyServers.filter(server => server.antivirus.antivirusStatus !== 'RunningAndUpToDate' || server.antivirus.antivirusStatus !== 'NotDetected')
 
-        return [rebootNeeded, offlineServers, antiVirusServers]
+        return [antiVirusServers, rebootNeeded, offlineServers]
     }
 }

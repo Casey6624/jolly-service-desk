@@ -14,17 +14,16 @@ import "assets/css/material-dashboard-react.css?v=1.6.0";
 const hist = createBrowserHistory();
 
 export default function App() {
-  const httpContext = useContext(HttpContext)
 
   const [allTasks, setAllTasks] = useState([])
-
-  const [myTasks, setMyTasks] = useState([])
-
-  const [fetchErr, setFetchErr] = useState(null)
-
-  const username = "Casey@jollyit.co.uk";
-
   const [lastTaskRefresh, setLastTaskRefresh] = useState(null)
+  const [myTasks, setMyTasks] = useState([])
+  const [fetchErr, setFetchErr] = useState(null)
+  const username = "Casey@jollyit.co.uk"; // this will eventually be taken from MSAL returned data
+  const [RMMData, setRMMData] = useState(null)
+  const [lastRMMRefresh, setLastRMMRefresh] = useState(null)
+
+  const graphqlUrl = "http://localhost:4000/graphql"
 
   function fetchAllTasks() {
     const requestBody = {
@@ -44,7 +43,7 @@ export default function App() {
           }`
     };
 
-    fetch("http://localhost:4000/graphql", {
+    fetch(graphqlUrl, {
       method: "POST",
       body: JSON.stringify(requestBody),
       headers: { "Content-Type": "application/json" }
@@ -64,6 +63,43 @@ export default function App() {
         console.log("Unable To Fetch")
         setFetchErr(err)
       });
+  }
+
+  function fetchRMMStats(){
+    const requestBody = {
+      query:` query{
+        RMMData{
+          hostname
+          intIpAddress
+          operatingSystem
+          domain
+          rebootRequired
+          online
+          antivirus{
+            antivirusProduct
+            antivirusStatus
+          }
+        }
+      }`};
+
+    fetch(graphqlUrl, {
+      method: "POST",
+      body: JSON.stringify(requestBody),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error("Failed to fetch data!");
+      }
+      return res.json();
+    })
+    .then(resData => {
+      setRMMData(resData.data)
+      setLastRMMRefresh(new Date())
+    })
+    .catch(err => {
+      console.log("Unable To Fetch" + err)
+    });
   }
   
   useEffect(() => {
@@ -107,7 +143,9 @@ export default function App() {
           allTasks: allTasks,
           lastTaskRefresh: lastTaskRefresh,
           myTasks: myTasks,
-          fetchErr: fetchErr
+          fetchErr: fetchErr,
+          RMMData: RMMData,
+          lastRMMRefresh: lastRMMRefresh
         }}>
           <Switch>
             <Route path="/admin" component={Admin} />

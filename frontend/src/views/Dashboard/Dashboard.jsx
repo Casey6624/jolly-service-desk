@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -32,19 +32,19 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-class Dashboard extends React.Component {
-  state = {
-    value: 0
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
+function Dashboard(props) {
+
+  const [value, setValue] = useState(0)
+
+  function handleChange(event, value) {
+    setValue(value);
   };
 
-  handleChangeIndex = index => {
-    this.setState({ value: index });
+  function handleChangeIndex(index){
+    setValue(index);
   };
-  render() {
-    const { classes } = this.props;
+
+    const { classes } = props;
     return (
       <div>
         <GridContainer>
@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Used Space</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  49/50
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -227,6 +227,5 @@ class Dashboard extends React.Component {
       </div>
     );
   }
-}
 
 export default withStyles(dashboardStyle)(Dashboard);
