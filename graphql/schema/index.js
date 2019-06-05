@@ -22,6 +22,24 @@ module.exports = TaskSchema = buildSchema(`
         createdBy: String!
     }
 
+    type RMM {
+        hostname: String!
+        intIpAddress: String!
+        operatingSystem: String!
+        domain: String!
+        rebootRequired: Boolean!
+        online: Boolean!
+    }
+
+    input RMMInput {
+        hostname: String!
+        intIpAddress: String!
+        operatingSystem: String!
+        domain: String!
+        rebootRequired: Boolean!
+        online: Boolean!
+    }
+
     input TaskInputEdit {
         title: String!
         description: String
@@ -35,6 +53,7 @@ module.exports = TaskSchema = buildSchema(`
 
     type RootQuery{
         tasks: [Task!]!
+        RMMData : [[RMM!]!]!
     }
 
     type RootMutation{

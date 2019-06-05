@@ -8,12 +8,17 @@ module.exports = {
         // all jolly servers
         const filtered = data.devices.filter(site => site.siteUid === process.env.AT_JOLLY_SERVERS)
 
-        const rebootNeeded = filtered.filter(server => server.rebootRequired === true) // returns array of servers which need reboots
+        const jollyServers = []
+        filtered.forEach(server => {
+            jollyServers.push((({hostname, intIpAddress, operatingSystem, domain, rebootRequired, online, antivirus}) => ({hostname, intIpAddress, operatingSystem, domain, rebootRequired, online, antivirus}))(server))
+        });
 
-        const offlineServers = filtered.filter(server => server.online === false) // returns array of offline servers
+        const rebootNeeded = jollyServers.filter(server => server.rebootRequired === true) // returns array of servers which need reboots
 
-        const antiVirusServers = filtered.filter(server => server.antivirus.antivirusStatus !== 'RunningAndUpToDate' || server.antivirus.antivirusStatus !== 'NotDetected')
+        const offlineServers = jollyServers.filter(server => server.online === false) // returns array of offline servers
 
-        console.log(filtered)
+        const antiVirusServers = jollyServers.filter(server => server.antivirus.antivirusStatus !== 'RunningAndUpToDate' || server.antivirus.antivirusStatus !== 'NotDetected')
+
+        return [rebootNeeded, offlineServers, antiVirusServers]
     }
 }

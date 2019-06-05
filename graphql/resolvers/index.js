@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const Task = require("../../models/Task")
 
 const mail = require("../../mail/index");
+const RMM = require("../../RMM/index");
 
 module.exports = GraphQLResolvers = {
     tasks: () => {
@@ -78,5 +79,8 @@ module.exports = GraphQLResolvers = {
             }
         })
         return taskInput
+    },
+    RMMData: async () => {
+        return data = await RMM.readFile()
     }
 }
