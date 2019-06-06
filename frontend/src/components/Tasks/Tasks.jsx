@@ -30,8 +30,6 @@ import HttpContext from "../../context/HttpContext";
 import { transformPriority, transformDate } from "../../helpers/index";
 // Custom components
 import Searchbar from "../Searchbar/Searchbar";
-// LIbraries
-import moment from "moment"
 
 function Tasks({ classes, filter, refreshing, setRefreshing }) {
   const httpContext = useContext(HttpContext);
