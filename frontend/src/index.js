@@ -20,7 +20,7 @@ export default function App() {
   const [myTasks, setMyTasks] = useState([])
   const [fetchErr, setFetchErr] = useState(null)
   const username = "Casey@jollyit.co.uk"; // this will eventually be taken from MSAL returned data
-  const [RMMData, setRMMData] = useState(null)
+  const [RMMData, setRMMData] = useState([])
   const [lastRMMRefresh, setLastRMMRefresh] = useState(null)
 
   const graphqlUrl = "http://localhost:4000/graphql"
@@ -94,7 +94,8 @@ export default function App() {
       return res.json();
     })
     .then(resData => {
-      setRMMData(resData.data)
+      console.log(resData.data.RMMData)
+      setRMMData(resData.data.RMMData)
       setLastRMMRefresh(new Date())
     })
     .catch(err => {

@@ -25,12 +25,6 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 // Context
 import HttpContext from "../../context/HttpContext"
-import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
-import {
-    dailySalesChart,
-    emailsSubscriptionChart,
-    completedTasksChart
-  } from "variables/charts.jsx";
 
 export default function RMMStats({classes}){
 
@@ -38,7 +32,11 @@ export default function RMMStats({classes}){
 
     const [RMMData, setRMMData] = useState(null)
 
-    return(
+    useEffect(() => {
+        setRMMData(httpContext.RMMData)
+    }, [httpContext.RMMData])
+
+     return(
         <Fragment>
             <GridContainer>
               <GridItem xs={12} sm={12} md={4}>
@@ -49,7 +47,7 @@ export default function RMMStats({classes}){
                     </CardIcon>
                     <p className={classes.cardCategory}>Anti-Virus Issues</p>
                     <h3 className={classes.cardTitle}>
-                      4
+                      {"RMMData"}
                     </h3>
                   </CardHeader>
                   <CardFooter stats>
@@ -71,7 +69,7 @@ export default function RMMStats({classes}){
                       <Store />
                     </CardIcon>
                     <p className={classes.cardCategory}>Servers Requiring Reboots</p>
-                    <h3 className={classes.cardTitle}>$34,245</h3>
+                    <h3 className={classes.cardTitle}> {"RMMData"} </h3>
                   </CardHeader>
                   <CardFooter stats>
                     <div className={classes.stats}>
@@ -88,7 +86,7 @@ export default function RMMStats({classes}){
                       <Icon>info_outline</Icon>
                     </CardIcon>
                     <p className={classes.cardCategory}>Offline Servers</p>
-                    <h3 className={classes.cardTitle}>75</h3>
+                    <h3 className={classes.cardTitle}> {"RMMData"} </h3>
                   </CardHeader>
                   <CardFooter stats>
                     <div className={classes.stats}>
@@ -100,6 +98,6 @@ export default function RMMStats({classes}){
               </GridItem>
             </GridContainer>
         </Fragment>
-    )
+    ) 
 }
 

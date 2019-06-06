@@ -142,7 +142,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
   function handleClearInput() {
     setSearchQuery("")
   }
-
+  const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   if (filteredTaskData !== null) {
     return (
       <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
@@ -308,7 +308,6 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     )
   }
 
-  const taskTitle = classnames(classes.tableCell, classes.taskTitle);
   return (
     <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
       <GridItem xs={12} sm={12} md={12}>
