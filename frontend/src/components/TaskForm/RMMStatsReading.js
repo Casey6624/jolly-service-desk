@@ -12,8 +12,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import Coffee from "@material-ui/icons/LocalCafe";
 // Libraries
 import { NavLink } from "react-router-dom"
-// Helpers
-import {transformDate} from "../../helpers/index"
 
 export default function RMMStatsReading({ onClose, RMMStats, activeList }) {
 
@@ -27,19 +25,27 @@ export default function RMMStatsReading({ onClose, RMMStats, activeList }) {
             </GridContainer >
         );
     }
+    const [toggleExpand, setToggleExpand] = useState(false)
+
     let extraDetails
 
     switch(activeList){
         case 0:
-            extraDetails = (<div>
-                <p> AntiVirus Status: <span style={{color: "#ef5350"}}>{RMMStats[activeList][13].antivirus.antivirusStatus} </span> </p>
-                <p> AntiVirus Product: <span style={{color: "#ffa726"}}>{RMMStats[activeList][13].antivirus.antivirusProduct !== null ? RMMStats[activeList][0].antivirus.antivirusProduct : "N/A"} </span> </p>
-            </div>)
+                        extraDetails = RMMStats[activeList].map((stat, index) => <Fragment>
+                        <div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
+                    <h4 style={{fontWeight: "bold"}}>{RMMStats[activeList][index].hostname}</h4>
+                    <h4>{RMMStats[activeList][index].domain}</h4>
+                </div><div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
+                    <p> AntiVirus Status: <span style={{color: "#ef5350"}}>{RMMStats[activeList][13].antivirus.antivirusStatus} </span> </p>
+                    <p> AntiVirus Product: <span style={{color: "#ffa726"}}>{RMMStats[activeList][13].antivirus.antivirusProduct !== null ? RMMStats[activeList][0].antivirus.antivirusProduct : "N/A"} </span> </p>
+                </div>
+                    </Fragment>)
         break;
         default:
-            extraDetails = RMMStats.map((stat, index) => <Fragment>
+            extraDetails = RMMStats[activeList].map((stat, index) => <Fragment key={`__${RMMStats[activeList][index].hostname}__`}>
+
                 <div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
-            <h4>{RMMStats[activeList][index].hostname}</h4>
+            <h4 style={{fontWeight: "bold"}}>{RMMStats[activeList][index].hostname}</h4>
             <h4>{RMMStats[activeList][index].domain}</h4>
         </div><div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
             <p> OS: <span style={{color: "#66bb6a"}}>{RMMStats[activeList][index].operatingSystem !== null ? RMMStats[activeList][index].operatingSystem : "Could Not Detect"} </span> </p>
@@ -49,22 +55,19 @@ export default function RMMStatsReading({ onClose, RMMStats, activeList }) {
         break;
     }
 
-    console.log(RMMStats[activeList][0])
     return (
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
                 <List style={{overflowY: "auto", height: 300}}>
                     <Card style={{overflowY: "auto", height: 300}}>
-                        <div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
-                            <h4>{RMMStats[activeList][0].hostname}</h4>
-                            <h4>{RMMStats[activeList][0].domain}</h4>
-                        </div>
-                        <div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
+                        <div style={{margin: 10}}>
+                            <h2>{ activeList === 0 ? "Servers With Anti-Virus Issues" : activeList === 1 ? "Server Requiring Reboots" : "Offline Servers"}</h2>
                         {extraDetails}
                         </div>
                     </Card>
                 </List>
                 <NavLink to="/admin/dashboard">
+                <Button onClick={onClose} style={{margin: "auto", display: "list-item", listStyle: "none"}}> {toggleExpand ? "Shrink" : "Expand"} </Button>
                 <Button onClick={onClose} style={{margin: "auto", display: "list-item", listStyle: "none"}}> Close </Button>
                 </NavLink>
             </GridItem>
