@@ -16,7 +16,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 // Custom Components
-import Modal from "../../components/Modal/Modal"
+import RMMStatsReading from "../../components/TaskForm/RMMStatsReading"
 // Context
 import HttpContext from "../../context/HttpContext"
 
@@ -27,6 +27,8 @@ export default function RMMStats({classes}){
     const [RMMData, setRMMData] = useState(null)
     const [openModal, setOpen] = useState(false)
 
+    const [activeList, setActiveList] = useState(null)
+
     useEffect(() => {
         setRMMData(httpContext.RMMData)
     }, [httpContext.RMMData])
@@ -34,16 +36,24 @@ export default function RMMStats({classes}){
     if(!RMMData){
       return <div>Loading...</div>
     }
+
+    function triggerModal(listIndex){
+      setActiveList(listIndex)
+      setOpen(true)
+    }
     
      return(
         <Fragment>
-          {openModal &&<Modal
-          title="Your Active Tasks"
-          modalType="reading"  
-          onCancel={() => setOpen(false)}  
-        > 
-        </Modal>}
+          {openModal &&<RMMStatsReading
+          title="RMM"
+          RMMStats={RMMData}
+          onClose={() => setOpen(false)}
+          activeList={activeList}
+          />}
             <GridContainer>
+              <GridItem xs={12} sm={12} md={12}>
+              <h4>Jolly Servers.</h4>
+              </GridItem>
               <GridItem xs={12} sm={12} md={4}>
                 <Card>
                   <CardHeader color="warning" stats icon>
@@ -58,7 +68,7 @@ export default function RMMStats({classes}){
                   <CardFooter stats>
                     <div className={classes.stats}>
                         <Warning />
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                      <a onClick={() => triggerModal(0)}>
                         View Servers
                       </a>
                     </div>
@@ -77,7 +87,7 @@ export default function RMMStats({classes}){
                   <CardFooter stats>
                     <div className={classes.stats}>
                     <Warning />
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                      <a onClick={() => triggerModal(1)}>
                         View Servers
                       </a>
                     </div>
@@ -96,7 +106,7 @@ export default function RMMStats({classes}){
                   <CardFooter stats>
                     <div className={classes.stats}>
                     <Warning />
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                      <a onClick={() => triggerModal(2)}>
                         View Servers
                       </a>
                     </div>
