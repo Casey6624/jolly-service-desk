@@ -31,6 +31,7 @@ export default function RMMStatsReading({ onClose, RMMStats, activeList }) {
 
     switch(activeList){
         case 0:
+            // we report on different stats to default so we need different JSX
                         extraDetails = RMMStats[activeList].map((stat, index) => <Fragment>
                         <div style={{display: "flex", justifyContent: "space-between", margin: 10}}>
                     <h4 style={{fontWeight: "bold"}}>{RMMStats[activeList][index].hostname}</h4>
@@ -58,16 +59,16 @@ export default function RMMStatsReading({ onClose, RMMStats, activeList }) {
     return (
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-                <List style={{overflowY: "auto", height: 300}}>
-                    <Card style={{overflowY: "auto", height: 300}}>
+                <List>
+                    <Card style={{overflowY: "auto", height: toggleExpand ? 600 : 300}}>
                         <div style={{margin: 10}}>
                             <h2>{ activeList === 0 ? "Servers With Anti-Virus Issues" : activeList === 1 ? "Server Requiring Reboots" : "Offline Servers"}</h2>
                         {extraDetails}
                         </div>
                     </Card>
                 </List>
+                <Button onClick={() => setToggleExpand(!toggleExpand)} style={{margin: "auto", display: "list-item", listStyle: "none"}}> {toggleExpand ? "Shrink" : "Expand"} </Button> <br/>
                 <NavLink to="/admin/dashboard">
-                <Button onClick={onClose} style={{margin: "auto", display: "list-item", listStyle: "none"}}> {toggleExpand ? "Shrink" : "Expand"} </Button>
                 <Button onClick={onClose} style={{margin: "auto", display: "list-item", listStyle: "none"}}> Close </Button>
                 </NavLink>
             </GridItem>
