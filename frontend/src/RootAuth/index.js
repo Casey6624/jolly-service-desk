@@ -13,7 +13,7 @@ import "assets/css/material-dashboard-react.css?v=1.6.0";
 
 const hist = createBrowserHistory();
 
-export default function App({ auth }) {
+export default function App({ auth, setAuth }) {
 
     const [allTasks, setAllTasks] = useState([])
     const [lastTaskRefresh, setLastTaskRefresh] = useState(null)
@@ -133,6 +133,11 @@ export default function App({ auth }) {
         }
     }, [auth])
 
+    function logout() {
+        window.location.href = "http://localhost:3000/logout"
+        setAuth(null)
+    }
+
     return (
         <Router history={hist}>
             <UserContext.Provider
@@ -146,7 +151,8 @@ export default function App({ auth }) {
                         "Dan@jollyit.co.uk",
                         "Jude@jollyit.co.uk",
                         "Anyone@jollyit.co.uk"
-                    ]
+                    ],
+                    logout: () => logout()
                 }}
             >
                 <HttpContext.Provider value={{

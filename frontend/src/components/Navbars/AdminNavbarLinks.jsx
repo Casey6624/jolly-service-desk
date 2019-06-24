@@ -12,6 +12,7 @@ import Poppers from "@material-ui/core/Popper";
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
+import PowerSetting from "@material-ui/icons/PowerSettingsNew";
 import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -30,6 +31,7 @@ function HeaderLinks(props) {
   const [openModal, setOpenModal] = useState(false)
 
   const httpContext = useContext(HttpContext)
+  const userContext = useContext(UserContext)
 
   function handleToggle(val) {
     setOpenModal(!val)
@@ -97,6 +99,16 @@ function HeaderLinks(props) {
         onCancel={() => setOpenModal(false)}
       >
       </Modal>}
+      <Button
+        color={window.innerWidth > 959 ? "transparent" : "white"}
+        justIcon={window.innerWidth > 959}
+        simple={!(window.innerWidth > 959)}
+        aria-label="Log Out"
+        className={classes.buttonLink}
+        onClick={() => userContext.logout()}
+      >
+        <PowerSetting className={classes.icons} />
+      </Button>
     </div>
   );
 }
