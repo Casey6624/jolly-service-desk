@@ -67,9 +67,9 @@ export default function RMMStatsReading({ onClose, RMMStats, activeList }) {
                         </div>
                     </Card>
                 </List>
-                <Button onClick={() => setToggleExpand(!toggleExpand)} style={{ margin: "auto", display: "list-item", listStyle: "none" }}> {toggleExpand ? "Shrink" : "Expand"} </Button> <br />
+                <Button color="primary" onClick={() => setToggleExpand(!toggleExpand)} style={{ margin: "auto", display: "list-item", listStyle: "none" }}> {toggleExpand ? "Shrink" : "Expand"} </Button> <br />
                 <NavLink to="/admin/dashboard">
-                    <Button onClick={onClose} style={{ margin: "auto", display: "list-item", listStyle: "none" }}> Close </Button>
+                    <Button color="danger" onClick={onClose} style={{ margin: "auto", display: "list-item", listStyle: "none" }}> Close </Button>
                 </NavLink>
             </GridItem>
         </GridContainer >

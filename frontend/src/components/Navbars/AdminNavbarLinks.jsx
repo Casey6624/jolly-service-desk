@@ -97,18 +97,6 @@ function HeaderLinks(props) {
         onCancel={() => setOpenModal(false)}
       >
       </Modal>}
-      <Button
-        color={window.innerWidth > 959 ? "transparent" : "white"}
-        justIcon={window.innerWidth > 959}
-        simple={!(window.innerWidth > 959)}
-        aria-label="Person"
-        className={classes.buttonLink}
-      >
-        <Person className={classes.icons} />
-        <Hidden mdUp implementation="css">
-          <p className={classes.linkText}>Profile</p>
-        </Hidden>
-      </Button>
     </div>
   );
 }
