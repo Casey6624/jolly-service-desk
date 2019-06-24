@@ -1,8 +1,9 @@
 const mongoose = require("mongoose")
 const Task = require("../../models/Task")
-
+const request = require("request")
 const mail = require("../../mail/index");
 const RMM = require("../../RMM/index");
+const axios = require("axios")
 
 module.exports = GraphQLResolvers = {
     tasks: () => {
@@ -36,7 +37,7 @@ module.exports = GraphQLResolvers = {
                 return createdTask
             })
             .then(() => {
-                mail.sendNow(null, "new" ,args.taskInput)
+                mail.sendNow(null, "new", args.taskInput)
             })
             .catch(err => {
                 console.log(err)
@@ -81,6 +82,37 @@ module.exports = GraphQLResolvers = {
         return taskInput
     },
     RMMData: async () => {
-        return data = await RMM.readFile()
+        let RMMData = await axios.get(process.env.RMMEndpoint)
+            .then(res => {
+                return res.data
+            })
+            .then(token => {
+                return axios.get("https://pinotage-api.centrastage.net/api/v2/account/devices", {
+                    headers:
+                    {
+                        'cache-control': 'no-cache',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                    .then(RMMData => {
+                        const filtered = RMMData.data.devices.filter(site => site.siteUid === process.env.AT_JOLLY_SERVERS)
+
+                        const jollyServers = []
+                        filtered.forEach(server => {
+                            jollyServers.push((({ hostname, intIpAddress, operatingSystem, domain, rebootRequired, online, antivirus }) => ({ hostname, intIpAddress, operatingSystem, domain, rebootRequired, online, antivirus }))(server))
+                        });
+
+                        rebootNeeded = jollyServers.filter(server => server.rebootRequired === true) // returns array of servers which need reboots
+
+                        offlineServers = jollyServers.filter(server => server.online === false) // returns array of offline servers
+
+                        antiVirusServers = jollyServers.filter(server => server.antivirus.antivirusStatus !== 'RunningAndUpToDate' || server.antivirus.antivirusStatus !== 'NotDetected')
+
+                        return [antiVirusServers, rebootNeeded, offlineServers]
+
+                    })
+                    .catch(err => new Error("Can't fetch! - " + err))
+            })
+        return RMMData
     }
 }
