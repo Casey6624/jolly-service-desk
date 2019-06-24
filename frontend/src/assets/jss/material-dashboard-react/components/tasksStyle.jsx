@@ -39,6 +39,9 @@ const tasksStyle = {
     width: "17px",
     height: "17px"
   },
+  taskDescriptionCell: {
+    width: "100em"
+  },
   taskTitle: {
     fontWeight: "bold",
     textTransform: "uppercase",

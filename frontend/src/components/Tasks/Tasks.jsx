@@ -141,6 +141,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
     setSearchQuery("")
   }
   const taskTitle = classnames(classes.tableCell, classes.taskTitle);
+  const taskDescription = classnames(classes.tableCell, classes.taskDescriptionCell)
   if (filteredTaskData !== null) {
     return (
       <GridContainer className={classes.tableResponsive} style={{ overflowX: "auto" }}>
@@ -288,7 +289,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className={classes.tableCell}> {task.description} </TableCell>
+                    <TableCell className={taskDescription}> {task.description} </TableCell>
                   </TableRow>
                   <TableRow className={classes.tableRow}>
                     <TableCell />
@@ -452,7 +453,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className={classes.tableCell}> {task.description} </TableCell>
+                  <TableCell className={taskDescription}> {task.description} </TableCell>
                 </TableRow>
                 <TableRow className={classes.tableRow}>
                   <TableCell />
