@@ -1,4 +1,4 @@
-import React , {useState, useContext, useEffect, Fragment} from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 // @material-ui/core
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
@@ -20,101 +20,166 @@ import RMMStatsReading from "../../components/TaskForm/RMMStatsReading"
 // Context
 import HttpContext from "../../context/HttpContext"
 
-export default function RMMStats({classes}){
+export default function RMMStats({ classes }) {
 
-    const httpContext = useContext(HttpContext)
+  const httpContext = useContext(HttpContext)
 
-    const [RMMData, setRMMData] = useState(null)
-    const [openModal, setOpen] = useState(false)
+  const [RMMData, setRMMData] = useState(null)
+  const [openModal, setOpen] = useState(false)
 
-    const [activeList, setActiveList] = useState(null)
+  const [activeList, setActiveList] = useState(null)
 
-    useEffect(() => {
-        setRMMData(httpContext.RMMData)
-    }, [httpContext.RMMData])
+  useEffect(() => {
+    setRMMData(httpContext.RMMData)
+  }, [httpContext.RMMData])
 
-    if(!RMMData){
-      return <div>Loading...</div>
-    }
+  if (!RMMData) {
+    return (
+      <Fragment>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <h4>Jolly Servers.</h4>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={4}>
+            <Card>
+              <CardHeader color="warning" stats icon>
+                <CardIcon color="warning">
+                  <Icon>bug_report</Icon>
+                </CardIcon>
+                <p className={classes.cardCategory}>Anti-Virus Issues</p>
+                <h3 className={classes.cardTitle}>
+                </h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats}>
+                  <a>
+                    Loading Data...
+                  </a>
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={4}>
+            <Card>
+              <CardHeader color="success" stats icon>
+                <CardIcon color="success">
+                  <Icon>cached</Icon>
+                </CardIcon>
+                <p className={classes.cardCategory}>Servers Requiring Reboots</p>
+                <h3 className={classes.cardTitle}> </h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats}>
+                  <Warning />
+                  <a>
+                    Loading Data...
+                  </a>
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={4}>
+            <Card>
+              <CardHeader color="danger" stats icon>
+                <CardIcon color="danger">
+                  <Icon>signal_cellular_off</Icon>
+                </CardIcon>
+                <p className={classes.cardCategory}>Offline Servers</p>
+                <h3 className={classes.cardTitle}> </h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats}>
+                  <Warning />
+                  <a>
+                    Loading Data...
+                  </a>
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </Fragment>
+    )
+  }
 
-    function triggerModal(listIndex){
-      setActiveList(listIndex)
-      setOpen(true)
-    }
-    
-     return(
-        <Fragment>
-          {openModal &&<RMMStatsReading
-          title="RMM"
-          RMMStats={RMMData}
-          onClose={() => setOpen(false)}
-          activeList={activeList}
-          />}
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={12}>
-              <h4>Jolly Servers.</h4>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={4}>
-                <Card>
-                  <CardHeader color="warning" stats icon>
-                    <CardIcon color="warning">
-                      <Icon>bug_report</Icon>
-                    </CardIcon>
-                    <p className={classes.cardCategory}>Anti-Virus Issues</p>
-                    <h3 className={classes.cardTitle}>
-                      {RMMData ? RMMData[0].length : null}
-                    </h3>
-                  </CardHeader>
-                  <CardFooter stats>
-                    <div className={classes.stats}>
-                        <Warning />
-                      <a onClick={() => triggerModal(0)}>
-                        View Servers
+  function triggerModal(listIndex) {
+    setActiveList(listIndex)
+    setOpen(true)
+  }
+
+  return (
+    <Fragment>
+      {openModal && <RMMStatsReading
+        title="RMM"
+        RMMStats={RMMData}
+        onClose={() => setOpen(false)}
+        activeList={activeList}
+      />}
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <h4>Jolly Servers.</h4>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={4}>
+          <Card>
+            <CardHeader color="warning" stats icon>
+              <CardIcon color="warning">
+                <Icon>bug_report</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Anti-Virus Issues</p>
+              <h3 className={classes.cardTitle}>
+                {RMMData ? RMMData[0].length : null}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <Warning />
+                <a onClick={() => triggerModal(0)}>
+                  View Servers
                       </a>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={4}>
-                <Card>
-                  <CardHeader color="success" stats icon>
-                    <CardIcon color="success">
-                      <Icon>cached</Icon>
-                    </CardIcon>
-                    <p className={classes.cardCategory}>Servers Requiring Reboots</p>
-                    <h3 className={classes.cardTitle}> {RMMData ? RMMData[1].length : null} </h3>
-                  </CardHeader>
-                  <CardFooter stats>
-                    <div className={classes.stats}>
-                    <Warning />
-                      <a onClick={() => triggerModal(1)}>
-                        View Servers
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={4}>
+          <Card>
+            <CardHeader color="success" stats icon>
+              <CardIcon color="success">
+                <Icon>cached</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Servers Requiring Reboots</p>
+              <h3 className={classes.cardTitle}> {RMMData ? RMMData[1].length : null} </h3>
+            </CardHeader>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <Warning />
+                <a onClick={() => triggerModal(1)}>
+                  View Servers
                       </a>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={4}>
-                <Card>
-                  <CardHeader color="danger" stats icon>
-                    <CardIcon color="danger">
-                      <Icon>signal_cellular_off</Icon>
-                    </CardIcon>
-                    <p className={classes.cardCategory}>Offline Servers</p>
-                    <h3 className={classes.cardTitle}> {RMMData ? RMMData[2].length : null} </h3>
-                  </CardHeader>
-                  <CardFooter stats>
-                    <div className={classes.stats}>
-                    <Warning />
-                      <a onClick={() => triggerModal(2)}>
-                        View Servers
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={4}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>signal_cellular_off</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Offline Servers</p>
+              <h3 className={classes.cardTitle}> {RMMData ? RMMData[2].length : null} </h3>
+            </CardHeader>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <Warning />
+                <a onClick={() => triggerModal(2)}>
+                  View Servers
                       </a>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </GridItem>
-            </GridContainer>
-        </Fragment>
-    ) 
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </Fragment>
+  )
 }
 
