@@ -10,8 +10,10 @@ import LocalOffer from "@material-ui/icons/LocalOffer";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Danger from "components/Typography/Danger.jsx";
+import Chip from '@material-ui/core/Chip';
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import Snackbar from '@material-ui/core/Snackbar';
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
@@ -19,6 +21,8 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import RMMStatsReading from "../../components/TaskForm/RMMStatsReading"
 // Context
 import HttpContext from "../../context/HttpContext"
+// libraries
+import moment from "moment"
 
 export default function RMMStats({ classes }) {
 
@@ -33,9 +37,24 @@ export default function RMMStats({ classes }) {
     setRMMData(httpContext.RMMData)
   }, [httpContext.RMMData])
 
+  function getLastRefresh() {
+    return moment(httpContext.lastRMMRefresh).format('LTS');
+  }
+
   if (!RMMData) {
     return (
       <Fragment>
+        {!RMMData && httpContext.RMMFetchErr && <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={true}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id"><strong>Connection Error</strong> - Struggling To Fetch RMM Data!</span>}
+        />}
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <h4>Jolly Servers.</h4>
@@ -116,8 +135,8 @@ export default function RMMStats({ classes }) {
         activeList={activeList}
       />}
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <h4>Jolly Servers.</h4>
+        <GridItem xs={12} sm={12} md={12} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <h4>Jolly Servers.</h4> <Chip label={`Last Updated: ${getLastRefresh()}`} className={classes.chip} variant="outlined" style={{ marginRight: 10 }} />
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card>

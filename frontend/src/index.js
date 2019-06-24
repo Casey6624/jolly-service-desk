@@ -19,6 +19,7 @@ export default function App() {
   const [lastTaskRefresh, setLastTaskRefresh] = useState(null)
   const [myTasks, setMyTasks] = useState([])
   const [fetchErr, setFetchErr] = useState(null)
+  const [RMMFetchErr, setRMMFetchErr] = useState(null)
   const username = "Casey@jollyit.co.uk"; // this will eventually be taken from MSAL returned data
   const [RMMData, setRMMData] = useState(null)
   const [lastRMMRefresh, setLastRMMRefresh] = useState(null)
@@ -95,9 +96,11 @@ export default function App() {
       })
       .then(resData => {
         setRMMData(resData.data.RMMData)
+        setRMMFetchErr(null)
         setLastRMMRefresh(new Date())
       })
       .catch(err => {
+        setRMMFetchErr(err)
         console.log("Unable To Fetch" + err)
       });
   }
@@ -151,7 +154,8 @@ export default function App() {
           myTasks: myTasks,
           fetchErr: fetchErr,
           RMMData: RMMData,
-          lastRMMRefresh: lastRMMRefresh
+          lastRMMRefresh: lastRMMRefresh,
+          RMMFetchErr: RMMFetchErr
         }}>
           <Switch>
             <Route path="/admin" component={Admin} />

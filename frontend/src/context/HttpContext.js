@@ -12,6 +12,7 @@ const HttpContext = createContext({
     myTasks: [],
     fetchErr: null,
     RMMData: null,
+    RMMFetchErr: null,
     lastRMMRefresh: null
 })
 
