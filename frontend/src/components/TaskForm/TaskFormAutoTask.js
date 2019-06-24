@@ -14,7 +14,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 // Additional Components
-
+import moment from "moment"
 // Context
 import UserContext from "../../context/UserContext"
 import HttpContext from "../../context/HttpContext"
@@ -37,15 +37,14 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
         DueDateTime: '2018-12-17',
         Title: taskTitle,
         Status: 1, // only 1 works, cannot set completed etc
-        Priority: taskPriority // 1 = High, 2 = Medium, 3 = Low, 4 = Critical
+        //Priority: taskPriority // 1 = High, 2 = Medium, 3 = Low, 4 = Critical
     }
 
-    const { _id, assignedTo, priority, title, description, createdBy, status } = editTaskData
+    const { _id, title, description, createdBy, status } = editTaskData
 
-    const [taskAssignedTo, setTaskAssignedTo] = useState(assignedTo)
-    const [taskPriority, setTaskPriority] = useState(priority)
     const [taskTitle, setTaskTitle] = useState(title)
     const [taskDescription, setTaskDescription] = useState(description)
+    const [taskDueDate, setTaskDueDate] = useState(null)
     const [error, setError] = useState("Please fill out all fields which are marked with an asterix (*)")
 
     const styles = {
@@ -69,65 +68,55 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
 
     function handleFormChange({ name, value }) {
         switch (name) {
-            case "assignedTo":
-                setTaskAssignedTo(value)
-                break;
-            case "priority":
-                setTaskPriority(value)
-                break;
             case "taskTitle":
                 setTaskTitle(value)
                 break;
             case "taskDescription":
                 setTaskDescription(value)
                 break;
+            case "taskDueDate":
+                setTaskDueDate(value)
+                break;
         }
     }
 
     function initialValidation() {
 
-        if (!taskAssignedTo || !taskPriority || !taskTitle) {
+        if (!taskTitle) {
             setError("Error! Please ensure you have filled out the required fields.")
             return
         }
-        submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle)
+        submitNewTask(taskDescription, taskTitle)
         onClose()
     }
 
-    function submitNewTask(taskAssignedTo, taskDescription, taskPriority, taskTitle) {
+    function submitNewTask(taskDescription, taskTitle) {
 
         const currUser = userContext.username
-        if (!taskAssignedTo || !taskTitle || !taskPriority) return
+        if (!taskTitle) return
 
         if (taskDescription === "") {
             taskDescription = "N/A"
         }
 
+        if (taskDueDate === null) {
+            const now = moment(new Date()).format()
+            setTaskDueDate(now)
+        }
+
         let requestBody = {
-            query: `
-            mutation{
-                editTask(taskID: "${_id}", taskInput: {
-                  title: "${taskTitle}"
-                  description: "${taskDescription}"
-                  assignedTo: "${taskAssignedTo}"
-                  priority: ${taskPriority}
-                }){
-                  title
-                  assignedTo
-                }
-              }
-            `
-        };
-        fetch(httpContext.graphqlEndpoint, {
+            Title: taskTitle,
+            Description: taskDescription,
+            DueDate: taskDueDate
+        }
+
+        fetch(httpContext.ATPSAEndpoint, {
             method: "POST",
             body: JSON.stringify(requestBody),
             headers: { "Content-Type": "application/json" }
         })
             .then(res => {
-                if (res.status !== 200 && res.status !== 201) {
-                    throw new Error("Failed to fetch data!");
-                }
-                return res.json();
+                console.log(res)
             })
             .then(resData => {
                 console.log(resData)
@@ -141,57 +130,10 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
                 <Card>
-                    <CardHeader color={error === "Please fill out all fields which are marked with an asterix (*)" ? "info" : "danger"}>
+                    <CardHeader color={error === "Create New AutoTask Ticket With The Following Information" ? "info" : "danger"}>
                         <p className={styles.cardCategoryWhite}> {error} </p>
                     </CardHeader>
                     <CardBody>
-                        <GridContainer style={{ marginTop: 15 }}>
-                            <GridItem xs={12} sm={12} md={12} lg={6}>
-                                <InputLabel htmlFor="assign-task" style={{ fontSize: "1rem" }}>Assign Task To* </InputLabel>
-                                <Select
-                                    native
-                                    name="assignedTo"
-                                    required
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "flex-end",
-                                        font: "inherit",
-                                        color: "currentColor",
-                                        width: "100%",
-                                        border: 0,
-                                        margin: 0,
-                                        padding: 6,
-                                    }}
-                                    onChange={e => handleFormChange(e.target)}
-                                    value={taskAssignedTo}
-                                >
-                                    {userContext.JITUsers.map((user, index) => <option key={user} value={user}> {user} </option>)}
-                                </Select>
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={12} lg={6}>
-                                <InputLabel htmlFor="priority-task" style={{ fontSize: "1rem" }}>Choose Task Priority* </InputLabel>
-                                <Select
-                                    native
-                                    name="priority"
-                                    selected
-                                    required
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "flex-end",
-                                        font: "inherit",
-                                        color: "currentColor",
-                                        width: "100%",
-                                        border: 0,
-                                        margin: 0,
-                                        padding: 6,
-                                    }}
-                                    onChange={e => handleFormChange(e.target)}
-                                    value={taskPriority}
-                                >
-                                    {priorities.map((priority, index) => <option key={priority} value={priority}> {transformPriority(priority)} </option>)}
-                                </Select>
-                            </GridItem>
-                        </GridContainer>
                         <GridContainer>
                             <GridItem xs={12} sm={12} md={12}>
                                 <CustomInput
@@ -215,10 +157,12 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                                 <TextField
                                     id="date"
                                     label="Ticket Due Date"
+                                    name="taskDueDate"
                                     type="date"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    onChange={e => handleFormChange(e.target)}
                                 />
                             </GridItem>
                         </GridContainer>

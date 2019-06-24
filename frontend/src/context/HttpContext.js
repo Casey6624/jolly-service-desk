@@ -4,6 +4,7 @@ import { createContext } from "react"
 
 const HttpContext = createContext({
     graphqlEndpoint: null,
+    ATPSAEndpoint: null,
     fetchAllTasks: function () { },
     autoTaskQueueID: null,
     allTasks: [],
