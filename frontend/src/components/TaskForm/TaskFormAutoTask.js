@@ -13,6 +13,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Snackbar from '@material-ui/core/Snackbar';
 // Additional Components
 import moment from "moment"
 // Context
@@ -46,6 +47,7 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
     const [taskTitle, setTaskTitle] = useState(title)
     const [taskDescription, setTaskDescription] = useState(description)
     const [taskDueDate, setTaskDueDate] = useState(null)
+    const [httpError, setHttpError] = useState(null)
     const [error, setError] = useState(ATLabel)
 
     const styles = {
@@ -84,11 +86,15 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
     function initialValidation() {
 
         if (!taskTitle) {
-            setError("Error! Please ensure you have filled out the required fields.")
+            setError("Error! Please ensure you have filled out the 'Title' field.")
+            return
+        }
+
+        if (!taskDueDate) {
+            setError("Error! Please ensure you have filled out the 'Due Date' field.")
             return
         }
         submitNewTask(taskDescription, taskTitle)
-        onClose()
     }
 
     function submitNewTask(taskDescription, taskTitle) {
@@ -121,14 +127,26 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
             })
             .then(resData => {
                 console.log(resData)
+                onClose()
             })
             .catch(err => {
-                throw new Error("Could not reach API!" + err);
+                setHttpError(err)
             });
     }
 
     return (
         <GridContainer>
+            {httpError && <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={true}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id"><strong>Error </strong> - Failed To Reach AutoTask PSA :/ </span>}
+            />}
             <GridItem xs={12} sm={12} md={12}>
                 <Card>
                     <CardHeader color={error === ATLabel ? "info" : "danger"}>
@@ -162,6 +180,7 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
                                     type="date"
                                     InputLabelProps={{
                                         shrink: true,
+                                        required: true
                                     }}
                                     onChange={e => handleFormChange(e.target)}
                                 />
