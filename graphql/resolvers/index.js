@@ -1,8 +1,6 @@
 const mongoose = require("mongoose")
 const Task = require("../../models/Task")
-const request = require("request")
 const mail = require("../../mail/index");
-const RMM = require("../../RMM/index");
 const axios = require("axios")
 
 module.exports = GraphQLResolvers = {
