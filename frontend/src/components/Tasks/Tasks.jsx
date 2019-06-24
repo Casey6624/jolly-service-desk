@@ -182,7 +182,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
             {autotasking && <Modal
               modalType="autotask"
               editTaskData={autoTaskTask}
-              title="Export Task To AutoTask"
+              title="Export Task To AutoTask Ticket"
               onCancel={() => setAutotasking(false)}
             />}
             <TableBody className={classes.tableResponsive} >
@@ -346,7 +346,7 @@ function Tasks({ classes, filter, refreshing, setRefreshing }) {
           {autotasking && <Modal
             modalType="autotask"
             editTaskData={autoTaskTask}
-            title="Export Task To AutoTask"
+            title="Export Task To AutoTask Ticket"
             onCancel={() => setAutotasking(false)}
           />}
           <TableBody className={classes.tableResponsive} >

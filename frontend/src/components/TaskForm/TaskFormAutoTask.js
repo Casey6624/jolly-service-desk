@@ -42,10 +42,11 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
 
     const { _id, title, description, createdBy, status } = editTaskData
 
+    const ATLabel = "Export the Following Task to an AutoTask Ticket? Feel free to modify the data before saving to AutoTask."
     const [taskTitle, setTaskTitle] = useState(title)
     const [taskDescription, setTaskDescription] = useState(description)
     const [taskDueDate, setTaskDueDate] = useState(null)
-    const [error, setError] = useState("Please fill out all fields which are marked with an asterix (*)")
+    const [error, setError] = useState(ATLabel)
 
     const styles = {
         cardCategoryWhite: {
@@ -130,7 +131,7 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
         <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
                 <Card>
-                    <CardHeader color={error === "Create New AutoTask Ticket With The Following Information" ? "info" : "danger"}>
+                    <CardHeader color={error === ATLabel ? "info" : "danger"}>
                         <p className={styles.cardCategoryWhite}> {error} </p>
                     </CardHeader>
                     <CardBody>
