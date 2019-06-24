@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -23,7 +23,7 @@ import headerLinksStyle from "assets/jss/material-dashboard-react/components/hea
 import HttpContext from "../../context/HttpContext"
 import UserContext from "../../context/UserContext"
 
-function HeaderLinks(props){
+function HeaderLinks(props) {
 
   const [open, setOpen] = useState(false)
 
@@ -31,102 +31,86 @@ function HeaderLinks(props){
 
   const httpContext = useContext(HttpContext)
 
-  function handleToggle(val){
+  function handleToggle(val) {
     setOpenModal(!val)
-  };  
+  };
 
-    const { classes } = props;
-    return (
-      <div>
-        <div className={classes.searchWrapper}>
-          <CustomInput
-            formControlProps={{
-              className: classes.margin + " " + classes.search
-            }}
-            inputProps={{
-              placeholder: "Search",
-              inputProps: {
-                "aria-label": "Search"
-              }
-            }}
-          />
-          <Button color="white" aria-label="edit" justIcon round>
-            <Search />
-          </Button>
-        </div>
-        <NavLink to="/admin/dashboard">
-          <Button
-            color={window.innerWidth > 959 ? "transparent" : "white"}
-            justIcon={window.innerWidth > 959}
-            simple={!(window.innerWidth > 959)}
-            aria-label="Dashboard"
-            className={classes.buttonLink}
-          >
-            <Dashboard className={classes.icons} />
-            <Hidden mdUp implementation="css">
-              <p className={classes.linkText}>Dashboard</p>
-            </Hidden>
-          </Button>
-        </NavLink>
-        <div className={classes.manager}>
-          <Button
-            color={window.innerWidth > 959 ? "transparent" : "white"}
-            justIcon={window.innerWidth > 959}
-            simple={!(window.innerWidth > 959)}
-            aria-owns={open ? "menu-list-grow" : null}
-            aria-haspopup="true"
-            className={classes.buttonLink}
-            onClick={() => handleToggle(openModal)}
-          >
-            <Notifications className={classes.icons} />
-            <span className={classes.notifications}> {httpContext.myTasks.length} </span>
-            <Hidden mdUp implementation="css">
-            </Hidden>
-          </Button>
-          <Poppers
-            open={open}
-            transition
-            disablePortal
-            className={
-              classNames({ [classes.popperClose]: !open }) +
-              " " +
-              classes.pooperNav
-            }
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                id="menu-list-grow"
-                style={{
-                  transformOrigin:
-                    placement === "bottom" ? "center top" : "center bottom"
-                }}
-              >
-              </Grow>
-            )}
-          </Poppers>
-        </div>
-        {openModal &&<Modal
-          title="Your Active Tasks"
-          modalType="reading"
-          myTaskData={httpContext.myTasks}   
-          onCancel={() => setOpenModal(false)}  
-        > 
-        </Modal>}
+  const { classes } = props;
+  return (
+    <div>
+      <NavLink to="/admin/dashboard">
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
-          aria-label="Person"
+          aria-label="Dashboard"
           className={classes.buttonLink}
         >
-          <Person className={classes.icons} />
+          <Dashboard className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>Dashboard</p>
           </Hidden>
         </Button>
+      </NavLink>
+      <div className={classes.manager}>
+        <Button
+          color={window.innerWidth > 959 ? "transparent" : "white"}
+          justIcon={window.innerWidth > 959}
+          simple={!(window.innerWidth > 959)}
+          aria-owns={open ? "menu-list-grow" : null}
+          aria-haspopup="true"
+          className={classes.buttonLink}
+          onClick={() => handleToggle(openModal)}
+        >
+          <Notifications className={classes.icons} />
+          <span className={classes.notifications}> {httpContext.myTasks.length} </span>
+          <Hidden mdUp implementation="css">
+          </Hidden>
+        </Button>
+        <Poppers
+          open={open}
+          transition
+          disablePortal
+          className={
+            classNames({ [classes.popperClose]: !open }) +
+            " " +
+            classes.pooperNav
+          }
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              id="menu-list-grow"
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "center top" : "center bottom"
+              }}
+            >
+            </Grow>
+          )}
+        </Poppers>
       </div>
-    );
-  }
+      {openModal && <Modal
+        title="Your Active Tasks"
+        modalType="reading"
+        myTaskData={httpContext.myTasks}
+        onCancel={() => setOpenModal(false)}
+      >
+      </Modal>}
+      <Button
+        color={window.innerWidth > 959 ? "transparent" : "white"}
+        justIcon={window.innerWidth > 959}
+        simple={!(window.innerWidth > 959)}
+        aria-label="Person"
+        className={classes.buttonLink}
+      >
+        <Person className={classes.icons} />
+        <Hidden mdUp implementation="css">
+          <p className={classes.linkText}>Profile</p>
+        </Hidden>
+      </Button>
+    </div>
+  );
+}
 
 export default withStyles(headerLinksStyle)(HeaderLinks);
