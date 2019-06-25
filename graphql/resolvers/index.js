@@ -80,7 +80,7 @@ module.exports = GraphQLResolvers = {
         return taskInput
     },
     RMMData: async () => {
-        let RMMData = await axios.get(process.env.RMMEndpoint)
+        let RMMData = await axios.get(process.env.RMM_ENDPOINT)
             .then(res => {
                 return res.data
             })

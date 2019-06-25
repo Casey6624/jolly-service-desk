@@ -1,8 +1,14 @@
-import React, { useContext } from "react"
+import React, { useContext, Fragment, useState } from "react"
 import myMSALObj from "./appConfig"
 import LoginContext from "../context/LoginContext"
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import Lock from '@material-ui/icons/Lock';
+import LockOpen from '@material-ui/icons/LockOpen';
 
 export default function LoginScreen({ setAuth }) {
+
+    const [ hover, setHover ] = useState(false)
 
     const loginContext = useContext(LoginContext)
 
@@ -22,9 +28,14 @@ export default function LoginScreen({ setAuth }) {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
-            <h1> Jolly IT | Tasks  </h1>
-            <button onClick={() => signIn()}> Sign in Using Office 365 </button>
-        </div>
+        <Fragment>
+            <div style={{ textAlign: "center", height: "100vh", margin: "5vh" }}>
+                {hover ? <LockOpen style={{fontSize: 50}} /> : <Lock style={{fontSize: 50}}/>}
+                <h1 style={{margin: 0}}> Jolly IT | Tasks  </h1>
+                <p>NOTE: If this is your first time signing in, you will need to authorize the app on the following screen.</p>
+                <h2>---</h2>
+                <Button variant="contained" color="primary" onClick={() => signIn()} onMouseLeave={() => setHover(false)} onMouseEnter={() => setHover(true)}> Sign in Using Office 365 </Button>
+            </div>
+        </Fragment>
     )
 }
