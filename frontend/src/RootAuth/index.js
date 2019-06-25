@@ -135,6 +135,7 @@ export default function App({ auth, setAuth }) {
 
     function logout() {
         window.location.href = "http://localhost:3000/logout"
+        localStorage.clear();
         setAuth(null)
     }
 
