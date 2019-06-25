@@ -8,7 +8,6 @@ import ViewModule from "@material-ui/icons/ViewModule";
 import MarkerCheck from "@material-ui/icons/Done";
 import Add from '@material-ui/icons/Add';
 import Refresh from '@material-ui/icons/Refresh';
-import CloseIcon from '@material-ui/icons/Close';
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -18,7 +17,6 @@ import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Modal from "components/Modal/Modal"
 import moment from "moment"
 import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import HttpContext from "../../context/HttpContext";
