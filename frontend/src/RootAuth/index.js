@@ -156,7 +156,7 @@ export default function App({ auth, setAuth }) {
                 }}
             >
                 <HttpContext.Provider value={{
-                    graphqlEndpoint: "https://app.jollyit.co.uk/api/graphql",
+                    graphqlEndpoint: graphqlUrl,
                     ATPSAEndpoint: "http://tasks.jollyit.co.uk/php/AT/createTicket.php",
                     fetchAllTasks: fetchAllTasks,
                     autoTaskQueueID: 29682833, // The Helpdesk AT Queue
