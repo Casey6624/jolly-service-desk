@@ -24,7 +24,7 @@ export default function App({ auth, setAuth }) {
     const [RMMData, setRMMData] = useState(null)
     const [lastRMMRefresh, setLastRMMRefresh] = useState(null)
 
-    const graphqlUrl = "http://localhost:4000/api/graphql"
+    const graphqlUrl = "https://app.jollyit.co.uk/api/graphql"
 
     function fetchAllTasks() {
         const requestBody = {
@@ -156,7 +156,7 @@ export default function App({ auth, setAuth }) {
                 }}
             >
                 <HttpContext.Provider value={{
-                    graphqlEndpoint: "http://localhost:4000/api/graphql",
+                    graphqlEndpoint: "https://app.jollyit.co.uk/api/graphql",
                     ATPSAEndpoint: "http://tasks.jollyit.co.uk/php/AT/createTicket.php",
                     fetchAllTasks: fetchAllTasks,
                     autoTaskQueueID: 29682833, // The Helpdesk AT Queue
