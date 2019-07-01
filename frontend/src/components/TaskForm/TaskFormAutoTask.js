@@ -120,7 +120,7 @@ export default function TaskFormEditing({ classes, onClose, editTaskData }) {
         fetch(httpContext.ATPSAEndpoint, {
             method: "POST",
             body: JSON.stringify(requestBody),
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": 'application/x-www-form-urlencoded; charset=UTF-8' }
         })
             .then(res => {
                 console.log(res)
