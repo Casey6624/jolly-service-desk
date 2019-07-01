@@ -22,7 +22,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/api/graphql", graphqlHttp({
+app.use("/graphql", graphqlHttp({
     schema: graphqlSchema,
     rootValue: graphqlResolvers,
     graphiql: true
