@@ -38,7 +38,7 @@ module.exports = {
 
         var mailOptions = {
             from: process.env.EMAIL_USR,
-            to: 'casey@jollyit.co.uk',
+            to: assignedTo,
             subject: `New Task - ${title}`,
             text: createNew
           };
