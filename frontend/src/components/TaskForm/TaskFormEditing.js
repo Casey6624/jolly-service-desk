@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
@@ -12,8 +10,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-import customInputStyle from "assets/jss/material-dashboard-react/components/customInputStyle.jsx";
 // Context
 import UserContext from "../../context/UserContext"
 import HttpContext from "../../context/HttpContext"

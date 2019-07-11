@@ -1,5 +1,5 @@
 .modal{
-    width: 80vw;;
+    width: 80vw;
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     position: fixed;
@@ -8,6 +8,7 @@
     left: 10vw;
     right: 10vw;
     position: absolute;
+    overflow: auto;
     z-index:1000;
 }
 
@@ -21,6 +22,7 @@
     height: 100vh;
     background: rgba(0, 0, 0, 0.75);
     z-index:2000;
+    overflow: auto;
 }
 
 @media(mix-width: 768px){

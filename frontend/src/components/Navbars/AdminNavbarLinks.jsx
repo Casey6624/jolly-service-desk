@@ -1,32 +1,22 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, Fragment } from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
 import Grow from "@material-ui/core/Grow";
-import Card from "@material-ui/core/Card";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 // @material-ui/icons
-import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
 import PowerSetting from "@material-ui/icons/PowerSettingsNew";
-import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Modal from "../Modal/Modal"
-import { NavLink } from "react-router-dom"
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
 // Context 
 import HttpContext from "../../context/HttpContext"
 import UserContext from "../../context/UserContext"
 
 function HeaderLinks(props) {
-
-  const [open, setOpen] = useState(false)
 
   const [openModal, setOpenModal] = useState(false)
 
@@ -39,27 +29,21 @@ function HeaderLinks(props) {
 
   const { classes } = props;
   return (
+    <Fragment>
+      {openModal && <Modal
+        title="Your Active Tasks"
+        modalType="reading"
+        myTaskData={httpContext.myTasks}
+        onCancel={() => setOpenModal(false)}
+      >
+    </Modal>}
     <div>
-      <NavLink to="/admin/dashboard">
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Dashboard"
-          className={classes.buttonLink}
-        >
-          <Dashboard className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Dashboard</p>
-          </Hidden>
-        </Button>
-      </NavLink>
       <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={!(window.innerWidth > 959)}
-          aria-owns={open ? "menu-list-grow" : null}
+          aria-owns={false ? "menu-list-grow" : null}
           aria-haspopup="true"
           className={classes.buttonLink}
           onClick={() => handleToggle(openModal)}
@@ -70,11 +54,11 @@ function HeaderLinks(props) {
           </Hidden>
         </Button>
         <Poppers
-          open={open}
+          false={false}
           transition
           disablePortal
           className={
-            classNames({ [classes.popperClose]: !open }) +
+            classNames({ [classes.popperClose]: !false }) +
             " " +
             classes.pooperNav
           }
@@ -92,13 +76,6 @@ function HeaderLinks(props) {
           )}
         </Poppers>
       </div>
-      {openModal && <Modal
-        title="Your Active Tasks"
-        modalType="reading"
-        myTaskData={httpContext.myTasks}
-        onCancel={() => setOpenModal(false)}
-      >
-      </Modal>}
       <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
@@ -108,8 +85,10 @@ function HeaderLinks(props) {
         onClick={() => userContext.logout()}
       >
         <PowerSetting className={classes.icons} />
+        {window.innerWidth < 959 ? <span className={classes.notifications} style={{textTransform: "none"}}> Log Out </span> : null} 
       </Button>
     </div>
+    </Fragment>
   );
 }
 

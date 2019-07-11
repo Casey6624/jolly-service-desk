@@ -57,7 +57,8 @@ export default function App({ auth, setAuth }) {
             })
             .then(resData => {
                 setFetchErr(null)
-                setAllTasks(resData.data.tasks);
+                // Use reverse to put tasks in order from new to old
+                setAllTasks(resData.data.tasks.reverse());
                 setLastTaskRefresh(new Date())
             })
             .catch(err => {

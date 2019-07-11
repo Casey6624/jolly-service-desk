@@ -18,8 +18,8 @@ export default function TaskFormReading({ onClose, myTaskData }) {
 
     if(myTaskData.length === 0){
         return (
-            <GridContainer>
-                <GridItem xs={12} sm={12} md={12} style={{margin: "auto"}}>
+            <GridContainer className="modal">
+                <GridItem xs={12} sm={12} md={12}>
                     <h4>You're All Up To Date!</h4>
                     <p>Go and stick the kettle on. <Coffee /></p>
                 </GridItem>
@@ -28,9 +28,9 @@ export default function TaskFormReading({ onClose, myTaskData }) {
     }
 
     return (
-        <GridContainer>
+        <GridContainer className="modal">
             <GridItem xs={12} sm={12} md={12}>
-                <List style={{overflowY: "auto", height: 300}}>
+                <List style={{overflowY: "auto", height: 300, margin: "0 auto"}}>
               {myTaskData.map(task => <ListItem key={task._id} style={{background: "#f2f2f2", marginBottom: 5}}>
                   <ListItemText
                     primary={`${task.title}`}
