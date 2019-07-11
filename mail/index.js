@@ -14,14 +14,14 @@ module.exports = {
     sendNow: function(to, template, taskDetails){
         const { title, description, priority, createdBy } = taskDetails
         let { assignedTo } = taskDetails
-        assignedTo = assignedTo.split("@")[0]
+        assignedToName = assignedTo.split("@")[0]
 
-        if(assignedTo === "Anyone"){
-            assignedTo = "Everyone"
+        if(assignedToName === "Anyone"){
+          assignedToName = "Everyone"
         }
 
         let createNew = `
-        Hey ${assignedTo},
+        Hey ${assignedToName},
         
         A new Task has been created and assigned to you - ${title}.
         
