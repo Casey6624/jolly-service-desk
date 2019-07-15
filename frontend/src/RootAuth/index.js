@@ -144,10 +144,13 @@ export default function App({ auth, setAuth }) {
             <UserContext.Provider
                 value={{
                     username: username, JITUsers: [
-                        "Casey@jollyit.co.uk",
-                        "Tom@jollyit.co.uk",
-                        "Tony@jollyit.co.uk",
+                        "AccountsDL@jollyit.co.uk",
                         "Ben@jollyit.co.uk",
+                        "Casey@jollyit.co.uk",
+                        "CSPLicenses@jollyit.co.uk",
+                        "Tom@jollyit.co.uk",
+                        "Jenna@sewjolly.co.uk",
+                        "Tony@jollyit.co.uk",
                         "Lewis@jollyit.co.uk",
                         "Dan@jollyit.co.uk",
                         "Jude@jollyit.co.uk",
