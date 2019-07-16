@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 /*!
 
  =========================================================
@@ -82,33 +83,39 @@ small {
 h1 {
   font-size: 3em;
   line-height: 1.15em;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 h2 {
   font-size: 2.4em;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 h3 {
   font-size: 1.825em;
   line-height: 1.4em;
   margin: 20px 0 10px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 h4 {
   font-size: 1.3em;
   line-height: 1.4em;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 h5 {
   font-size: 1.25em;
   line-height: 1.4em;
   margin-bottom: 15px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 h6 {
   font-size: 1em;
   text-transform: uppercase;
   font-weight: 500;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 body {
@@ -251,7 +258,6 @@ footer ul li a:hover {
   border-radius: 8px 0 0 8px;
   text-align: center;
   top: 120px;
-  .badge-primary-background-color: #9c27b0;
 }
 
 .fixed-plugin .SocialMediaShareButton,
