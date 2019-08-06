@@ -33,7 +33,7 @@ module.exports = {
 
         ---------------------
 
-        Please login to view the task within your browser - https://tasks.jollyit.co.uk
+        Please login to view the task within your browser - https://app.jollyit.co.uk
         `
 
         var mailOptions = {
