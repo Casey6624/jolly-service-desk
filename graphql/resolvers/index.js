@@ -71,7 +71,6 @@ module.exports = GraphQLResolvers = {
         await Task.findByIdAndUpdate({ _id: taskID }, taskInput, { useFindAndModify: false }, (err, res) => {
             if (err) {
                 throw new Error("There was an issue updating the previous task status, please try again later.")
-                return
             }
             if (res) {
                 return res
